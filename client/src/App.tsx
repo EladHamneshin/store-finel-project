@@ -10,6 +10,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useContext, useMemo } from 'react';
 import { UserContext } from './UserContext';
 import { Box } from '@mui/material';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 
 function App() {
@@ -31,18 +32,20 @@ function App() {
     }), [mode])
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <AppBar />
-            <CategoryNav />
-            <Box display="flex" flexDirection="column" minHeight="100vh">
-                <Box flexGrow={1}>
-                    <Outlet />
+        <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <AppBar />
+                <CategoryNav />
+                <Box display="flex" flexDirection="column" minHeight="100vh">
+                    <Box flexGrow={1}>
+                        <Outlet />
+                    </Box>
+                    <Copyright sx={{ mt: 5 }} />
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
-            </Box>
-            <ToastContainer />
-        </ThemeProvider>
+                <ToastContainer />
+            </ThemeProvider>
+        </PayPalScriptProvider>
     )
 }
 

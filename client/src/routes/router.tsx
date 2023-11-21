@@ -9,7 +9,7 @@ import CategoryPage from "../pages/CategoryPage";
 import ProductPage from "../pages/ProductPage";
 import CartPage from "../pages/CartPage";
 import ComparePage from "../pages/ComparePage";
-import CheckoutPage from "../pages/CheckoutPage";
+import CheckoutPage from "../pages/Checkout/CheckoutPage";
 
 const Router = () => {
     return (

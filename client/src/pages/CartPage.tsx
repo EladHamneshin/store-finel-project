@@ -92,8 +92,7 @@ const CartPage = () => {
     const buyNow = async () => {
         if (!userInfo) {
             console.log('Product purchased!');
-            navigate(`/checkout/${Math.round(totalAmount)}`)
-            alert(`Total Amount: ${totalAmount.toFixed(3)}`);
+            navigate(`/checkout/${Math.round(totalAmount)}`);
         } else {
             navigate(ROUTES.LOGIN)
         };

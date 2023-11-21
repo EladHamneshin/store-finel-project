@@ -1,4 +1,4 @@
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useState } from "react";
 
 type Product = {
@@ -10,14 +10,26 @@ type Props = {
     product: Product;
 }
 
+type OrderData = {
+    orderID: string;
+    payerID?: string;
+    paymentID?: string;
+    billingToken?: null;
+    facilitatorAccessToken: string;
+    autoCode?: string;
+    subscriptionID?: string;
+}
+
 export default function Paypal(props: Props): JSX.Element {
     const { product } = props;
 
     const [paidFor, setPaidFor] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleApprove = (orderId: string) => {
+    const handleApprove = (orderData: OrderData) => {
         setPaidFor(true);
+        console.log("orderId: ", orderData.orderID);
+        console.log("orderData: ", orderData);
     };
 
     if (paidFor) {
@@ -29,7 +41,7 @@ export default function Paypal(props: Props): JSX.Element {
     }
 
     return (
-        <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
+        <>
             <PayPalButtons
                 style={{ layout: "horizontal" }}
                 onClick={(data, actions) => {
@@ -56,14 +68,16 @@ export default function Paypal(props: Props): JSX.Element {
                 onApprove={async (data, action) => {
                     const order = await action.order?.capture();
                     console.log(`order: ${order}`);
-                    handleApprove(data.orderID)
+                    handleApprove(data as OrderData);
                 }}
-                onCancel={() => { }}
+                onCancel={() => {
+                    console.log('Payment cancelled!');
+                }}
                 onError={(err) => {
                     setError(err.toString());
                     console.log(`PayPal Chckout onError: ${err}.`);
                 }}
             />
-        </PayPalScriptProvider>
+        </>
     );
 }
