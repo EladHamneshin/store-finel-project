@@ -9,6 +9,7 @@ import CategoryPage from "../pages/CategoryPage";
 import ProductPage from "../pages/ProductPage";
 import CartPage from "../pages/CartPage";
 import ComparePage from "../pages/ComparePage";
+import CheckoutPage from "../pages/CheckoutPage";
 
 const Router = () => {
     return (
@@ -21,6 +22,7 @@ const Router = () => {
                 <Route path={ROUTES.PRODUCT} element={<ProductPage/>} />
                 <Route path={ROUTES.CART} element={<CartPage/>} />
                 <Route path={ROUTES.COMPARE} element={<ComparePage/>} />    
+                <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />    
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>
