@@ -6,46 +6,35 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Paypal from '../../components/Paypal';
 import { useParams } from 'react-router-dom';
-import { Collapse, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Collapse, Divider, List, ListItem, ListItemText } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 
 export default function PaymentForm() {
     const { totalAmount } = useParams();
-    const [payPalOpen, setPayPalOpen] = React.useState(false);
     const [payCurrentOpen, setPayCurrentOpen] = React.useState(false);
 
-    const handleSectionToggle = (section: string) => {
-        switch (section) {
-            case 'payPal':
-                setPayPalOpen(!payPalOpen);
-                break;
-            case 'payCurrent':
-                setPayCurrentOpen(!payCurrentOpen);
-                break;
-            default:
-                break;
-        }
-    };
 
 
     return (
         <React.Fragment>
-            <List>
-                <ListItem sx={{ width: '100%' }} onClick={() => handleSectionToggle('payPal')}>
-                    <ListItemText primary="PayPal" />
-                    {payPalOpen ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={payPalOpen} timeout="auto" unmountOnExit>
-                    <Paypal product={{ description: 'Payment', price: `${totalAmount}` }} />
-                </Collapse>
-            </List>
+            <Typography component="h1" variant="h6" align="center">
+                Choose a payment method
+            </Typography>
 
-            <hr style={{ width: '90%', color: 'gray' }} />
+            <hr style={{ width: '90%', color: 'gray', marginBottom: '40px' }} />
+            
+            <Paypal product={{ description: 'Payment', price: `${totalAmount}` }} />
+
+            <Box sx={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
+                <Divider sx={{ flex: 1, margin: 0 }} />
+                <Typography sx={{ padding: '0 10px' }}>or</Typography>
+                <Divider sx={{ flex: 1, margin: 0 }} />
+            </Box>
 
             <List>
-                <ListItem sx={{ width: '100%' }} onClick={() => handleSectionToggle('payCurrent')}>
-                    <ListItemText primary="Payment details" />
+                <ListItem sx={{ width: '100%' }} onClick={() => setPayCurrentOpen(!payCurrentOpen)}>
+                    <ListItemText primary="Enter credit information" />
                     {payCurrentOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={payCurrentOpen} timeout="auto" unmountOnExit>
