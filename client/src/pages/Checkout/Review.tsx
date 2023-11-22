@@ -46,8 +46,14 @@ export default function Review(props: Props) {
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
+
+            </Typography>
+            <Typography component="h1" variant="h6" align="center">
                 Order summary
             </Typography>
+
+            <hr style={{ width: '90%', color: 'gray', marginBottom: '40px' }} />
+
             <List disablePadding>
                 {products.map((product) => (
                     <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
@@ -55,6 +61,9 @@ export default function Review(props: Props) {
                         <Typography variant="body2">{product.price}</Typography>
                     </ListItem>
                 ))}
+
+                <hr style={{ width: '100%', color: 'gray', marginBottom: '40px' }} />
+
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Total" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
@@ -62,15 +71,20 @@ export default function Review(props: Props) {
                     </Typography>
                 </ListItem>
             </List>
+
+            <hr style={{ width: '100%', color: 'gray', marginBottom: '40px' }} />
+
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+
+                <Grid item xs={12} >
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                         Shipping
                     </Typography>
                     <Typography gutterBottom>John Smith</Typography>
                     <Typography gutterBottom>{addresses.join(', ')}</Typography>
                 </Grid>
-                <Grid item container direction="column" xs={12} sm={6}>
+
+                <Grid item container direction="column" xs={12}>
                     <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                         Payment details
                     </Typography>
@@ -87,6 +101,7 @@ export default function Review(props: Props) {
                         ))}
                     </Grid>
                 </Grid>
+
             </Grid>
         </React.Fragment>
     );

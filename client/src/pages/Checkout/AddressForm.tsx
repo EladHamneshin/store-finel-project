@@ -8,9 +8,6 @@ import Checkbox from '@mui/material/Checkbox';
 export default function AddressForm() {
     return (
         <React.Fragment>
-            {/* <Typography variant="h6" gutterBottom>
-                Shipping address
-            </Typography> */}
             <Typography component="h1" variant="h6" align="center">
             Shipping address
             </Typography>
@@ -66,7 +63,7 @@ export default function AddressForm() {
                         variant="standard"
                     />
                 </Grid>
-
+                
                 <Grid item xs={12} sm={6}>
                     <TextField
                         required

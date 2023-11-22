@@ -23,10 +23,32 @@ app.use('/api/users', userRoutes);
 app.use('/api/users/cart', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/category', categoryRoutes);
+
+
+// Payment.
+// =====================================================================
+
+app.post('/api/payment/check', (req, res) => {
+  const debitCardDetails = req.body; // פרטי כרטיס האשראי מתקבלים כאן
+
+  // ניתוב לשירות או ל-API המתאים לבדיקת פרטי כרטיס האשראי
+  // כאן תוכל להשתמש בפונקציות ובשירותים המתאימים לבדיקת תקינות פרטי כרטיסי האשראי
+
+  // לדוגמה, אם קיים פונקציה שבודקת תקינות כרטיס אשראי ומחזירה תשובה ב-JSON
+  // const isValid = validateCreditCardDetails(debitCardDetails);
+  console.log(debitCardDetails)
+  if (true) {
+    res.status(200).json({ message: 'Credit card details are valid' });
+  } else {
+    res.status(400).json({ message: 'Invalid credit card details' });
+  }
+});
+// ======================================================================
+
 app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT ;
+const port = process.env.PORT;
 
 await connectDB();
 
