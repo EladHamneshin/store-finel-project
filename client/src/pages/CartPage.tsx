@@ -7,15 +7,17 @@ import * as cartLocalStorageUtils from '../utils/cartLocalStorageUtils';
 import CartItem from '../types/CartItem';
 import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
-import Paypal from '../components/Paypal';
-import { sendCartToOms } from "../api/cartsAPI";
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../routes/routesModel';
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
     const context = useContext(UserContext)!;
-    const { userInfo, setProductsInCart} = context
+    const { userInfo, setProductsInCart } = context
     const [totalAmount, setTotalAmount] = useState<number>(0);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCart = async () => {
@@ -55,7 +57,7 @@ const CartPage = () => {
         try {
             if (userInfo) {
                 await cartsAPI.deleteProductFromCart(productId);
-                const newCart = await cartsAPI.getCart();                
+                const newCart = await cartsAPI.getCart();
                 setProductsInCart(newCart.items.length);
                 setCartItems(newCart.items);
             } else {
@@ -71,20 +73,28 @@ const CartPage = () => {
         }
     };
 
-    const buyNow = async () => {
-        if (userInfo) {
-            console.log('Product purchased!');
-            alert(`Total Amount: ${totalAmount.toFixed(3)}`);
-            const newCart = await cartsAPI.deleteCart();
-            setProductsInCart(newCart.items.length);
-            setCartItems(newCart.items);
-            sendCartToOms(newCart.items)
-        } else {
-            cartLocalStorageUtils.clearCart();
-            setCartItems([])
-            setProductsInCart(0);
-            alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
+    // const buyNow = async () => {
+    //     if (userInfo) {
+    //         console.log('Product purchased!');
+    //         alert(`Total Amount: ${totalAmount.toFixed(3)}`);
+    //         const newCart = await cartsAPI.deleteCart();
+    //         setProductsInCart(newCart.items.length);
+    //         setCartItems(newCart.items);
+    //     } else {
+    //         cartLocalStorageUtils.clearCart();
+    //         setCartItems([])
+    //         setProductsInCart(0);
+    //         alert(`Total Amount: $ ${totalAmount.toFixed(3)}`);
 
+    //     };
+    // }
+
+    const buyNow = async () => {
+        if (!userInfo) {
+            console.log('Product purchased!');
+            navigate(`/checkout/${Math.round(totalAmount)}`);
+        } else {
+            navigate(ROUTES.LOGIN)
         };
     }
 
@@ -115,53 +125,51 @@ const CartPage = () => {
 
     return (
         <Grid container spacing={3} style={{ display: 'flex', alignItems: 'start' }}>
-    <Grid item xs={8}>
-        {cartItems.map((item) => (
-            <ProductCartCard
-                key={'ProductCartCard-' + item.product_id._id}
-                product={item.product_id}
-                quantity={item.quantity}
-                removeFromCart={removeFromCart}
-                totalAmount={totalAmount}
-                setTotalAmount={setTotalAmount}
-                updateCartItemQuantity={updateCartItemQuantity}
-            />
-        ))}
-    </Grid>
-    <Grid item xs={4}>
-        <Paper sx={{ padding: '16px', position: 'sticky', right: '0', transform: 'translateY(20px)', }}>
-            <List>
-                <ListItem>
-                    <ListItemText primary={`Number of Items: ${cartItems.length}`} />
-                </ListItem>
+            <Grid item xs={8}>
                 {cartItems.map((item) => (
-                    <ListItem key={`ListItem-${item.product_id._id}`}>
-                        <ListItemText
-                            primary={item.product_id.name}
-                            secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.price).toFixed(3)}`}
-                        />
-                        <img src={item.product_id.imageUrl} alt={item.product_id.name} style={{ maxWidth: '50px', maxHeight: '50px', marginRight: '1rem' }} />
-                    </ListItem>
+                    <ProductCartCard
+                        key={'ProductCartCard-' + item.product_id._id}
+                        product={item.product_id}
+                        quantity={item.quantity}
+                        removeFromCart={removeFromCart}
+                        totalAmount={totalAmount}
+                        setTotalAmount={setTotalAmount}
+                        updateCartItemQuantity={updateCartItemQuantity}
+                    />
                 ))}
-                <ListItem>
-                    <ListItemText primary="Total Amount" />
-                    <Typography variant="h5" sx={{ marginLeft: '1rem' }}>
-                        ${totalAmount.toFixed(3)}
-                    </Typography>
-                </ListItem>
-                <ListItem>
-                    <Container>
-                    <Button sx={{width:"100%", marginBottom:1}} variant="contained" onClick={buyNow}>
-                        Buy Now
-                    </Button>
-                        <Paypal/>
-                    
-                    </Container>
-                </ListItem>
-            </List>
-        </Paper>
-    </Grid>
-</Grid>
+            </Grid>
+            <Grid item xs={4}>
+                <Paper sx={{ padding: '16px', position: 'sticky', right: '0', transform: 'translateY(20px)', }}>
+                    <List>
+                        <ListItem>
+                            <ListItemText primary={`Number of Items: ${cartItems.length}`} />
+                        </ListItem>
+                        {cartItems.map((item) => (
+                            <ListItem key={`ListItem-${item.product_id._id}`}>
+                                <ListItemText
+                                    primary={item.product_id.name}
+                                    secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.price).toFixed(3)}`}
+                                />
+                                <img src={item.product_id.imageUrl} alt={item.product_id.name} style={{ maxWidth: '50px', maxHeight: '50px', marginRight: '1rem' }} />
+                            </ListItem>
+                        ))}
+                        <ListItem>
+                            <ListItemText primary={`Subtotal (items: ):`} />
+                            <Typography variant="h5" sx={{ marginLeft: '1rem' }}>
+                                ${totalAmount.toFixed(3)}
+                            </Typography>
+                        </ListItem>
+                        <ListItem>
+                            <Container>
+                                <Button sx={{ width: "100%", marginBottom: 1 }} variant="contained" onClick={buyNow}>
+                                    Go to the payment page
+                                </Button>
+                            </Container>
+                        </ListItem>
+                    </List>
+                </Paper>
+            </Grid>
+        </Grid>
     );
 };
 

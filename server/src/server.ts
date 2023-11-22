@@ -31,5 +31,5 @@ const port = process.env.PORT ;
 await connectDB();
 
 app.listen(port, () => {
-  console.log(`server is running at port ${port}`);
+  console.log(`server is running at port ${port}...`);
 });
