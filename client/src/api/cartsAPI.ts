@@ -44,10 +44,26 @@ async function deleteProductFromCart(pid: string):Promise<Cart> {
     return data
 }
 
+//external
+async function sendCartToOms(cart:object):Promise<Cart> {
+    const response =  await fetch(`/api/checout`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            cart: cart,
+        }),
+    });
+
+    return await handleApiRes(response);
+}
+
+
 
 async function deleteCart():Promise<Cart> {
     const response = await fetch(`/api/users/cart`, {method: "DELETE"});
     return await handleApiRes(response);
 }
 
-export default { getCart, addToCart, updateQuantity, deleteProductFromCart, deleteCart }
+export default { getCart, addToCart, updateQuantity, deleteProductFromCart, deleteCart,sendCartToOms }
