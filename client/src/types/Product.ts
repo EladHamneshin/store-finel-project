@@ -7,7 +7,6 @@ interface Product {
   description: string;
   category: CategoryName;
   imageUrl: string;
-  rating: number;
   name: string;
   clickCount: number;
   tags:  {[key: string]: string}

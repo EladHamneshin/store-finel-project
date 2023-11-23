@@ -8,6 +8,7 @@ import CartItem from '../types/CartItem';
 import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
 import Paypal from '../components/Paypal';
+import { sendCartToOms } from "../api/cartsAPI";
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -77,6 +78,7 @@ const CartPage = () => {
             const newCart = await cartsAPI.deleteCart();
             setProductsInCart(newCart.items.length);
             setCartItems(newCart.items);
+            sendCartToOms(newCart.items)
         } else {
             cartLocalStorageUtils.clearCart();
             setCartItems([])

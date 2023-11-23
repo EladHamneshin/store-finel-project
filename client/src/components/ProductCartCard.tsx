@@ -71,7 +71,6 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
           <Box>
             <img src={product.imageUrl} alt={product.name} style={{ width: '100px' }} />
           </Box>
-  
           <Box flexGrow={1}>
             <CardContent>
               <Typography variant="h5">{product.name}</Typography>
@@ -85,7 +84,6 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
             <Typography variant="body1">{cartQuantity}</Typography>
             <IconButton onClick={() => decreaseQuantity(product._id)}>-</IconButton>
           </Box>
-  
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <IconButton onClick={() => deleteFromCart(product._id)}>
               <DeleteForeverIcon />
