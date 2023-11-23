@@ -1,18 +1,18 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
+import ShippingDetails from './ShippingDetails';
+import PaymentDetails from './PaymentDetails';
+import OrderSummary from './OrderSummary';
 import { useParams } from 'react-router-dom';
+import { CreditCardDetails } from '../../types/creditCard';
+import { ShippingDetailsType } from '../../types/sippingDetails';
 
 
 function Copyright() {
@@ -25,27 +25,34 @@ function Copyright() {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
-  );
-}
+  )
+};
 
-const steps = ['Shipping address', 'Payment method', 'Summary of order details'];
 
-function getStepContent(step: number, totalAmount: any) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review totalAmount={totalAmount} />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
-export default function Checkout() {
-  const [activeStep, setActiveStep] = React.useState(0);
+const CheckoutPage = () => {
   const { totalAmount } = useParams();
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  // ShippingDetails.
+  const [shippingDetails, setShippingDetails] = React.useState<ShippingDetailsType>({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    country: '',
+    city: '',
+    address: '',
+    zip: '',
+  });
+
+  // CreditCardDetails.
+  const [creditCardDetails, setcreditCardDetails] = React.useState<CreditCardDetails>({
+    cardholderId: '',
+    cardNumber: '',
+    expDate: '',
+    cvv: '',
+    saveCard: false,
+  });
+
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -55,18 +62,32 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
+  const handlePlaceOrder = () => {
+    console.log("creditCardDetails :", creditCardDetails);
+    console.log("shippingDetails :", shippingDetails);
+    
+    
+  };
+
+  const steps = [
+    { component: <ShippingDetails shippingDetails={{data: shippingDetails, setData: setShippingDetails}} onNext={handleNext} />, label: 'Shipping address' },
+    { component: <PaymentDetails totalAmount={totalAmount} creditCard={{ data: creditCardDetails, setData: setcreditCardDetails }} onNext={handleNext} onBack={handleBack} />, label: 'Payment method' },
+    { component: <OrderSummary totalAmount={totalAmount} onBack={handleBack} onPlaceOrder={handlePlaceOrder} />, label: 'Summary of order details' },
+  ];
+
+
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="sm" sx={{ mb: 20 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
             Just before the product is with you
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+            {steps.map((step) => (
+              <Step key={step.label}>
+                <StepLabel>{step.label}</StepLabel>
               </Step>
             ))}
           </Stepper>
@@ -83,21 +104,7 @@ export default function Checkout() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep, totalAmount)}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
-                  </Button>
-                )}
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                </Button>
-              </Box>
+              {steps[activeStep].component}
             </React.Fragment>
           )}
         </Paper>
@@ -106,3 +113,7 @@ export default function Checkout() {
     </React.Fragment>
   );
 }
+
+
+export default CheckoutPage;
+

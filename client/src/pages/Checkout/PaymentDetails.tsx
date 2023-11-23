@@ -5,7 +5,6 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Paypal from '../../components/Paypal';
-import { useParams } from 'react-router-dom';
 import { Box, Button, Collapse, Divider, List, ListItem, ListItemText } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -17,18 +16,20 @@ interface ApiResponse {
     message: string;
 }
 
+type Props = {
+    totalAmount: string | undefined;
+    creditCard: {data: CreditCardDetails, setData: Function};
+    onNext: Function;
+    onBack: Function;
+}
 
-export default function PaymentForm() {
-    const { totalAmount } = useParams<{ totalAmount: string }>();
+const PaymentDetails = (props: Props) => {
     const [payCurrentOpen, setPayCurrentOpen] = useState(false);
-    const [creditCardDetails, setcreditCardDetails] = useState<CreditCardDetails>({
-        cardholderId: '',
-        cardNumber: '',
-        expDate: '',
-        cvv: '',
-        saveCard: false,
-    });
 
+    // CreditCardDetails.
+    const creditCardDetails: CreditCardDetails = props.creditCard.data;
+    const setCreditCardDetails: Function = props.creditCard.setData;
+        
     const [errors, setErrors] = useState<Partial<CreditCardDetails>>({});
 
     const [isChecking, setIsChecking] = React.useState(false);
@@ -60,10 +61,13 @@ export default function PaymentForm() {
     };
 
     const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setServerResponse('');
+        setError('');
+
         const { name, value, checked, type } = event.target;
         const newValue = type === 'checkbox' ? checked : value;
 
-        setcreditCardDetails({
+        setCreditCardDetails({
             ...creditCardDetails,
             [name]: newValue,
         });
@@ -88,7 +92,10 @@ export default function PaymentForm() {
         setErrors(newErrors);
     };
 
-    const handleSubmit = async () => {
+    const handleNext = async () => {
+        setServerResponse('');
+        setError('');
+
         const formErrors: Partial<CreditCardDetails> = {};
         if (!isIdValid(creditCardDetails.cardholderId.trim())) {
             formErrors.cardholderId = 'Please enter a valid ID (9 digits).';
@@ -108,6 +115,7 @@ export default function PaymentForm() {
         const isValid = Object.keys(formErrors).length === 0;
 
         if (isValid) {
+
             setIsChecking(true);
 
             try {
@@ -119,8 +127,12 @@ export default function PaymentForm() {
 
                 if (typeof data === 'object' && 'message' in data) {
                     setServerResponse((data as ApiResponse).message);
+
+                    setTimeout(() => {
+                        props.onNext()
+                    }, 3000);
                 } else {
-                    setServerResponse('Unknown error occurred');
+                    setError('Unknown error occurred !!!');
                 }
             } catch (error) {
 
@@ -130,12 +142,13 @@ export default function PaymentForm() {
                     setError(`Error checking card details: ${errorMessage}`);
                     console.log(error.message);
                 } else {
-                    setError('Unknown error occurred');
+                    setError('Unknown error occurred !!!');
                 }
             }
             console.log("Form data :", creditCardDetails);
         } else {
-            console.log('Form has errors or empty/invalid fields.');
+            setError('Form has errors or empty/invalid fields !!!');
+            console.log(error);
         }
 
     };
@@ -148,7 +161,7 @@ export default function PaymentForm() {
 
             <hr style={{ width: '90%', color: 'gray', marginBottom: '40px' }} />
 
-            <Paypal product={{ description: 'Payment', price: `${totalAmount}` }} />
+            <Paypal product={{ description: 'Payment', price: `${props.totalAmount}` }} />
 
             <Box sx={{ display: 'flex', alignItems: 'center', margin: '10px 0' }}>
                 <Divider sx={{ flex: 1, margin: 0 }} />
@@ -243,18 +256,8 @@ export default function PaymentForm() {
                             />
                         </Grid>
                     </Grid>
-                    <Button onClick={handleSubmit}>Submit</Button>
                 </Collapse>
             </List>
-
-            {error && (
-                <div>
-                    <ErrorIcon sx={{ color: 'red', fontSize: 40 }} />
-                    <Typography variant="body1" color="error">
-                        {error}
-                    </Typography>
-                </div>
-            )}
 
             {isChecking && (
                 <Typography variant="body1">
@@ -271,9 +274,31 @@ export default function PaymentForm() {
                 </div>
             )}
 
+            {error && (
+                <div>
+                    <ErrorIcon sx={{ color: 'red', fontSize: 40 }} />
+                    <Typography variant="body1" color="error">
+                        {error}
+                    </Typography>
+                </div>
+            )}
+
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Button onClick={() => props.onBack()} sx={{ mt: 3, ml: 1 }}>
+                    Back
+                </Button>
+
+                <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    sx={{ mt: 3, ml: 1 }}
+                >
+                    Next
+                </Button>
+            </Box>
         </React.Fragment>
     );
 }
 
-
+export default PaymentDetails;
 

@@ -4,9 +4,12 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import { Box, Button } from '@mui/material';
 
 type Props = {
-    totalAmount: any;
+    totalAmount: string | undefined;
+    onBack: Function;
+    onPlaceOrder: Function;
 }
 
 const products = [
@@ -40,7 +43,7 @@ const payments = [
     { name: 'Expiry date', detail: '04/2024' },
 ];
 
-export default function Review(props: Props) {
+export default function OrderSummary(props: Props) {
     const { totalAmount } = props;
 
     return (
@@ -101,8 +104,20 @@ export default function Review(props: Props) {
                         ))}
                     </Grid>
                 </Grid>
-
             </Grid>
+
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Button onClick={() => props.onBack()} sx={{ mt: 3, ml: 1 }}>
+                    Back
+                </Button>
+                <Button
+                    variant="contained"
+                    onClick={() => props.onPlaceOrder()}
+                    sx={{ mt: 3, ml: 1 }}
+                >
+                    Place order
+                </Button>
+            </Box>
         </React.Fragment>
     );
 }

@@ -35,14 +35,19 @@ app.post('/api/payment/check', (req, res) => {
   // כאן תוכל להשתמש בפונקציות ובשירותים המתאימים לבדיקת תקינות פרטי כרטיסי האשראי
 
   // לדוגמה, אם קיים פונקציה שבודקת תקינות כרטיס אשראי ומחזירה תשובה ב-JSON
-  // const isValid = validateCreditCardDetails(debitCardDetails);
-  console.log(debitCardDetails)
-  if (true) {
-    res.status(200).json({ message: 'Credit card details are valid' });
-  } else {
-    res.status(400).json({ message: 'Invalid credit card details' });
-  }
+  // כאן אני משתמש ב setTimeout כדי ליצור השהייה של 3 שניות לפני החזרת התשובה
+  setTimeout(() => {
+    // כאן אתה יכול להמשיך עם בדיקת תקינות ולהחזיר תשובה בהתאם
+    // const isValid = validateCreditCardDetails(debitCardDetails);
+    console.log(debitCardDetails);
+    if (true) {
+      res.status(200).json({ message: 'Credit card details are valid' });
+    } else {
+      res.status(400).json({ message: 'Invalid credit card details' });
+    }
+  }, 3000); // השהייה של 3 שניות
 });
+
 // ======================================================================
 
 app.use(notFound);
