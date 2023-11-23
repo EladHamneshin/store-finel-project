@@ -45,9 +45,7 @@ const ProductPage = () => {
     //handle get product by id from server
     const getProduct = async (pid: string) => {
         try {
-            const data = await productsAPI.getProduct(pid!);
-            console.log(data);
-            const product = data[0]
+            const product = await productsAPI.getProduct(pid!);
             setProduct(product);
         } catch (error) {
             console.error("Failed to fetch");
@@ -56,7 +54,7 @@ const ProductPage = () => {
 
     //get the product after the page is rendered
     useEffect(() => {
-        getProduct(pid!);
+        getProduct('1');
     }, []);
 
     //handle decrease quantity by clicking on the minus button (when quantity shouldnt be lower then 1)
@@ -74,13 +72,11 @@ const ProductPage = () => {
         }
         if (userInfo) {
             try {
-
                 const cart = await cartsAPI.addToCart(
                     product!._id,
                     quantity.toString()
                 );
                 toastSuccess("Added to cart!");
-
                 setQuantity(1);
                 setProductsInCart(cart.items.length);
             } catch (error) {
@@ -201,58 +197,23 @@ const ProductPage = () => {
     <br />
 </Paper>
 
-  //When the product is loaded then show the component
-  return (
-    <>
-      <Paper style={{ margin: 50 }}>
-        <Grid container spacing={3} alignItems='center' justifyContent='center'>
-          <Grid item xs={6} justifyContent='center' alignItems='center'>
-            <img src={product?.image.url} alt={product?.image.alt} height={200} />
-          </Grid>
-          <Grid item xs={6} >
-            <Typography variant="h3">{product?.name}</Typography>
-            <Typography variant="body1">{product?.description}</Typography>
-            {/* <Typography variant="h6">${product?.price}</Typography> */}
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <IconButton onClick={decrementQuantity}><RemoveCircleRoundedIcon ></RemoveCircleRoundedIcon></IconButton>
-              <Box>{quantity}</Box>
-              <IconButton onClick={() => setQuantity(quantity + 1)}><AddCircleRoundedIcon ></AddCircleRoundedIcon></IconButton>
-            </div>
-            <div style={{ margin: "5px", alignItems: 'space-around' }}>
-              <Button style={{ margin: 5 }} variant="contained" color="primary" onClick={handleAddToCart}>
-                Add to Cart
-              </Button>
-              <Button style={{ margin: 5 }} variant="contained" color="primary" onClick={handleCompareProducts}>
-                Compare similar products
-              </Button>
-            </div>
-          </Grid>
-        </Grid>
-      </Paper>
-      <Paper style={{margin: '10px 50px',height:500}}>
-        <StoreMap />
-      </Paper>
-    </>
-  );
-  
-//             <br />
-//             <Paper
-//                 style={{
-//                     margin: "10px 50px",
-//                     height: "auto",
-//                     position: "relative",
-//                     padding: "20px",
-//                 }}
-//             >
-//                 <Typography variant="h5" sx={{ marginBottom: 2 }}>
-//                     Store Location
-//                 </Typography>
-//                 <div style={{ height: "400px" }}>
-//                     <StoreMap />
-//                 </div>
-//             </Paper>
+            <br />
+            <Paper
+                style={{
+                    margin: "10px 50px",
+                    height: "auto",
+                    position: "relative",
+                    padding: "20px",
+                }}
+            >
+                <Typography variant="h5" sx={{ marginBottom: 2 }}>
+                    Store Location
+                </Typography>
+                <div style={{ height: "400px" }}>
+                    <StoreMap />
+                </div>
+            </Paper>
         </>
     );
-
 };
 export default ProductPage;

@@ -37,8 +37,8 @@ function Top5ProductsPage() {
         alignItems="center"
       >
         {top5Products.map((product) => (
-          <Grid item xs key={product.id}>
-            <ProductCard key={product.id} product={product} />
+          <Grid item xs key={product._id}>
+            <ProductCard key={product._id} product={product} />
           </Grid>
         ))}
       </Grid>
