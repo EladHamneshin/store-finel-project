@@ -1,14 +1,18 @@
 import Category from "../types/Category";
 import Product from "../types/Product";
 import handleApiRes from "./apiResHandler";
+// import dotenv from "dotenv";
+// dotenv.config();
+
+
 
 async function getCategories(): Promise<Category[]> {
-    const response = await fetch('/api/category');
+    const response = await fetch(`/api/category`);
     return await handleApiRes(response);
 }
 
 async function getTop5categories():Promise<Category[]> {
-    const response = await fetch('/api/category/top5');
+    const response = await fetch(`/api/category/top5`);
     return await handleApiRes(response);
 }
 
