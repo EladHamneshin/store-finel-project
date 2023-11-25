@@ -1,9 +1,9 @@
-import CartItem from './CartItem.ts';
+import { Product } from './Product.ts';
 
 interface Cart {
     _id: string;
     user: string;
-    items: CartItem[];
+    items: Product[];
 }
 
 export default Cart;

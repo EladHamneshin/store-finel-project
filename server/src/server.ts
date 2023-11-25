@@ -48,6 +48,21 @@ app.post('/api/payment/check', (req, res) => {
   }, 3000); // השהייה של 3 שניות
 });
 
+
+
+app.post('/api/payment/order', (req, res) => {
+  const order = req.body; 
+  setTimeout(() => {
+  
+    console.log(order);
+    if (true) {
+      res.status(200).json({ message: 'The order has been placed !' });
+    } else {
+      res.status(400).json({ message: 'An error occurred in the ordering process !!!' });
+    }
+  }, 3000); // השהייה של 3 שניות
+});
+
 // ======================================================================
 
 app.use(notFound);

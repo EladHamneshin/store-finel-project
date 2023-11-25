@@ -1,8 +1,9 @@
 import Cart from "../types/Cart";
+import { Product } from "../types/Product";
 import handleApiRes from "./apiResHandler";
 
 
-async function getCart(): Promise<Cart> {
+async function getCart(): Promise<Product[]> {
     const response = await fetch('/api/users/cart');
     return await handleApiRes(response);
 }

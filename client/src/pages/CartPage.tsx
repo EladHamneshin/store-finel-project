@@ -4,14 +4,14 @@ import ProductCartCard from '../components/ProductCartCard';
 import cartsAPI from '../api/cartsAPI';
 import CircularProgress from '@mui/material/CircularProgress';
 import * as cartLocalStorageUtils from '../utils/cartLocalStorageUtils';
-import CartItem from '../types/CartItem';
 import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/routesModel';
+import { Product } from '../types/Product';
 
 const CartPage = () => {
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [cartItems, setCartItems] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context
@@ -24,7 +24,7 @@ const CartPage = () => {
             try {
                 if (userInfo) {
                     const cartData = await cartsAPI.getCart();
-                    setCartItems(cartData.items);
+                    setCartItems(cartData);
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();
 
@@ -47,7 +47,7 @@ const CartPage = () => {
     useEffect(() => {
         if (cartItems.length !== 0) {
             const total = cartItems.reduce((sum, item) => {
-                return sum + item.quantity * item.product_id.price;
+                return sum + item.quantity * item.salePrice;
             }, 0);
             setTotalAmount(total);
         }
@@ -58,8 +58,8 @@ const CartPage = () => {
             if (userInfo) {
                 await cartsAPI.deleteProductFromCart(productId);
                 const newCart = await cartsAPI.getCart();
-                setProductsInCart(newCart.items.length);
-                setCartItems(newCart.items);
+                setProductsInCart(newCart.length);
+                setCartItems(newCart);
             } else {
                 cartLocalStorageUtils.removeFromCart(productId);
                 const newCart = cartLocalStorageUtils.getCart();
@@ -101,12 +101,12 @@ const CartPage = () => {
     const updateCartItemQuantity = (productId: string, newQuantity: number) => {
         setCartItems((prevCartItems) =>
             prevCartItems.map((item) =>
-                item.product_id._id === productId ? { ...item, quantity: newQuantity } : item
+                item.id === productId ? { ...item, quantity: newQuantity } : item
             )
         );
 
         const total = cartItems.reduce((sum, item) => {
-            return sum + item.quantity * item.product_id.price;
+            return sum + item.quantity * item.salePrice;
         }, 0);
         setTotalAmount(total);
     };
@@ -128,8 +128,8 @@ const CartPage = () => {
             <Grid item xs={8}>
                 {cartItems.map((item) => (
                     <ProductCartCard
-                        key={'ProductCartCard-' + item.product_id._id}
-                        product={item.product_id}
+                        key={'ProductCartCard-' + item.id}
+                        product={item.id}
                         quantity={item.quantity}
                         removeFromCart={removeFromCart}
                         totalAmount={totalAmount}
@@ -145,12 +145,12 @@ const CartPage = () => {
                             <ListItemText primary={`Number of Items: ${cartItems.length}`} />
                         </ListItem>
                         {cartItems.map((item) => (
-                            <ListItem key={`ListItem-${item.product_id._id}`}>
+                            <ListItem key={`ListItem-${item.id}`}>
                                 <ListItemText
-                                    primary={item.product_id.name}
-                                    secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.price).toFixed(3)}`}
+                                    primary={item.id}
+                                    secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.salePrice).toFixed(3)}`}
                                 />
-                                <img src={item.product_id.imageUrl} alt={item.product_id.name} style={{ maxWidth: '50px', maxHeight: '50px', marginRight: '1rem' }} />
+                                <img src={item.id} alt={item.id} style={{ maxWidth: '50px', maxHeight: '50px', marginRight: '1rem' }} />
                             </ListItem>
                         ))}
                         <ListItem>

@@ -17,7 +17,7 @@ interface ApiResponse {
 }
 
 type Props = {
-    totalAmount: string | undefined;
+    totalAmount: number;
     creditCard: {data: CreditCardDetails, setData: Function};
     onNext: Function;
     onBack: Function;
@@ -266,21 +266,21 @@ const PaymentDetails = (props: Props) => {
             )}
 
             {serverResponse && (
-                <div>
+                <Box>
                     <CheckCircleIcon sx={{ color: 'green', fontSize: 40 }} />
                     <Typography variant="body1">
                         {serverResponse}
                     </Typography>
-                </div>
+                </Box>
             )}
 
             {error && (
-                <div>
+                <Box>
                     <ErrorIcon sx={{ color: 'red', fontSize: 40 }} />
                     <Typography variant="body1" color="error">
                         {error}
                     </Typography>
-                </div>
+                </Box>
             )}
 
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

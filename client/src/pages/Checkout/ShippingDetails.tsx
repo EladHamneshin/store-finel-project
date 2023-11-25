@@ -12,18 +12,21 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { ShippingDetailsType } from '../../types/sippingDetails';
 
 type Props = {
-    shippingDetails: {data: ShippingDetailsType, setData: Function};
+    deliveryMethod: { data: string, setData: Function};
+    shippingDetails: { data: ShippingDetailsType, setData: Function };
     onNext: Function;
 }
 
 const ShippingDetails = (props: Props) => {
-    const [deliveryMethod, setDeliveryMethod] = useState<string>('pickup');
+    // deliveryMethod.
+    const deliveryMethod = props.deliveryMethod.data;
+    const setDeliveryMethod = props.deliveryMethod.setData;
 
     // CreditCardDetails.
     const shippingDetails: ShippingDetailsType = props.shippingDetails.data;
     const setShippingDetails: Function = props.shippingDetails.setData;
 
-    
+
 
     const [errors, setErrors] = useState<Partial<ShippingDetailsType>>({});
 
@@ -40,7 +43,7 @@ const ShippingDetails = (props: Props) => {
         setError('');
 
         const { name, value } = event.target;
-       
+
 
         setShippingDetails({
             ...shippingDetails,
@@ -49,26 +52,20 @@ const ShippingDetails = (props: Props) => {
 
         const newErrors = { ...errors };
         switch (name) {
-            case 'firstName':
-                newErrors.firstName = value.trim() === '' ? 'Please enter your first name' : '';
-                break;
-            case 'lastName':
-                newErrors.lastName = value.trim() === '' ? 'Please enter your last name' : '';
-                break;
-            case 'phone':
-                newErrors.phone = value.trim() === '' ? 'Please enter your phone number' : '';
-                break;
             case 'country':
                 newErrors.country = value.trim() === '' ? 'Please enter your country' : '';
                 break;
             case 'city':
                 newErrors.city = value.trim() === '' ? 'Please enter your city' : '';
                 break;
-            case 'address':
-                newErrors.address = value.trim() === '' ? 'Please enter your address' : '';
+            case 'street':
+                newErrors.street = value.trim() === '' ? 'Please enter your street' : '';
                 break;
-            case 'zip':
-                newErrors.zip = value.trim() === '' ? 'Please enter your postal code' : '';
+            case 'celPhone':
+                newErrors.celPhone = value.trim() === '' ? 'Please enter your  cel phone number' : '';
+                break;
+            case 'zipCode':
+                newErrors.zipCode = value.trim() === '' ? 'Please enter your postal code' : '';
                 break;
             default:
                 break;
@@ -77,29 +74,24 @@ const ShippingDetails = (props: Props) => {
     };
 
     const handleNextClick = async () => {
-        const { firstName, lastName, phone, country, city, zip, address } = shippingDetails;
+        if (deliveryMethod === 'delivery') {
+        const { country, city, street, celPhone, zipCode } = shippingDetails;
 
         const formErrors: Partial<ShippingDetailsType> = {};
-        if (firstName.trim() === '') {
-            formErrors.firstName = 'Please enter your first name';
-        }
-        if (lastName.trim() === '') {
-            formErrors.lastName = 'Please enter your last name';
-        }
-        if (phone.trim() === '') {
-            formErrors.phone = 'Please enter your phone number';
-        }
         if (country.trim() === '') {
             formErrors.country = 'Please enter your country';
         }
         if (city.trim() === '') {
             formErrors.city = 'Please enter your city';
         }
-        if (zip.trim() === '') {
-            formErrors.zip = 'Please enter your address';
+        if (street.trim() === '') {
+            formErrors.street = 'Please enter your postal code';
         }
-        if (address.trim() === '') {
-            formErrors.address = 'Please enter your postal code';
+        if (celPhone.trim() === '') {
+            formErrors.celPhone = 'Please enter your  cel phone number';
+        }
+        if (zipCode.trim() === '') {
+            formErrors.zipCode = 'Please enter your street';
         }
 
         setErrors(formErrors);
@@ -113,6 +105,9 @@ const ShippingDetails = (props: Props) => {
         } else {
             setError('Please fill in all required fields !!!');
         }
+    } else{
+        props.onNext();
+    }
 
     };
 
@@ -142,54 +137,6 @@ const ShippingDetails = (props: Props) => {
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 required
-                                id="firstName"
-                                name="firstName"
-                                label="First name"
-                                fullWidth
-                                autoComplete="given-name"
-                                variant="standard"
-                                value={shippingDetails.firstName}
-                                onChange={handleInputChange}
-                                error={!!errors.firstName}
-                                helperText={errors.firstName}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                id="lastName"
-                                name="lastName"
-                                label="Last name"
-                                fullWidth
-                                autoComplete="family-name"
-                                variant="standard"
-                                value={shippingDetails.lastName}
-                                onChange={handleInputChange}
-                                error={!!errors.lastName}
-                                helperText={errors.lastName}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="phone"
-                                name="phone"
-                                label="Phone"
-                                fullWidth
-                                autoComplete="phone"
-                                variant="standard"
-                                value={shippingDetails.phone}
-                                onChange={handleInputChange}
-                                error={!!errors.phone}
-                                helperText={errors.phone}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
                                 id="country"
                                 name="country"
                                 label="Country"
@@ -210,7 +157,7 @@ const ShippingDetails = (props: Props) => {
                                 name="city"
                                 label="City"
                                 fullWidth
-                                autoComplete="shipping address-city"
+                                autoComplete="shipping street-city"
                                 variant="standard"
                                 value={shippingDetails.city}
                                 onChange={handleInputChange}
@@ -218,42 +165,59 @@ const ShippingDetails = (props: Props) => {
                                 helperText={errors.city}
                             />
                         </Grid>
+
                         <Grid item xs={12}>
                             <TextField
                                 required
-                                id="address"
-                                name="address"
-                                label="Address"
+                                id="street"
+                                name="street"
+                                label="Street"
                                 fullWidth
-                                autoComplete="shipping address"
+                                autoComplete="shipping street"
                                 variant="standard"
-                                value={shippingDetails.address}
+                                value={shippingDetails.street}
                                 onChange={handleInputChange}
-                                error={!!errors.address}
-                                helperText={errors.address}
+                                error={!!errors.street}
+                                helperText={errors.street}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                id="celPhone"
+                                name="celPhone"
+                                label="Cel phone"
+                                fullWidth
+                                autoComplete="celPhone"
+                                variant="standard"
+                                value={shippingDetails.celPhone}
+                                onChange={handleInputChange}
+                                error={!!errors.celPhone}
+                                helperText={errors.celPhone}
                             />
                         </Grid>
 
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 required
-                                id="zip"
-                                name="zip"
+                                id="zipCode"
+                                name="zipCode"
                                 label="Postal code"
                                 fullWidth
                                 autoComplete="shipping postal-code"
                                 variant="standard"
-                                value={shippingDetails.zip}
+                                value={shippingDetails.zipCode}
                                 onChange={handleInputChange}
-                                error={!!errors.zip}
-                                helperText={errors.zip}
+                                error={!!errors.zipCode}
+                                helperText={errors.zipCode}
                             />
                         </Grid>
 
                         <Grid item xs={12}>
                             <FormControlLabel
-                                control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                                label="Use this address for payment details"
+                                control={<Checkbox color="secondary" name="savestreet" value="yes" />}
+                                label="Use this street for payment details"
                             />
                         </Grid>
                     </Grid>

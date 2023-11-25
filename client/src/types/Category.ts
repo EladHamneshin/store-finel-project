@@ -1,10 +1,7 @@
 import CategoryName from "./CategoryName";
 
-type Category = {
-  _id: string;
+export interface Category {
+  id: string;
   name: CategoryName;
-  clickCount: number;
-  imageUrl: string;
-};
-
-export default Category;
+  clicked: number;
+}
