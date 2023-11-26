@@ -1,11 +1,8 @@
-import CategoryName from "./CategoryName.js"
-import Product from "./Product.js"
 
-type Category = {
-    name: CategoryName,
-    products: Product[],
-    clickCount: number,
-    imageUrl: string
-}
+interface Category {
+    id: string;
+    name: string;
+    clicked: number;
+  };[]  
 
 export default Category

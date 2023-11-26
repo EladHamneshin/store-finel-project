@@ -12,6 +12,8 @@ import cartRoutes from './routes/cartRoutes.js';
 import pg from "pg";
 const { Pool } = pg;
 import { config } from 'dotenv';
+import bannerRoutes from './routes/bannerRouetes.js';
+import ordersRoutes from './routes/ordersRouets.js';
 config();
 
 
@@ -27,8 +29,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api/users', userRoutes);
+app.use('/api/orders', ordersRoutes);
 app.use('/api/users', cartRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/banners', bannerRoutes);
 app.use('/api', categoryRoutes);
 app.use(notFound);
 app.use(errorHandler);

@@ -5,9 +5,6 @@ import mongoose from "mongoose";
 import { Types } from "mongoose";
 
 
-// @desc    Get product by id
-// @route   GET  /api/products/:pid
-// @access  Public
 
 //OMS
 const getProductAndReviewByID = asyncHandler(async (req: Request, res: Response) => {
@@ -22,7 +19,17 @@ const getTop5Products = async (_req :Request, res:Response) => {
     console.log('controll');
     res.json(top5Products);
   }
+
+// const getTop5ForCategory = async (_req :Request, res:Response) => {  
+//     const top5Products = await productsService.getTop5Products();
+//     console.log('controll');
+//     res.json(top5Products);
+//   }
+
+export default { getProductByID, getTop5Products,getTop5ForCategory}
+
   const reviews = asyncHandler(async (req: Request, res: Response) => {
     console.log('this is review',req.body)} )
 
 export default { getProductAndReviewByID, getTop5Products,reviews}
+

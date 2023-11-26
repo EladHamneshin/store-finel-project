@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Product from "../types/Product.js";
 
+
 const productSchema = new mongoose.Schema<Product>(
 //     {
 //         quantity: Number,

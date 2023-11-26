@@ -43,7 +43,7 @@ const ProductPage = () => {
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context;
     const { pid } = useParams();
-​
+
     //handle get product by id from server
     const getProductAndReview = async (pid: string) => {
         try {

@@ -1,4 +1,7 @@
-const foo:any = [
+import Product from "./types/Product.js";
+import Category from "./types/Category.js";
+
+const foo:Product[] = [
   {
     id: "a86eaf9c-9ebe-4393-a52f-82c140cc1afe",
     name: "Product 1",
@@ -22,10 +25,11 @@ const foo:any = [
       alt: "Product 1 Image",
     },
     tags: {
-      tag1: "Tag A",
+      tag: "Tag A",
       tag2: "Tag B",
     },
   },
+  
   {
     id: "a86eaf9c-9ebe-4393-a52f-82c141cc1afe",
     name: "Product 2",
@@ -49,7 +53,7 @@ const foo:any = [
       alt: "Product 2 Image",
     },
     tags: {
-      tag1: "Tag C",
+      tag: "Tag C",
       tag2: "Tag D",
     },
   },
@@ -76,7 +80,7 @@ const foo:any = [
         alt: "Product 6 Image",
       },
       tags: {
-        tag1: "Tag E",
+        tag: "Tag E",
         tag2: "Tag F",
       },
     },
@@ -103,7 +107,7 @@ const foo:any = [
         alt: "Product 7 Image",
       },
       tags: {
-        tag1: "Tag G",
+        tag: "Tag G",
         tag2: "Tag H",
       },
     },
@@ -130,10 +134,42 @@ const foo:any = [
         alt: "Product 5 Image",
       },
       tags: {
-        tag1: "Tag G",
+        tag: "Tag G",
         tag2: "Tag H",
       },
     },
   ];
   
-  export default foo
+
+  const categories:Category[] = [
+    {
+      id: "1",
+      name: "Category 1",
+      clicked: 150,
+    },
+    {
+      id: "2",
+      name: "Category 2",
+      clicked: 200,
+    },
+    {
+      id: "3",
+      name: "Category 3",
+      clicked: 120,
+    },
+    {
+      id: "4",
+      name: "Category 4",
+      clicked: 180,
+    },
+    {
+      id: "5",
+      name: "Category 5",
+      clicked: 90,
+    },
+  ];
+  
+
+
+export default {foo,categories}
+
