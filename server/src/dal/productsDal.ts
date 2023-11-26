@@ -1,31 +1,33 @@
-import { Types } from "mongoose";
-import ProductModel from "../models/productModel.js";
+import axios from "axios";
+import foo from "../data.js";
 
-const getProductByID = async (id: Types.ObjectId) => {
-    return await ProductModel.findOne({_id: id})
+interface prod {
+    id: string ,
+    name: string,
+    salePrice: number,
+    quantity : number,
+    description : string,
+    category: string,
+    discountPercentage : number,
 }
 
-const increaseClickCount = async (id: Types.ObjectId) => {
-   return await ProductModel.findOneAndUpdate(
-        { _id: id },
-        { $inc: { clickCount: 1 } },
-        { new: true }
-    );
-};
 
-const getProductQuantity = async (id:  Types.ObjectId) => {
-    return await ProductModel.findOne({_id : id}).select('quantity')
+const getProductByID = async (id:string) => {
+    const data = foo.filter((item:prod) => item.id===String(id))
+    return data
+
+    // const res = await axios.get(`https://dummyjson.com/products${id}`)
+    // console.log(await res.data)
+    // return res.data
 }
 
-const deleteQuantity = async (id: Types.ObjectId, quantityToDelete: number) => {
-    return await ProductModel.findByIdAndUpdate({_id: id},{$inc : {quantity: (quantityToDelete * -1)}})
-};
+
+
 const getTop5Products =  async () => {
-    const Top5Products = await ProductModel.find({})
-        .sort({ clickCount: -1 })
-        .limit(5)
-        .exec();
-    return Top5Products
+    const data = foo
+    return data 
+    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories`)
+    // return res.data
 };
 
-export default {getProductByID, increaseClickCount, getProductQuantity, deleteQuantity, getTop5Products }
+export default {getProductByID, getTop5Products }

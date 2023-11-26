@@ -47,6 +47,7 @@ async function deleteProductFromCart(pid: string):Promise<Cart> {
 }
 
 
+
 async function deleteCart():Promise<Cart> {
     const response = await fetch(`/api/users/cart`, {method: "DELETE"});
     return await handleApiRes(response);

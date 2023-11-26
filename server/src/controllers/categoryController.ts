@@ -28,14 +28,9 @@ const get5Categories = asyncHandler(async (_req, res) => {
 // @desc    Increase clicked count
 // @route   PATCH /api/category/:name/click
 // @access  Public
-const increaseClickedCount = asyncHandler(async (req, res) => {
-  const category = await categoryService.increaseClickCount(req);
-  res.json(category);
-});
 
 export default {
   getCategories,
   getCategoryProducts,
   get5Categories,
-  increaseClickedCount,
 };

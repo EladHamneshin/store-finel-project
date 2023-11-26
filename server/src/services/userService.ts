@@ -7,25 +7,28 @@ import { Types } from "mongoose";
 import cartDal from "../dal/cartDal.js";
 
 const addUser = async (user: User) => {
+	
 	const { email, password } = user;
 	const isUserRegistered  = await userDal.getUserByEmail(email);
 
-	if (isUserRegistered) 
+	if (isUserRegistered.length !== 0) 
 		throw new RequestError('Email already exists', STATUS_CODES.BAD_REQUEST);
 
 	const hashedPassword = await hashPassword(password);
-	const newUser = await userDal.addUser({ email, password: hashedPassword });
-	console.log(newUser._id);
+	user.password = hashedPassword
+	const newUser = await userDal.addUser({...user});
+	// console.log(newUser._id);
 	
-	const newCart = await cartDal.createCart( newUser._id)
+	// const newCart = await cartDal.createCart( newUser._id)
+
 	return newUser;
 }
 
-const getUser = async (userId: Types.ObjectId) => {
+const getUser = async (userId: string) => {
 	const user = await userDal.getUser(userId);
-	if(!user)
-		throw new RequestError('User not found', STATUS_CODES.NOT_FOUND);
-	return user;
+	if(user) return user;
+	throw new RequestError('User not found', STATUS_CODES.NOT_FOUND);
+	
 }
 
 export default { addUser, getUser };

@@ -3,8 +3,9 @@ import asyncHandler from "express-async-handler";
 import STATUS_CODES from "../utils/StatusCodes.js";
 import RequestError from "../types/errors/RequestError.js";
 import generateToken from "../utils/jwtUtils.js";
-import  authService from "../services/authService.js";
+import authService from "../services/authService.js";
 import userValidation from "../utils/validations/userValidation.js";
+import User from "../types/User.js";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth/login
@@ -14,16 +15,16 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     if (error)
         throw new RequestError(error.message, STATUS_CODES.BAD_REQUEST);
 
-    if (req.cookies.jwt) 
+    if (req.cookies.jwt)
         throw new RequestError('User already logged in', STATUS_CODES.BAD_REQUEST);
-    
-    const { email, password } = req.body;
-    const user = await authService.authUser(email, password);
 
-    generateToken(res, user._id);
+    const { email, password } = req.body;
+    console.log(email, password);
+    const user = await authService.authUser(email, password);
+    if (user.user_id) generateToken(res, user.user_id);
 
     res.json({
-        _id: user._id,
+        id: user.user_id,
         email: user.email,
     });
 });
@@ -33,10 +34,10 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
 // @access  Public
 const logoutUser = (_req: Request, res: Response) => {
     res.cookie('jwt', '', {
-      httpOnly: true,
-      expires: new Date(0),
+        httpOnly: true,
+        expires: new Date(0),
     });
     res.status(STATUS_CODES.OK).json({ message: 'Logged out successfully' });
-  };
+};
 
 export default { loginUser, logoutUser };

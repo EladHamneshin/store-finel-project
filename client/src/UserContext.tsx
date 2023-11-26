@@ -37,6 +37,7 @@ const UserContextProvider: React.FC<UserContextProviderProps> = (props) => {
     };
 
     const login = async (email: string, password: string) => {
+        console.log(email);
         const loggedUser = await usersAPI.loginUser(email, password);
         localStorage.setItem('userInfo', JSON.stringify(loggedUser));
         setUserInfo(loggedUser);

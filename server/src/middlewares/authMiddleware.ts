@@ -13,7 +13,7 @@ const authHandler = asyncHandler( async (req, _res, next) => {
     console.error('JWT_SECRET not defined');
     process.exit(1);
   }
-
+``
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = (decoded as JwtPayload).userId;

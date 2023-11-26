@@ -48,6 +48,7 @@ const AppBar = () => {
   const { userInfo, logout, mode,  changeMode, productsInCart, setProductsInCart } = context
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    navigate('/Account')
     setAnchorElUser(event.currentTarget);
   };
 

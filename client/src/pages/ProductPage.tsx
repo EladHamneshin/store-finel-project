@@ -20,6 +20,7 @@ import CartItem from "../types/CartItem.ts";
 import { toastError, toastSuccess } from "../utils/toastUtils.ts";
 import { UserContext } from "../UserContext.tsx";
 import Rating from "../components/Rating.tsx";
+
 // import DialogReview from "../mui/DialogReview.tsx";
 import ProductReviews from "../components/ProductReviews .tsx";
 import DialogReview from "../mui/DialogReview.tsx";
@@ -36,17 +37,48 @@ const reviews = [
 
 const ProductPage = () => {
     const navigate = useNavigate();
-    const [product, setProduct] = useState<null | Product>(null);
+    const [product, setProduct] = useState<null | Product | any>(null);
     const [quantity, setQuantity] = useState<number>(1);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context;
     const { pid } = useParams();
-
+​
     //handle get product by id from server
-    const getProduct = async (pid: string) => {
+    const getProductAndReview = async (pid: string) => {
         try {
-            const product = await productsAPI.getProduct(pid!);
+            // const data = await productsAPI.getProductAndreview(pid!);
+            
+            const product = {
+                id: "a86eaf9c-9ebe-4393-a52f-82c159cc1afe",
+                name: "Product 1",
+                salePrice: 29.99,
+                quantity: 10,
+                description: "Description for Product 1.",
+                category: "Category A",
+                discountPercentage: 10,
+                rating: 4.5,
+                click: 100,
+                coordinate: {
+                    longitude1: 40.7128,
+                    longitude2: -74.0060,
+                    longitude3: 45.5122,
+                    latitude1: -74.0060,
+                    latitude2: 40.7128,
+                    latitude3: -122.6795,
+                },
+                image: {
+                    url: "https://example.com/product1.jpg",
+                    alt: "Product 1 Image",
+                },
+                tags: {
+                    tag1: "Tag A",
+                    tag2: "Tag B",
+                },
+            }
+            // console.log("hi from productpage, product:", product);
             setProduct(product);
+            // console.log("hi from productPage, product:", product);
+​
         } catch (error) {
             console.error("Failed to fetch");
         }
@@ -54,9 +86,8 @@ const ProductPage = () => {
 
     //get the product after the page is rendered
     useEffect(() => {
-        getProduct(pid!);
+        getProductAndReview('1');
     }, []);
-
     //handle decrease quantity by clicking on the minus button (when quantity shouldnt be lower then 1)
     const decrementQuantity = () => {
         if (quantity > 1) {
@@ -71,16 +102,23 @@ const ProductPage = () => {
             return;
         }
         if (userInfo) {
+            const userid = userInfo.id
+            console.log("hi from productpage", product);
+
             try {
                 const cart = await cartsAPI.addToCart(
+
                     product!._id,
                     quantity.toString()
                 );
+
                 toastSuccess("Added to cart!");
                 setQuantity(1);
-                setProductsInCart(cart.items.length);
+                // setProductsInCart(cart.items.length);
             } catch (error) {
+
                 console.error("failed to add to cart");
+
                 toastError("Failed to add");
             }
         } else {
@@ -94,7 +132,7 @@ const ProductPage = () => {
             setQuantity(1);
         }
     };
-
+​
     //Navigate the user to choose another product to compare them
     const handleCompareProducts = () => {
         navigate(`/category/${product!.category}`, { state: product });
@@ -132,7 +170,9 @@ const ProductPage = () => {
                         alignItems="center"
                     >
                         <img
-                            src={product?.imageUrl}
+
+                            src={product?.image.url}
+
                             alt={product?.name}
                             height={200}
                         />
@@ -142,7 +182,9 @@ const ProductPage = () => {
                         <Typography variant="body1">
                             {product?.description}
                         </Typography>
-                        <Typography variant="h6">${product?.price}</Typography>
+
+                        <Typography variant="h6">${product?.salePrice}</Typography>
+
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <IconButton onClick={decrementQuantity}>
                                 <RemoveCircleRoundedIcon></RemoveCircleRoundedIcon>
@@ -183,7 +225,9 @@ const ProductPage = () => {
                                     alignItems: "center",
                                 }}
                             >
-                                <DialogReview pid={pid}/>
+
+                                <DialogReview pid={pid} />
+
                                 <div style={{ margin: "20px" }}>
                                     <Rating />
                                 </div>
@@ -193,9 +237,11 @@ const ProductPage = () => {
                 </Grid>
             </Paper>
             <Paper style={{ margin: "10px 50px", height: 'auto', maxHeight: 500, overflowY: 'auto', padding: '20px' }}>
+
     <ProductReviews reviews={reviews} />
     <br />
 </Paper>
+
 
             <br />
             <Paper

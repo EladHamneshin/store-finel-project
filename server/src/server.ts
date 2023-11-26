@@ -9,27 +9,40 @@ import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productsRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import pg from "pg";
+const { Pool } = pg;
+import { config } from 'dotenv';
+config();
+
+
+
 
 const app = express();
 
 // APP CONFIGS
-dotenv.config();
+// console.log(process.env);
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api/users', userRoutes);
-app.use('/api/users/cart', cartRoutes);
+app.use('/api', cartRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/category', categoryRoutes);
+app.use('/api', categoryRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT ;
 
-await connectDB();
+const port = 5000 ;
 
-app.listen(port, () => {
+//await connectDB();
+
+
+app.listen(port, async () => {
+  const pool = new Pool()
+  const res = await pool.connect()
+  res.release()
   console.log(`server is running at port ${port}`);
+  console.log(`Database connection test completed successfully`);
 });
