@@ -9,9 +9,5 @@ const cartRouter = express.Router();
 
 cartRouter.get('/cart', cartController.getCart);
 cartRouter.post('/cart', cartController.updateCart);
-cartRouter.post('/checkout', cartController.sendCart);
-cartRouter.delete('/cart', cartController.deleteCart);
-cartRouter.delete('/:pid', cartController.deleteCartItem);
-cartRouter.patch('/cart ', cartController.patchAmount);
 
 export default cartRouter;

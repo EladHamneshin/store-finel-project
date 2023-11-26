@@ -22,5 +22,10 @@ const getTop5Products = async (_req :Request, res:Response) => {
     console.log('controll');
     res.json(top5Products);
   }
+const getTop5ForCategory = async (_req :Request, res:Response) => {  
+    const top5Products = await productsService.getTop5Products();
+    console.log('controll');
+    res.json(top5Products);
+  }
 
-export default { getProductByID, getTop5Products}
+export default { getProductByID, getTop5Products,getTop5ForCategory}

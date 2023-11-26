@@ -1,13 +1,11 @@
 import { Types } from 'mongoose';
 import cartModel from '../models/cartModel.js';
-import productModel from '../models/productModel.js';
 import Cart from '../types/Cart.js';
 import axios from 'axios';
 import pg from "pg";
 const { Pool } = pg;
 
 
-const b = productModel.find();
 
 const createCart = async (userId: string) => {
   return await cartModel.create({ user: userId });
@@ -54,11 +52,7 @@ const updateAmount = async (userId: string, product_id: string, amount: number) 
     { new: true }
   );
 };
-const sendToOms = async (cart: Cart) => {
-  const res = await axios.post('localhost:3000/api/cart', cart)
-  console.log('hi')
-  return res
-};
+
 
 const deleteCart = async (userId: string) => {
   return await cartModel.findOneAndUpdate(
@@ -111,5 +105,4 @@ export default {
   deleteCartItem,
   incAmount,
   decAmount,
-  sendToOms
 };

@@ -1,4 +1,5 @@
 import axios from "axios";
+import categorys from "../data.js";
 
 //OMS
 const getCategories = async () => {
@@ -8,9 +9,11 @@ const getCategories = async () => {
 
 //OMS
 const getCategoryProducts = async (name: string) => {
-    const res = await axios.get('https://655c7c6a25b76d9884fd5cd1.mockapi.io/product')
-    console.log(await res.data)
-    return res.data
+    // const res = await axios.get(`https:/product${name}`)
+    // console.log(await res.data)
+    // return res.data
+    const data = categorys
+    return data
 };
 
 //BANNERS

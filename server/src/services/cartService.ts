@@ -52,10 +52,6 @@ const updateCart = async (userId: string, itemId: string, quantity:number) => {
 };
 
 
-const sendToOms = async ( cart: Cart) => {
-  const omsCart = await cartDal.sendToOms(cart);
-  return omsCart;
-};
 
 
 const deleteCart = async (userId: string) => {
@@ -79,4 +75,4 @@ const patchAmount = async (
   return await cartDal.decAmount(userId, metaDate.pid);
 };
 
-export default { getCart,updateAmount, updateCart, deleteCart, deleteCartItem, patchAmount,sendToOms };
+export default { getCart,updateAmount, updateCart, deleteCart, deleteCartItem, patchAmount };
