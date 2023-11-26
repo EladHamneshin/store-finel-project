@@ -4,8 +4,8 @@ import RequestError from "../types/errors/RequestError.js";
 import STATUS_CODES from "../utils/StatusCodes.js";
 
 
-const getProductByID  = async (ID:string) => {
-    const product = productsDal.getProductByID(ID)
+const getProductAndReviewByID  = async (ID:string) => {
+    const product = productsDal.getProductAndReviewByID(ID)
     if(!product)
         throw new RequestError('product not found', STATUS_CODES.BAD_REQUEST)
 
@@ -24,4 +24,4 @@ const getTop5Products = async () => {
     return Top5Products;
 }
 
-export default {getProductByID, getTop5Products }
+export default {getProductAndReviewByID, getTop5Products }

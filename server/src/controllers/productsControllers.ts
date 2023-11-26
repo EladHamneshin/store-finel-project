@@ -10,9 +10,9 @@ import { Types } from "mongoose";
 // @access  Public
 
 //OMS
-const getProductByID = asyncHandler(async (req: Request, res: Response) => {
+const getProductAndReviewByID = asyncHandler(async (req: Request, res: Response) => {
     const {pid} = req.params
-    const product = await productsService.getProductByID(pid)
+    const product = await productsService.getProductAndReviewByID(pid)
     res.json(product)  
 })
 
@@ -25,4 +25,4 @@ const getTop5Products = async (_req :Request, res:Response) => {
   const reviews = asyncHandler(async (req: Request, res: Response) => {
     console.log('this is review',req.body)} )
 
-export default { getProductByID, getTop5Products,reviews}
+export default { getProductAndReviewByID, getTop5Products,reviews}
