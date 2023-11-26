@@ -20,12 +20,12 @@ const ComparePage = () => {
         };
         if (userInfo) {
             try {
-                const cart = await cartsAPI.addToCart(product._id, '1');
+                const cart = await cartsAPI.addToCart(userInfo.id ,product.id, '1');
                 setProductsInCart(cart.items.length);
                 toastSuccess('Added to cart!');
             } catch (error) {
                 console.error('Failed to fetch', error);
-                toastError('Failed to add to cart');
+                toastError('Failed to add to cart, from ComparePage');
             }
         } else {
             const productToAdd: CartItem = { product_id: product, quantity: 1 };

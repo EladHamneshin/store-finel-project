@@ -30,7 +30,7 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
                     cartLocalStorageUtils.incQuantityOfProduct(productId);
                 }
                 setCartQuantity(cartQuantity + 1);
-                setTotalAmount(totalAmount + product.price);
+                setTotalAmount(totalAmount + product.salePrice);
 
                 updateCartItemQuantity(productId, cartQuantity + 1);
             } catch (error) {
@@ -50,7 +50,7 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
                     cartLocalStorageUtils.decQuantityOfProduct(productId);
                 }
                 setCartQuantity(cartQuantity - 1);
-                setTotalAmount(totalAmount - product.price);
+                setTotalAmount(totalAmount - product.salePrice);
 
                 updateCartItemQuantity(productId, cartQuantity - 1);
             } catch (error) {
@@ -69,25 +69,25 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
         <Card sx={{margin:2, padding:1}}>
         <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
           <Box>
-            <img src={product.imageUrl} alt={product.name} style={{ width: '100px' }} />
+            {/* <img src={product.image.url} alt={product.name} style={{ width: '100px' }} /> */}
           </Box>
   
           <Box flexGrow={1}>
             <CardContent>
               <Typography variant="h5">{product.name}</Typography>
               <Typography variant="body1">{product.description}</Typography>
-              <Typography variant="body2">{`Price: ${product.price}`}</Typography>
+              <Typography variant="body2">{`Price: ${product.salePrice}`}</Typography>
             </CardContent>
           </Box>
   
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <IconButton onClick={() => increaseQuantity(product._id)}>+</IconButton>
+            <IconButton onClick={() => increaseQuantity(product.id)}>+</IconButton>
             <Typography variant="body1">{cartQuantity}</Typography>
-            <IconButton onClick={() => decreaseQuantity(product._id)}>-</IconButton>
+            <IconButton onClick={() => decreaseQuantity(product.id)}>-</IconButton>
           </Box>
   
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <IconButton onClick={() => deleteFromCart(product._id)}>
+            <IconButton onClick={() => deleteFromCart(product.id)}>
               <DeleteForeverIcon />
             </IconButton>
           </Box>

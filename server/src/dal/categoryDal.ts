@@ -9,7 +9,7 @@ const getCategories = async () => {
 //OMS
 const getCategoryProducts = async (name: string) => {
     const res = await axios.get('https://655c7c6a25b76d9884fd5cd1.mockapi.io/product')
-    console.log(await res.data)
+    // console.log(await res.data)
     return res.data
 };
 
