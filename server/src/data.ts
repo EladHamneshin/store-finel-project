@@ -3,7 +3,7 @@ import Category from "./types/Category.js";
 
 const foo:Product[] = [
   {
-    id: "1",
+    id: "a86eaf9c-9ebe-4393-a52f-82c140cc1afe",
     name: "Product 1",
     salePrice: 29.99,
     quantity: 10,
@@ -31,7 +31,7 @@ const foo:Product[] = [
   },
   
   {
-    id: "2",
+    id: "a86eaf9c-9ebe-4393-a52f-82c141cc1afe",
     name: "Product 2",
     salePrice: 49.99,
     quantity: 15,
@@ -58,7 +58,7 @@ const foo:Product[] = [
     },
   },
     {
-      id: "6",
+      id: "a86eaf9c-9ebe-4393-a52f-82c142cc1afe",
       name: "Product 6",
       salePrice: 79.99,
       quantity: 20,
@@ -85,7 +85,7 @@ const foo:Product[] = [
       },
     },
     {
-      id: "7",
+      id: "a86eaf9c-9ebe-4393-a52f-82c143cc1afe",
       name: "Product 7",
       salePrice: 99.99,
       quantity: 12,
@@ -112,7 +112,7 @@ const foo:Product[] = [
       },
     },
     {
-      id: "5",
+      id: "a86eaf9c-9ebe-4393-a52f-82c149cc1afe",
       name: "Product 5",
       salePrice: 99.99,
       quantity: 12,

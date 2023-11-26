@@ -3,10 +3,11 @@ import Category from '../types/Category';
 import { useEffect, useState } from 'react';
 import categoriesAPI from '../api/categoriesAPI';
 import CategoryCard from './CategoryCard';
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default function Top5Categories() {
   const [top5Categories, setTop5Categories] = useState<Category[]>([]);
-
   useEffect(() => {
     const fetchTopCategories = async () => {
       try {
@@ -32,7 +33,7 @@ export default function Top5Categories() {
           alignItems="center"
         >
           {top5Categories.map((category) => (
-            <Grid item xs key={category._id}>
+            <Grid item xs key={uuidv4()}>
               <CategoryCard category={category} />
             </Grid>
           ))}

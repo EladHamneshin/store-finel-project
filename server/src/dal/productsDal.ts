@@ -7,6 +7,18 @@ const getProductByID = async (id:string) => {
     const data = foo
     // foo.filter((item:Product) => item.id===String(id))
     return data
+
+import pg from "pg";
+const { Pool } = pg;
+
+
+const getProductAndReviewByID = async (id:string) => {
+    const data = foo.filter((item:prod) => item.id===String(id))
+    const query = 'SELECT * FROM users WHERE user_id ::text = $1';
+    const values = [id];
+    const res = await sendQueryToDatabase(query, values)
+    return [data, res]
+
     // const res = await axios.get(`https://dummyjson.com/products${id}`)
     // console.log(await res.data)
     // return res.data
@@ -29,4 +41,16 @@ const getTop5ProductsCategoty =  async () => {
     // return res.data
 };
 
-export default {getProductByID, getTop5Products,getTop5ProductsCategoty }
+
+const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
+    const pool = new Pool()
+    const res = await pool.connect()
+    // console.log("hi from productsDal, sendQueryToDatabase:", values);
+    const data = await res.query(query, values).catch(err => console.log(err));
+    // console.log("hi from productsDal, sendQueryToDatabase:", data);
+    res.release()
+    return data
+}
+
+export default {getProductAndReviewByID, getTop5Products ,getProductByID,getTop5ProductsCategoty}
+

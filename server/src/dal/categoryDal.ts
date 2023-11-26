@@ -14,6 +14,7 @@ const getCategoryProducts = async (name: string) => {
     // return res.data
     const data = categorys
     return data
+
 };
 
 //BANNERS

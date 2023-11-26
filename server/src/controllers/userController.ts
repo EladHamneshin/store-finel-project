@@ -25,10 +25,10 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const logoutUser = (_req: Request, res: Response) => {
-  // res.cookie('jwt', '', {
-  //     httpOnly: true,
-  //     expires: new Date(0),
-  // });
+  res.cookie('jwt', '', {
+      httpOnly: true,
+      expires: new Date(0),
+  });
   res.status(STATUS_CODES.OK).json({ message: 'Logged out successfully' });
 };
 
@@ -44,4 +44,4 @@ const getUser = asyncHandler(async (req, res) => {
   // });
 });
 
-export default { registerUser, getUser };
+export default { registerUser, getUser, logoutUser};

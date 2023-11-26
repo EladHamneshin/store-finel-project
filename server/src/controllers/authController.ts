@@ -6,6 +6,7 @@ import generateToken from "../utils/jwtUtils.js";
 import authService from "../services/authService.js";
 import userValidation from "../utils/validations/userValidation.js";
 import User from "../types/User.js";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth/login
@@ -15,8 +16,22 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     if (error)
         throw new RequestError(error.message, STATUS_CODES.BAD_REQUEST);
 
-    if (req.cookies.jwt)
-        throw new RequestError('User already logged in', STATUS_CODES.BAD_REQUEST);
+    if (req.cookies.jwt){
+        const token = req.cookies.jwt
+    if(!process.env.JWT_SECRET){
+        console.error('JWT_SECRET not defined');
+        process.exit(1);
+      }
+    
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // req.userId = (decoded as JwtPayload).userId;
+        // throw new RequestError('User already logged in', STATUS_CODES.BAD_REQUEST);
+      } catch (error) {
+        console.error(error);
+        throw new RequestError('Not authorized, token failed', STATUS_CODES.UNAUTHORIZED);
+      }}
+      
 
     const { email, password } = req.body;
     console.log(email, password);
