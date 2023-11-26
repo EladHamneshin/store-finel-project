@@ -4,13 +4,12 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import { useNavigate, useParams } from "react-router-dom";
 import productsAPI from "../api/productsAPI";
-import Product from "../types/Product.ts";
 import StoreMap from "../components/StoreMap.tsx";
 import cartsAPI from "../api/cartsAPI.ts";
 import * as localstorage from "../utils/cartLocalStorageUtils.ts";
-import CartItem from "../types/CartItem.ts";
 import { toastError, toastSuccess } from "../utils/toastUtils.ts";
 import { UserContext } from "../UserContext.tsx";
+import { Product } from "../types/Product.ts";
 
 
 
