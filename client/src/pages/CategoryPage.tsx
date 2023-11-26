@@ -10,7 +10,7 @@ import Filter from '../components/Filter';
 const CategoryPage = () => {
   const { cname } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
-
+  
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const location = useLocation();
   // if location.state is not undefined, then we are in compare mode and it stores the product we want to compare to
@@ -42,16 +42,16 @@ const CategoryPage = () => {
       <Filter products={products} setProducts={setFilteredProducts} />
       <ProductCardsContainer>
         {filteredProducts.map((product) => {
-          if (isCompareMode.current && location.state._id === product._id)
+          if (isCompareMode.current && location.state._id === product.id)
             return null;
 
           return (
             <ProductCard
-              key={product._id}
+              key={product.id}
               product={product}
               navigateToOnClick={
                 isCompareMode.current
-                  ? `/compare/${location.state._id}/${product._id}`
+                  ? `/compare/${location.state._id}/${product.id}`
                   : undefined
               }
             />
