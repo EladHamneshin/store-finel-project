@@ -12,6 +12,7 @@ async function getCategories(): Promise<Category[]> {
 }
 
 async function getTop5categories():Promise<Category[]> {
+
     const response = await fetch(`/api/topFiveCategories`);
     return await handleApiRes(response);
 }

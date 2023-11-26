@@ -4,6 +4,7 @@ import handleApiRes from "./apiResHandler";
 // dotenv.config();
 //no need for change 
 
+
 async function getCart(userid: string): Promise<Cart> {
     const response = await fetch(`/api/users/cart`, {
         method: "POST",
@@ -59,6 +60,7 @@ async function deleteProductFromCart(pid: string):Promise<Cart> {
 }
 
 
+
 //external
 async function sendCartToOms(cart:object):Promise<Cart> {
     const response =  await fetch(`/api/checkout`, {
@@ -73,6 +75,7 @@ async function sendCartToOms(cart:object):Promise<Cart> {
 
     return await handleApiRes(response);
 }
+
 
 
 

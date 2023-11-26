@@ -8,9 +8,9 @@ import CartItem from '../types/CartItem';
 import { toastError, toastSuccess } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
 import Paypal from '../components/Paypal';
+
 import { v4 as uuidv4 } from 'uuid';
 import sendCartToOms from "../api/cartsAPI";
-
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);

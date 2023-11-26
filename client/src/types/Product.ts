@@ -28,6 +28,8 @@ tags: {
   tag1: string
  }
 
+}
+
 
 
 interface Category {
