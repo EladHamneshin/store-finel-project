@@ -1,9 +1,11 @@
 import Cart from "../types/Cart";
 import handleApiRes from "./apiResHandler";
-
+// import dotenv from "dotenv";
+// dotenv.config();
+//no need for change 
 
 async function getCart(): Promise<Cart> {
-    const response = await fetch('/api/users/cart');
+    const response = await fetch(`/api/users/cart`);
     return await handleApiRes(response);
 }
 
@@ -44,21 +46,6 @@ async function deleteProductFromCart(pid: string):Promise<Cart> {
     return data
 }
 
-//external
-async function sendCartToOms(cart:object):Promise<Cart> {
-    const response =  await fetch(`/api/checkout`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            cart: cart,
-        }),
-    });
-
-    return await handleApiRes(response);
-}
-
 
 
 async function deleteCart():Promise<Cart> {
@@ -66,4 +53,4 @@ async function deleteCart():Promise<Cart> {
     return await handleApiRes(response);
 }
 
-export default { getCart, addToCart, updateQuantity, deleteProductFromCart, deleteCart,sendCartToOms }
+export default { getCart, addToCart, updateQuantity, deleteProductFromCart, deleteCart }
