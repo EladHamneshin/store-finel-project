@@ -34,9 +34,10 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
     const { email, password } = req.body;
     console.log(email, password);
     const user = await authService.authUser(email, password);
-    if (user.user_id) generateToken(res, user.user_id);
+    console.log("i am user:", user);
+    if (user.userid) generateToken(res, user.userid);
     res.json({
-        id: user.user_id,
+        id: user.userid,
         email: user.email,
     });
 });

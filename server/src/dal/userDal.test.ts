@@ -25,7 +25,7 @@ describe("User Data Access Layer Tests", () => {
 
     const userObj = users[0];
     expect(userObj.email).toEqual(email);
-    createdUserId = userObj.user_id;
+    createdUserId = userObj.userid;
   });
 
   test("should retrieve user by ID from the database", async () => {
@@ -36,7 +36,7 @@ describe("User Data Access Layer Tests", () => {
     expect(user.rows.length).toBeGreaterThan(0);
 
     const userObj = user.rows[0];
-    expect(userObj.user_id).toEqual(userId);
+    expect(userObj.userid).toEqual(userId);
   });
 
 

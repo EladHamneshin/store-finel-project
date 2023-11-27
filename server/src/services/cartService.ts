@@ -25,9 +25,9 @@ const updateAmount = async (userId: string, itemId: string, quantity:number) => 
     throw new RequestError('Cart not found', STATUS_CODES.NO_CONTENT);
   return updatedCart;
 };
-const updateCart = async (userId: string, product_id: string, quantity:number) => {
-  console.log("hi from service updateCart:", userId, product_id, quantity);
-  const cartRes = await cartDal.updateCart(userId, product_id, quantity);
+const updateCart = async (userId: string, productid: string, quantity:number) => {
+  console.log("hi from service updateCart:", userId, productid, quantity);
+  const cartRes = await cartDal.updateCart(userId, productid, quantity);
   if (cartRes.length === 0)
     throw new RequestError(
       'Cart update failed',

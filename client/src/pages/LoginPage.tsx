@@ -11,7 +11,7 @@ const sendCartToServer = () => {
     if (localStorage.isCartEmpty()) return;
     try {
         const cart = localStorage.getCart();
-        cart.map((item) => { cartsAPI.addToCart(item.product_id.id, item.quantity.toString(),)})
+        cart.map((item) => { cartsAPI.addToCart(item.productId, item.quantity.toString(), item.name, item.description, item.salePrice, item.discount, item.image.url)})
         localStorage.clearCart();
     } catch (err) {
         console.log(err);

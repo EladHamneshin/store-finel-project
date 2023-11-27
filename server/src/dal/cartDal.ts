@@ -10,7 +10,7 @@ const createCart = async (userId: string) => {
   // return await cartModel.create({ user: userId });
 };
 const getCart = async (userId: string) => {
-  const query = 'SELECT * FROM cartitems WHERE user_id ::text = $1';
+  const query = 'SELECT * FROM cartitems WHERE userid ::text = $1';
   const values = [userId];
   const res = await sendQueryToDatabase(query, values)
   // console.log("hi from gatcart in Dal:", userId);
@@ -21,24 +21,24 @@ const getCart = async (userId: string) => {
   return array;
 };
 const getCartProducts = async (userId: string, itemId: string):Promise<Product[]> => {
-  const query = 'SELECT * FROM cartitems WHERE user_id ::text = $1 AND product_id = $2';
+  const query = 'SELECT * FROM cartitems WHERE userid ::text = $1 AND productid = $2';
   const values = [userId, itemId];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
   console.log('Query result from getCartProducts:', rows);
   return rows;
 };
-const updateCart = async (userId: string, product_id: string, quantity: number) => {
+const updateCart = async (userId: string, productid: string, quantity: number) => {
   // console.log("hi from dal updatecart");
   const query = `INSERT
   INTO cartitems
-  (user_id, product_id, quantity)
+  (userid, productid, quantity)
   VALUES
   ($1, $2, $3)
-  ON CONFLICT (user_id, product_id) DO UPDATE
+  ON CONFLICT (userid, productid) DO UPDATE
   SET quantity = cartitems.quantity + $3
   RETURNING *`
-  const values = [userId, product_id, quantity];
+  const values = [userId, productid, quantity];
   console.log("values:", values);
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
@@ -48,16 +48,16 @@ const updateCart = async (userId: string, product_id: string, quantity: number) 
   console.log("hi from cartDal, array.items.length:", array[0].items.length);
   return array;
 };
-const updateAmount = async (userId: string, product_id: string, quantity: number) => {
+const updateAmount = async (userId: string, productid: string, quantity: number) => {
   const query = `INSERT
   INTO cartitems
-  (user_id, product_id, quantity)
+  (userid, productid, quantity)
   VALUES
   ($1, $2, $3)
-  ON CONFLICT (user_id, product_id) DO UPDATE
+  ON CONFLICT (userid, productid) DO UPDATE
   SET quantity = cartitems.quantity + $3
   RETURNING *`
-  const values = [userId, product_id, quantity];
+  const values = [userId, productid, quantity];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
   console.log('Query result from updateAmount:', rows);
@@ -70,41 +70,54 @@ const sendToOms = async (cart: Cart) => {
 }
 
 const deleteCart = async (userId: string) => {
-  console.log("hello from deletecart");
-  const res = await getCart(userId)
-  if (res.length === 0) return res
+  const query = `DELETE FROM cartitems
+                WHERE userid ::text = $1
+                RETURNING *`
+  const values = [userId];
+  const res = await sendQueryToDatabase(query, values)
+  const { rowCount } = res
+  console.log('Query result from updateAmount:', rowCount);
+  return rowCount;
 };
+
 const deleteCartItem = async (userId: string, productId: string) => {
-  //need to add quarry
-   
+  const query = `DELETE FROM cartitems
+                WHERE userid ::text = $1 AND productid = $2
+                RETURNING *;`
+  const values = [userId, productId];
+  const res = await sendQueryToDatabase(query, values)
+  const { rows } = res
+  console.log('Query result from updateAmount:', rows);
+  return rows;
+
 };
-const incAmount = async (userId: string, product_id: string) => {
+const incAmount = async (userId: string, productid: string) => {
   console.log("hello from incAmount");
   const query = `INSERT
   INTO cartitems
-  (user_id, product_id, quantity)
+  (userid, productid)
   VALUES
-  ($1, $2, $3)
-  ON CONFLICT (user_id, product_id) DO UPDATE
+  ($1, $2)
+  ON CONFLICT (userid, productid) DO UPDATE
   SET quantity = cartitems.quantity + 1
   RETURNING *`
-  const values = [userId, product_id];
+  const values = [userId, productid];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
   console.log('Query result:', rows);
   return rows;
 };
-const decAmount = async (userId: string, product_id: string) => {
+const decAmount = async (userId: string, productid: string) => {
   console.log("hello from decAmount");
   const query = `INSERT
   INTO cartitems
-  (user_id, product_id, quantity)
+  (userid, productid)
   VALUES
-  ($1, $2, $3)
-  ON CONFLICT (user_id, product_id) DO UPDATE
+  ($1, $2)
+  ON CONFLICT (userid, productid) DO UPDATE
   SET quantity = cartitems.quantity - 1
   RETURNING *`
-  const values = [userId, product_id];
+  const values = [userId, productid];
   const res = await sendQueryToDatabase(query, values)
   const { rows } = res
   console.log('Query result:', rows);

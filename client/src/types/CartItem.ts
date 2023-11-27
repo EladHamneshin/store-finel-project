@@ -1,8 +1,14 @@
-import {Product} from "./Product.js";
-
 interface CartItem {
-  product_id: Product;
-  quantity: number;
+    productid: string;
+    name: string;
+    description: string;
+    salePrice: number;
+    quantity: number;
+    discount: number;
+    image: {
+        url: string
+    };
 }
+
 
 export default CartItem;

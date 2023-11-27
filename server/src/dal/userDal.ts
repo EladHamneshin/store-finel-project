@@ -16,7 +16,7 @@ const addUser = async (user: User) => {
     return rowCount;
 }
 const getUser = async (userId: string) => {
-    const query = 'SELECT * FROM users WHERE user_id ::text = $1';
+    const query = 'SELECT * FROM users WHERE userid ::text = $1';
     const values = [userId];
     const res = await sendQueryToDatabase(query, values)
     return res;

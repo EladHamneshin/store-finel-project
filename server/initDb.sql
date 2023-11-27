@@ -16,49 +16,53 @@ CREATE DATABASE fullstack;
 
 CREATE TABLE
     IF NOT EXISTS users(
-        user_id uuid PRIMARY KEY DEFAULT gen_random_uuid (),
+        userId uuid PRIMARY KEY DEFAULT gen_random_uuid (),
         name TEXT,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
-        created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+        createdAt TIMESTAMPTZ DEFAULT NOW() NOT NULL,
         contactNumber NUMERIC,
         payment TEXT,
         address JSONB DEFAULT '{"country": "", "city": "", "street":"", "zip_code":""}'
     );
 
 CREATE TABLE IF NOT EXISTS cartitems (
-    user_id UUID,
-    product_id UUID PRIMARY KEY,
+    userId UUID,
+    productId UUID PRIMARY KEY,
     quantity NUMERIC,
     price NUMERIC,
-    UNIQUE(product_id, user_id),
-    CONSTRAINT user_id
-    FOREIGN KEY(user_id) 
-	REFERENCES users(user_id)
+    name TEXT,
+    description TEXT,
+    discount NUMERIC,
+    image TEXT,
+    UNIQUE(productId, userId),
+    CONSTRAINT userId
+    FOREIGN KEY(userId) 
+	REFERENCES users(userId)
 );
 
 
 
 
 CREATE TABLE IF NOT EXISTS reviews(
-    user_id UUID NOT NULL, 
-    product_id UUID NOT NULL, 
+    userId UUID NOT NULL, 
+    productId UUID NOT NULL, 
     author TEXT,
     title TEXT, 
     body TEXT, 
     rating NUMERIC, 
     thumbUp NUMERIC, 
     thumbDown NUMERIC,
-    CONSTRAINT user_id FOREIGN KEY(user_id) REFERENCES users(user_id),
-    CONSTRAINT product_id FOREIGN KEY(product_id) REFERENCES cartitems(product_id)
+    CONSTRAINT userId FOREIGN KEY(userId) REFERENCES users(userId),
+    CONSTRAINT productId FOREIGN KEY(productId) REFERENCES cartitems(productId)
 );
 
 DROP Table users ;
-DROP Table cartitems ;
-DROP Table reviews ;
+DROP Table cartitems;
+DROP Table reviews;
 
 INSERT INTO
-    cartitems (product_id, user_id, quantity)
+    cartitems (productId, userId, quantity)
 VALUES (
         'dbdd2ff6-c240-4e2a-b1a2-51be8724f5ca',
         'dbdd2ff6-c240-4e2a-b1a2-51be8724f0ca',
@@ -121,11 +125,11 @@ add = jsonb_set(
 
 SELECT add ->> 'country' AS Feeling FROM users;
 
-SELECT address FROM users 
+SELECT address FROM users;
 
-CREATE TABLE cartitmes 
+CREATE TABLE cartitmes;
 
 
-SELECT * FROM users 
+SELECT * FROM users; 
 
-SELECT * FROM cartitems 
+SELECT * FROM cartitems;

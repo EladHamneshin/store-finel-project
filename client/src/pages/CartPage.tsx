@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
+    const [emptyCart, setEmptyCart] = useState(true);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context
     const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -20,10 +21,8 @@ const CartPage = () => {
         const fetchCart = async () => {
             try {
                 if (userInfo) {
-                    console.log("hi from cartpage", userInfo);
-                    const cartData = await cartsAPI.getCart(userInfo.id);
-                    console.log("hi from cartData in cartpage:", cartData);
-                    setCartItems(cartData[0].items);
+                    const cartData = await cartsAPI.getCart();
+                    setCartItems(cartData[0].items);                    
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();
                     if (localCart) {
@@ -39,22 +38,26 @@ const CartPage = () => {
             }
         };
         fetchCart();
-    }, [userInfo]);
+    }, [userInfo, emptyCart]);
     useEffect(() => {
         if (cartItems.length !== 0) {
             const total = cartItems.reduce((sum, item) => {
-                return sum + item.quantity * item.product_id.salePrice;
+                return sum + item.quantity * item.salePrice;
             }, 0);
             setTotalAmount(total);
         }
     }, [cartItems]);
+
+    const removeCart = async () => {
+        cartsAPI.deleteCart(); 
+        setCartItems([])
+    }
+
     const removeFromCart = async (productId: string) => {
         try {
             if (userInfo) {
-                console.log("hi from cartPage, removeFromCart:", userInfo);
-                console.log("hi from cartPage, removeFromCart:", productId);
                 await cartsAPI.deleteProductFromCart(productId);
-                const newCart = await cartsAPI.getCart(userInfo.id);
+                const newCart = await cartsAPI.getCart();
                 setProductsInCart(newCart[0].items.length);
                 setCartItems(newCart[0].items);
             } else {
@@ -86,11 +89,11 @@ const CartPage = () => {
     const updateCartItemQuantity = (productId: string, newQuantity: number) => {
         setCartItems((prevCartItems) =>
             prevCartItems.map((item) =>
-                item.product_id.id === productId ? { ...item, quantity: newQuantity } : item
+                item.productid === productId ? { ...item, quantity: newQuantity } : item
             )
         );
         const total = cartItems.reduce((sum, item) => {
-            return sum + item.quantity * item.product_id.salePrice;
+            return sum + item.quantity * item.salePrice;
         }, 0);
         setTotalAmount(total);
     };
@@ -101,7 +104,7 @@ const CartPage = () => {
             </Box>
         );
     }
-    console.log(cartItems);
+    // console.log(cartItems);
     if (cartItems.length === 0) {
         return <Typography variant="h2">No items in the cart</Typography>;
     }
@@ -109,10 +112,10 @@ const CartPage = () => {
         <Grid container spacing={3} style={{ display: 'flex', alignItems: 'start' }}>
             <Grid item xs={8}>
                 {cartItems.map((item) => (
-                    console.log("item.product_id", item.product_id),
+                    // console.log("item.productid", item),
                     <ProductCartCard
                         key={'ProductCartCard-' + uuidv4()}
-                        product={item.product_id}
+                        product={item}
                         quantity={item.quantity}
                         removeFromCart={removeFromCart}
                         totalAmount={totalAmount}
@@ -130,8 +133,8 @@ const CartPage = () => {
                         {cartItems.map((item) => (
                             <ListItem key={`ListItem-${uuidv4()}`}>
                                 <ListItemText
-                                    primary={item.product_id.name}
-                                    secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.product_id.salePrice).toFixed(3)}`}
+                                    primary={item.name}
+                                    secondary={`Quantity: ${item.quantity} | Total Price: $${(item.quantity * item.salePrice).toFixed(3)}`}
                                 />
                                 {/* <img src={item.product_id.image.url} alt={item.product_id.name} style={{ maxWidth: '50px', maxHeight: '50px', marginRight: '1rem' }} /> */}
                             </ListItem>
@@ -146,6 +149,9 @@ const CartPage = () => {
                             <Container>
                                 <Button sx={{ width: "100%", marginBottom: 1 }} variant="contained" onClick={buyNow}>
                                     Buy Now
+                                </Button>
+                                <Button sx={{ width: "100%", marginBottom: 1 }} variant="contained" onClick={removeCart}>
+                                delete Cart
                                 </Button>
                                 <Paypal />
                             </Container>

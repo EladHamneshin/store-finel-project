@@ -17,7 +17,7 @@ const isCartEmpty = () => {
 
 const addToCart = (cartItem: CartItem) => {
     const cart = getCart();
-    const existingItemIndex = cart.findIndex(item => item.product_id.id === cartItem.product_id.id);
+    const existingItemIndex = cart.findIndex(item => item.productId === cartItem.productId);
 
     //TODO
     if (existingItemIndex !== -1) {
@@ -32,20 +32,20 @@ const addToCart = (cartItem: CartItem) => {
 
 const removeFromCart = (ptoductId: string) => {
     const cart = getCart();
-    const newCart = cart.filter((item: CartItem) => item.product_id.id !== ptoductId);
+    const newCart = cart.filter((item: CartItem) => item.productId !== ptoductId);
     localStorage.setItem(CART_KEY, JSON.stringify(newCart));
 };
 
 const incQuantityOfProduct = (ptoductId: string) =>{
     const cart = getCart();
-    const index = cart.findIndex((item: CartItem) => item.product_id.id === ptoductId);
+    const index = cart.findIndex((item: CartItem) => item.productId === ptoductId);
     cart[index].quantity++;
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
 };
 
 const decQuantityOfProduct = (ptoductId: string) =>{   
     const cart = getCart();
-    const index = cart.findIndex((item: CartItem) => item.product_id.id === ptoductId);
+    const index = cart.findIndex((item: CartItem) => item.productId === ptoductId);
     cart[index].quantity--;
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }

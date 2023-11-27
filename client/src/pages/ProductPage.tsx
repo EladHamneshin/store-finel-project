@@ -39,6 +39,7 @@ const ProductPage = () => {
             const data = await productsAPI.getProductById(pid!);
             const reviews = await productsAPI.getReviewsByProductIdFromDB(pid!);
             setProduct(data[0])
+            console.log("hello from getProductAndReview:", data[0]);
             setReviews(reviews)
             console.log("hi from productpage, data:", data);
             // setProduct(data);
@@ -68,12 +69,18 @@ const ProductPage = () => {
             const userid = userInfo.id;
             console.log("hi from productpage", product);
             try {
+                console.log("hi from cart before fetch",)
                 const cart = await cartsAPI.addToCart(
-                    userid,
                     product!.id,
-                    quantity.toString()
+                    String(product.quantity),
+                    product.name,
+                    product.description,
+                    product.salePrice,
+                    product.discount,
+                    product.image.url,
+                    // userid
                 );
-                    console.log("hi from productpage, cart:", cart);
+                console.log("hi from productpage, cart:", cart);
                 toastSuccess("Added to cart!");
                 setQuantity(1);
                 // setProductsInCart(cart.items.length);
@@ -83,8 +90,13 @@ const ProductPage = () => {
             }
         } else {
             const itemForCart: CartItem = {
-                product_id: product!,
-                quantity: quantity,
+                productid: product!.id,
+                quantity: product.quantity,
+                name: product.name,
+                description: product.description,
+                salePrice: product.salePrice,
+                discount: product.discount,
+                image: product.image.url,
             };
             localstorage.addToCart(itemForCart);
             setProductsInCart(localstorage.getCart().length);
@@ -95,7 +107,7 @@ const ProductPage = () => {
     //Navigate the user to choose another product to compare them
     const handleCompareProducts = () => {
         navigate(`/category/${product!.category}`, { state: product });
-        console.log('this compere',product.category)
+        console.log('this compere', product.category)
     };
     //If the the product isn't loaded yet, show "Loading product..."
     if (!product) {
@@ -202,7 +214,7 @@ const ProductPage = () => {
                 <ProductReviews reviews={reviews} />
                 <br />
             </Paper>
-            ​
+
             <br />
             <Paper
                 style={{

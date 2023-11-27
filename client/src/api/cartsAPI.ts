@@ -3,35 +3,38 @@ import handleApiRes from "./apiResHandler";
 // import dotenv from "dotenv";
 // dotenv.config();
 //no need for change
-async function getCart(userid: string): Promise<Cart[]> {
-    const response = await fetch(`/api/users/cart`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            userId: userid,
-        }),
-    }) ;
-    // console.log("hi from get cart");
-    return await handleApiRes(response);
+
+async function getCart(): Promise<Cart[]> {
+    const response = await fetch(`/api/users/cart`, { method: "GET" });
+    const data = await handleApiRes(response);
+    // console.log("hi from getCart:", data);
+    return data
 }
-async function addToCart( pid: string, quantity: string,userid?:string): Promise<Cart> {
-    console.log("hi from cartsAPi addtocart:", userid, pid, quantity)
+
+async function addToCart(pid: string, quantity: string, name: string, description: string, salePrice: number, discount: number, url: string,  userid?: string): Promise<Cart> {
+    // console.log("hi from cartsAPi addtocart:", "pid:", pid, "quantity:", quantity, "userid:", userid)
     const response = await fetch(`/api/users/cart`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            userid: userid,
             product_id: pid,
-            quantity: quantity
+            quantity: quantity,
+            name: name,
+            description: description,
+            salePrice: salePrice,
+            discount: discount,
+            image: {
+                url: url
+            },
+            userid: userid
         }),
     });
     return await handleApiRes(response);
 }
-async function updateQuantity(pid: string, action : "inc" | "dec"):Promise<Cart> {
+
+async function updateQuantity(pid: string, action: "inc" | "dec"): Promise<Cart> {
     const response = await fetch(`/api/users/cart`, {
         method: "PATCH",
         headers: {
@@ -44,15 +47,17 @@ async function updateQuantity(pid: string, action : "inc" | "dec"):Promise<Cart>
     });
     return await handleApiRes(response);
 }
-async function deleteProductFromCart(pid: string):Promise<Cart> {
+
+async function deleteProductFromCart(pid: string): Promise<Cart> {
     console.log("hi from cartsAPI, deleteProductFromCart:", pid);
-    const response = await fetch(`/api/users/cart/${pid}`, {method: "DELETE"});
+    const response = await fetch(`/api/users/${pid}`, { method: "DELETE" });
     const data = await handleApiRes(response);
     return data
 }
+
 //external
-async function sendCartToOms(cart:object):Promise<Cart> {
-    const response =  await fetch(`/api/checkout`, {
+async function sendCartToOms(cart: object): Promise<Cart> {
+    const response = await fetch(`/api/checkout`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -63,8 +68,10 @@ async function sendCartToOms(cart:object):Promise<Cart> {
     });
     return await handleApiRes(response);
 }
-async function deleteCart():Promise<Cart> {
-    const response = await fetch(`/api/users/cart`, {method: "DELETE"});
+
+async function deleteCart(): Promise<Cart> {
+    const response = await fetch(`/api/users/cart`, { method: "DELETE" });
     return await handleApiRes(response);
 }
-export default { getCart, addToCart, updateQuantity, deleteProductFromCart, deleteCart,sendCartToOms }
+
+export default { getCart, addToCart, updateQuantity, deleteProductFromCart, deleteCart, sendCartToOms }
