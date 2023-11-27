@@ -171,5 +171,5 @@ const foo:Product[] = [
   
 
 
-export default {foo,categories}
+export  {foo,categories}
 

@@ -14,6 +14,7 @@ import Shipment from "../profile/Shipment";
 import Orders from "../profile/Orders";
 import CustomerService from "../profile/CustomerService";
 import Addrees from "../profile/Addrees";
+import WishList from "../profile/WishList";
 
 const Router = () => {
     return (
@@ -31,6 +32,7 @@ const Router = () => {
                 <Route path={ROUTES.ORDERS} element={<Orders/>} />    
                 <Route path={ROUTES.SHIPMENT} element={<Shipment/>} />    
                 <Route path={ROUTES.ADDRESS} element={<Addrees/>} />    
+                <Route path={ROUTES.WISHLIST} element={<WishList/>} />    
             </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
         </Routes>

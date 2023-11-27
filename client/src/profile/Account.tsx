@@ -6,7 +6,11 @@ import Grid from "@mui/material/Unstable_Grid2";
 import CallRoundedIcon from "@mui/icons-material/CallRounded";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ContactsIcon from '@mui/icons-material/Contacts';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -56,6 +60,7 @@ export default function FullWidthGrid() {
                 },
               }}
             >
+                            <LocalShippingIcon />
               <h3 style={{ color: "lightblue" }}>your orders</h3>all of your
               past orders
             </Item>
@@ -90,6 +95,7 @@ export default function FullWidthGrid() {
               },
             }}
           >
+                          <ShoppingCartIcon />
                    <h3 style={{ color: "lightblue" }}>your cart</h3>
           </Item>
           </Link>
@@ -105,25 +111,31 @@ export default function FullWidthGrid() {
                 transform: "scale(1.03)",
               },
             }}
-          >
+            >
             <p>
-              <LocalShippingIcon />
             </p>{" "}
-            shipment
+            <PersonIcon/>
+            <h3 style={{ color: "lightblue" }}>profile</h3>
+
+            
           </Item>
+          <Link to='/wishlist' style={{ color: "lightblue" ,textDecorationLine:'none'}}>
           <Item
           sx={{
-              height: "200px",
-              width: "250px",
-              marginBottom: "10px",
-              transition: "transform 0.3s",
-              "&:hover": {
-                transform: "scale(1.03)",
-              }
-              
-            }}
-          > notes
+            height: "200px",
+            width: "250px",
+            marginBottom: "10px",
+            transition: "transform 0.3s",
+            "&:hover": {
+              transform: "scale(1.03)",
+            }
+            
+          }}
+          > 
+          <FavoriteIcon></FavoriteIcon>
+             <h3 style={{ color: "lightblue" ,textDecorationLine:'none'}}>WishList</h3>
           </Item>
+          </Link>
         </Grid>
       </Grid>
     </Box>

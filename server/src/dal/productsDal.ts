@@ -1,11 +1,11 @@
 import axios from "axios";
-import foo from "../data.js";
+import {foo} from "../data.js";
 import Product from "../types/Product.js";
 
 
 const getProductByID = async (id:string) => {
     const data = foo
-    // foo.filter((item:Product) => item.id===String(id))
+    foo.filter((item:Product) => item.id===String(id))
     return data
     // const res = await axios.get(`https://dummyjson.com/products${id}`)
     // console.log(await res.data)

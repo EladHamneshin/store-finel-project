@@ -11,7 +11,8 @@ const ROUTES = {
     ADDRESS:'/address',
     SERVICE:'/service',
     ORDERS:'/orders',
-    SHIPMENT:'/shipment'
+    SHIPMENT:'/shipment',
+    WISHLIST:'/wishlist'
 };
 
 export default ROUTES;
