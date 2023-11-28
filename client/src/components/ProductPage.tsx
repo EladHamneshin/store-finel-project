@@ -12,7 +12,7 @@ import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import { useNavigate, useParams } from "react-router-dom";
 import productsAPI from "../api/productsAPI";
-import Product from "../types/Product.ts";
+import {Product} from "../types/Product.ts";
 import StoreMap from "../components/StoreMap.tsx";
 import cartsAPI from "../api/cartsAPI.ts";
 import * as localstorage from "../utils/cartLocalStorageUtils.ts";
@@ -23,6 +23,7 @@ import Rating from "../components/Rating.tsx";
 // import DialogReview from "../mui/DialogReview.tsx";
 import ProductReviews from "../components/ProductReviews .tsx";
 import DialogReview from "../mui/DialogReview.tsx";
+import Cart from "../types/Cart.ts";
 
 
 const reviews = [
@@ -46,7 +47,7 @@ const ProductPage = () => {
 
     const getProduct = async (pid: string) => {
         try {
-            const data = await productsAPI.getProduct(pid!);
+            const data = await productsAPI.getProductById(pid!);
             console.log(data);
             const product = data
             setProduct(product);
@@ -78,7 +79,6 @@ const ProductPage = () => {
 
             try {
                 const cart = await cartsAPI.addToCart(
-
                     userid,
                     product!.id,
                     quantity.toString()
