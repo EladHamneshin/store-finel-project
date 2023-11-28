@@ -6,7 +6,7 @@ function Copyright(props: any) {
       <Typography variant="body2" color="text.primary" align="center" marginBottom={4} {...props}>        
       {'Copyright © '}
         <Link color="inherit" href="/">
-          Reuven Team Inc
+          Class 4 Team Inc
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}

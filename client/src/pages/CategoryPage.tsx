@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import Product from '../types/Product';
 import categoriesAPI from '../api/categoriesAPI';
 import ProductCard from '../components/ProductCard';
 import ProductCardsContainer from '../components/ProductCardsContainer';
 import { Box, CircularProgress } from '@mui/material';
 import Filter from '../components/Filter';
+import { Product } from '../types/Product';
 
 const CategoryPage = () => {
   const { cname } = useParams();
@@ -42,16 +42,20 @@ const CategoryPage = () => {
       <Filter products={products} setProducts={setFilteredProducts} />
       <ProductCardsContainer>
         {filteredProducts.map((product) => {
-          if (isCompareMode.current && location.state._id === product.id)
+
+          if (isCompareMode.current && location.state._id === product.productId)
+
             return null;
 
           return (
             <ProductCard
-              key={product.id}
+
+              key={product.productId}
               product={product}
               navigateToOnClick={
                 isCompareMode.current
-                  ? `/compare/${location.state._id}/${product.id}`
+                  ? `/compare/${location.state._id}/${product.productId}`
+
                   : undefined
               }
             />

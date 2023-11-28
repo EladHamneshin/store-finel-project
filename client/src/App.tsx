@@ -10,6 +10,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useContext, useMemo } from 'react'
 import { UserContext } from './UserContext'
 import { Box } from '@mui/material'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 function App() {
     const context = useContext(UserContext)!;
@@ -29,8 +30,9 @@ function App() {
         },
     }), [mode])
 
-    return (     
-           <ThemeProvider theme={theme}>
+    return (
+        <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
+            <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <AppBar />
                 <CategoryNav />
@@ -42,6 +44,7 @@ function App() {
                 </Box>
                 <ToastContainer />
             </ThemeProvider>
+        </PayPalScriptProvider>
     )
 }
 

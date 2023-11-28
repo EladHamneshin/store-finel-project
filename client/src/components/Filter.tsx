@@ -9,7 +9,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import Product from '../types/Product';
+import {Product} from '../types/Product';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -42,7 +42,7 @@ const Filter = (props: Props) => {
   );
 
   tags.forEach((tag) => {
-    tagsValues[tag] = [...new Set(products.map((p) => p.tags[tag]))];
+    tagsValues[tag] = [...new Set(products.map((p:Product) => p.tags.tag))];
   });
 
   const handleFilterChange = (
@@ -60,7 +60,7 @@ const Filter = (props: Props) => {
       const newProducts = products.filter((p) => {
         for (const tag of tags) {
           const isChecked = filters[tag].some((filter) => {
-            return p.tags[tag] === filter;
+            return p.tags.tag === filter;
           });
           if (!(filters[tag].length === 0 || isChecked)) return false;
         }

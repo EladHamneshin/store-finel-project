@@ -3,13 +3,7 @@ import { useEffect, useState } from 'react';
 import categoriesAPI from '../api/categoriesAPI';
 import Category from '../types/Category';
 
-const handleClick = async (category: Category) => {
-  try {
-    await categoriesAPI.patchCategoryClick(category.name);
-  } catch (err) {
-    console.error((err as Error).message);
-  }
-};
+
 
 export default function CategoryNav() {
   const theme = useTheme();
@@ -44,7 +38,6 @@ export default function CategoryNav() {
           href={`/category/${category.name}`}
           underline="none"
           key={category._id}
-          onClick={() => handleClick(category)}
           sx={{
             margin: 0.5,
             padding: 1,
@@ -62,6 +55,7 @@ export default function CategoryNav() {
           }}
         >
           <Typography variant="body1">{category.name}</Typography>
+        
         </Link>
       ))}
     </Paper>

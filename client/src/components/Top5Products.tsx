@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import productsAPI from '../api/productsAPI';
-import Product from '../types/Product';
+import {Product} from '../types/Product';
 import ProductCard from './ProductCard';
 import { Grid, Typography } from '@mui/material';
 
@@ -11,7 +11,9 @@ function Top5ProductsPage() {
     const fetchTop5Products = async () => {
       try {
         const top5Products = await productsAPI.getTop5Products();
+        console.log('top5Products:', top5Products);
         setTop5Products(top5Products);
+
       } catch (error) {
         console.error('Error fetching top 5 products:', error);
       }

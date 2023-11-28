@@ -12,7 +12,9 @@ const ROUTES = {
     SERVICE:'/service',
     ORDERS:'/orders',
     SHIPMENT:'/shipment',
-    WISHLIST:'/wishlist'
+    WISHLIST:'/wishlist',
+    CHECKOUT: "/checkout/:totalAmount",
+
 };
 
 export default ROUTES;

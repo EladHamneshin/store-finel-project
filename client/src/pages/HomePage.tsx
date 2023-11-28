@@ -4,9 +4,10 @@ import Top5Categories from '../components/Top5Categories'
 const HomePage = () => {
   return (
     <>
-    
-    {/* <Top5Categories/>
-    <Top5Products/> */}
+
+    <Top5Categories/>
+    <Top5Products/>
+
     </>
   )
 }

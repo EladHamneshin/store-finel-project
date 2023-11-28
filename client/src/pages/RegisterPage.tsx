@@ -6,63 +6,49 @@ import { useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../utils/validationUtils';
 import userAPI from '../api/usersAPI';
 import { toastError, toastSuccess } from '../utils/toastUtils';
-
-
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailError, setEmailError] = useState(false);
   const [isPasswordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
-
-  
   const handleEmailBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!isValidEmail(event.target.value)) {
       setEmailError(true);
     }
   };
-
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (isValidEmail(event.target.value)) {
       setEmailError(false);
     }
   }
-
   const handlePasswordBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!isValidPassword(event.target.value)) {
       setPasswordError(true);
     }
   }
-
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (isValidPassword(event.target.value)) {
       setPasswordError(false);
     }
   }
-
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const data = new FormData(event.currentTarget);
     const email = data.get('email') || '';
     const password = data.get('password') || '';
     const confirmPassword = data.get('confirmPassword') || '';
-
     if(password !== confirmPassword){
       toastError("Passwords do not match");
       return
     }
-    
     if(!isValidEmail(email.toString())){
       toastError("Email must be a valid email");
       return
     }
-      
     if(!isValidPassword(password.toString())){
       toastError("Password must be a valid password")
       return
     }
-
     try {
       setIsLoading(true);
       await userAPI.register(email.toString(), password.toString() );
@@ -74,7 +60,6 @@ const RegisterPage = () => {
       toastError((err as Error).message);
     }
   };
-
   return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -144,9 +129,7 @@ const RegisterPage = () => {
             >
              Register
             </Button>
-
             {isLoading && <p>Loading...</p>}
-
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href={ROUTES.LOGIN} variant="body2">
@@ -159,5 +142,4 @@ const RegisterPage = () => {
       </Container>
   );
 }
-
 export default RegisterPage;

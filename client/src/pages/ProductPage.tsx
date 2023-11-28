@@ -12,7 +12,7 @@ import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import { useNavigate, useParams } from "react-router-dom";
 import productsAPI from "../api/productsAPI";
-import Product from "../types/Product.ts";
+import { Product } from "../types/Product.ts";
 import StoreMap from "../components/StoreMap.tsx";
 import cartsAPI from "../api/cartsAPI.ts";
 import * as localstorage from "../utils/cartLocalStorageUtils.ts";
@@ -20,6 +20,7 @@ import CartItem from "../types/CartItem.ts";
 import { toastError, toastSuccess } from "../utils/toastUtils.ts";
 import { UserContext } from "../UserContext.tsx";
 import Rating from "../components/Rating.tsx";
+<<<<<<< HEAD
 import ProductReviews from "../components/ProductReviews .tsx";
 import DialogReview from "../mui/DialogReview.tsx";
 
@@ -32,68 +33,45 @@ const reviews = [
     },
     // Add more reviews as needed
 ];
+=======
+// import DialogReview from "../mui/DialogReview.tsx";
+import ProductReviews from "../components/ProductReviews .tsx";
+import DialogReview from "../mui/DialogReview.tsx";
+>>>>>>> test
 
 const ProductPage = () => {
     const navigate = useNavigate();
     const [product, setProduct] = useState<null | Product | any>(null);
     const [quantity, setQuantity] = useState<number>(1);
+    const [reviews, setReviews] = useState<any>([]);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context;
     const { pid } = useParams();
 
     //handle get product by id from server
-    const getProductById= async (pid: string) => {
-     const data = await productsAPI.getProduct(pid!);
-                 setProduct(data);
-                 return data
-    }
 
 
-    // const getProductAndReview = async (pid: string) => {
-    //     try {
-    //         // const data = await productsAPI.getProductAndreview(pid!);
-            
-    //         const product = {
-    //             id: "a86eaf9c-9ebe-4393-a52f-82c159cc1afe",
-    //             name: "Product 1",
-    //             salePrice: 29.99,
-    //             quantity: 10,
-    //             description: "Description for Product 1.",
-    //             category: "Category A",
-    //             discountPercentage: 10,
-    //             rating: 4.5,
-    //             click: 100,
-    //             coordinate: {
-    //                 longitude1: 40.7128,
-    //                 longitude2: -74.0060,
-    //                 longitude3: 45.5122,
-    //                 latitude1: -74.0060,
-    //                 latitude2: 40.7128,
-    //                 latitude3: -122.6795,
-    //             },
-    //             image: {
-    //                 url: "https://example.com/product1.jpg",
-    //                 alt: "Product 1 Image",
-    //             },
-    //             tags: {
-    //                 tag1: "Tag A",
-    //                 tag2: "Tag B",
-    //             },
-    //         }
-    //         // console.log("hi from productpage, product:", product);
-    //         setProduct(product);
-    //         // console.log("hi from productPage, product:", product);
+    const getProductAndReview = async (pid: string) => {
+        try {
+            const data = await productsAPI.getProductById(pid!);
+            const reviews = await productsAPI.getReviewsByProductIdFromDB(pid!);
+            setProduct(data[0])
+            setReviews(reviews)
+            console.log("hi from productpage, data:", data);
+            // setProduct(data);
+        } catch (error) {
+            console.error("Failed to fetch");
+        }
+    };
 
-    //     } catch (error) {
-    //         console.error("Failed to fetch");
-    //     }
-    // };
 
     //get the product after the page is rendered
 
     useEffect(() => {
-        getProductById
-        }, []);
+
+        getProductAndReview(pid!)
+    }, []);
+
 
     //handle decrease quantity by clicking on the minus button (when quantity shouldnt be lower then 1)
     const decrementQuantity = () => {
@@ -101,7 +79,6 @@ const ProductPage = () => {
             setQuantity((prevQty) => prevQty - 1);
         }
     };
-
     //handle add to cart. (if user logged in, products is being added to db at the server, else its stored in localstorage)
     const handleAddToCart = async () => {
         if (quantity > product!.quantity) {
@@ -109,19 +86,18 @@ const ProductPage = () => {
             return;
         }
         if (userInfo) {
-            const userid = userInfo.id
-            console.log("hi from productpage", product);
 
+            const userid = userInfo.id;
+            console.log("hi from productpage", product);
             try {
                 const cart = await cartsAPI.addToCart(
                     userid,
                     product!.id,
                     quantity.toString()
                 );
-                console.log("cart:", cart);
-                console.log("cart.items.length:", cart[0].items);
+                    console.log("hi from productpage, cart:", cart);
 
-                toastSuccess("Added to cart!");
+                    toastSuccess("Added to cart!");
                 setQuantity(1);
                 // setProductsInCart(cart.items.length);
             } catch (error) {
@@ -139,12 +115,11 @@ const ProductPage = () => {
             setQuantity(1);
         }
     };
-
     //Navigate the user to choose another product to compare them
     const handleCompareProducts = () => {
         navigate(`/category/${product!.category}`, { state: product });
+        console.log('this compere',product.category)
     };
-
     //If the the product isn't loaded yet, show "Loading product..."
     if (!product) {
         return (
@@ -159,6 +134,7 @@ const ProductPage = () => {
             </Box>
         );
     }
+
 
     //When the product is loaded then show the component
     return (
@@ -187,7 +163,11 @@ const ProductPage = () => {
                         <Typography variant="body1">
                             {product?.description}
                         </Typography>
-                        <Typography variant="h6">${product?.salePrice}</Typography>
+<
+                        <Typography variant="h6">
+                            ${product?.salePrice}
+                        </Typography>
+
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <IconButton onClick={decrementQuantity}>
                                 <RemoveCircleRoundedIcon></RemoveCircleRoundedIcon>
@@ -237,10 +217,20 @@ const ProductPage = () => {
                     </Grid>
                 </Grid>
             </Paper>
-            <Paper style={{ margin: "10px 50px", height: 'auto', maxHeight: 500, overflowY: 'auto', padding: '20px' }}>
+
+            <Paper
+                style={{
+                    margin: "10px 50px",
+                    height: "auto",
+                    maxHeight: 500,
+                    overflowY: "auto",
+                    padding: "20px",
+                }}
+            >
                 <ProductReviews reviews={reviews} />
                 <br />
             </Paper>
+            
 
             <br />
             <Paper

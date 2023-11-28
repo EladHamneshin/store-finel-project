@@ -1,15 +1,16 @@
 import Product from "./types/Product.js";
 import Category from "./types/Category.js";
 
-const foo:Product[] = [
+const products:Product[] = [
+
   {
-    id: "1",
+    id: "a86eaf9c-9ebe-4393-a52f-82c140cc1afe",
     name: "Product 1",
     salePrice: 29.99,
     quantity: 10,
     description: "Description for Product 1.",
     category: "Category A",
-    discountPercentage: 10,
+    discount: 10,
     rating: 4.5,
     click: 100,
     coordinate: {
@@ -31,13 +32,13 @@ const foo:Product[] = [
   },
   
   {
-    id: "2",
+    id: "a86eaf9c-9ebe-4393-a52f-82c141cc1afe",
     name: "Product 2",
     salePrice: 49.99,
     quantity: 15,
     description: "Description for Product 2.",
     category: "Category B",
-    discountPercentage: 15,
+    discount: 15,
     rating: 4.2,
     click: 150,
     coordinate: {
@@ -58,13 +59,13 @@ const foo:Product[] = [
     },
   },
     {
-      id: "6",
+      id: "a86eaf9c-9ebe-4393-a52f-82c142cc1afe",
       name: "Product 6",
       salePrice: 79.99,
       quantity: 20,
       description: "Description for Product 6.",
       category: "Category C",
-      discountPercentage: 5,
+      discount: 5,
       rating: 4.7,
       click: 80,
       coordinate: {
@@ -85,13 +86,13 @@ const foo:Product[] = [
       },
     },
     {
-      id: "7",
+      id: "a86eaf9c-9ebe-4393-a52f-82c143cc1afe",
       name: "Product 7",
       salePrice: 99.99,
       quantity: 12,
       description: "Description for Product 7.",
       category: "Category A",
-      discountPercentage: 20,
+      discount: 20,
       rating: 4.0,
       click: 120,
       coordinate: {
@@ -112,13 +113,13 @@ const foo:Product[] = [
       },
     },
     {
-      id: "5",
+      id: "a86eaf9c-9ebe-4393-a52f-82c149cc1afe",
       name: "Product 5",
       salePrice: 99.99,
       quantity: 12,
       description: "Description for Product 5.",
       category: "Category A",
-      discountPercentage: 20,
+      discount: 20,
       rating: 4.0,
       click: 120,
       coordinate: {
@@ -139,37 +140,41 @@ const foo:Product[] = [
       },
     },
   ];
-  
 
   const categories:Category[] = [
     {
       id: "1",
-      name: "Category 1",
+      name: "Category A",
+
       clicked: 150,
     },
     {
       id: "2",
-      name: "Category 2",
+
+      name: "Category B",
+
       clicked: 200,
     },
     {
       id: "3",
-      name: "Category 3",
+
+      name: "Category C",
+
       clicked: 120,
     },
     {
       id: "4",
-      name: "Category 4",
+
+      name: "Category D",
+
       clicked: 180,
     },
     {
       id: "5",
-      name: "Category 5",
+
+      name: "Category E",
       clicked: 90,
     },
   ];
-  
-
-
-export  {foo,categories}
+export  {products,categories}
 

@@ -4,8 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { To, useNavigate } from 'react-router-dom';
-import Product from '../types/Product';
-import productsAPI from '../api/productsAPI';
+import {Product} from '../types/Product';
 
 type props = {
   product: Product;
@@ -13,6 +12,7 @@ type props = {
 };
 
 export default function ProductCard({ product, navigateToOnClick }: props) {
+  
   const navigate = useNavigate();
   const handleCLick = async () => {
     try {
@@ -27,7 +27,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
       maxWidth: 300, // adjust this value to change the size of the card
       margin: '5px', 
       boxSizing:'border-box',
-      boxShadow: '0 4px 8px rgba(0, 0, 0.9, 0.8)',
+      boxShadow: '0 5px 8px rgba(0, 0, 0.9, 0.8)',
       marginBlock:'10px',
       transition: 'transform 0.3s', // animate the transform property
       '&:hover': {
