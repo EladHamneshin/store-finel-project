@@ -5,8 +5,10 @@
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc && nodemon ."
+    "test": "vitest",
+    "build": "tsc",
+    "dev": "tsc && nodemon .",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
