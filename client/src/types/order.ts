@@ -39,3 +39,7 @@ export interface OrderInterface {
     totalPrice: number;
     shippingDetails: ShippingDetailsType;
 }
+
+export interface GetOrderInterface {
+    orders : OrderInterface[];
+}
