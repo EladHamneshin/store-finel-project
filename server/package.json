@@ -6,7 +6,9 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc && nodemon ."
+    "build": "tsc",
+    "dev": "tsc && nodemon .", 
+    "start": "tsc && node dist/server.js"
   },
   "keywords": [],
   "author": "",
