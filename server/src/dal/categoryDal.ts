@@ -1,34 +1,31 @@
 import axios from "axios";
-<<<<<<< HEAD
-import {categories} from "../data.js";
+import { config } from 'dotenv';
+config();
 
-=======
-import  {categories,products}  from '../data.js'
-import { c } from "vitest/dist/reporters-5f784f42.js";
->>>>>>> test
-//OMS
+const banner = process.env.BANNER_BASE_URL
+const erp = process.env.ERP_BASE_URL
+
+
+//erp
 const getCategories = async () => {
-const data = categories
-return data
+    const categorys = await axios.get(`${erp}/api/shopInventory/categories`);
+     return categorys.data.data;
 };
 
-//OMS
+//erp
 const getCategoryProducts = async (name: string) => {
-<<<<<<< HEAD
-    // const res = await axios.get(`https:/product${name}`)
-    // console.log(await res.data)
-    // return res.data
-    const data = categories
-=======
-    const data = products
->>>>>>> test
-    return data
+    const res = await axios.get(`${erp}/api/shopInventory/categories${name}`)
+    console.log(await res.data)
+    return res.data.data;
 };
 
 //BANNERS
 const getTop5Categories = async () => {
- const data = categories
-    return data
+    const res = await axios.get(`${banner}/api/ext/bannersProduct/top5/products`)
+    console.log(await res.data)
+    return res.data.data;
 };
+
+
 
 export default { getCategories, getCategoryProducts, getTop5Categories};

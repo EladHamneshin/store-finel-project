@@ -17,14 +17,15 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
+  height: "200px",
+  width: "250px",
+  marginBottom: "10px",
+  transition: "transform 0.3s",
+  "&:hover": {
+    transform: "scale(1.03)",
+  }
 }));
 
-const style = {
-transition: "transform 0.3s",
-"&:hover": {
-  transform: "scale(1.03)",
-}
-}
 
 
 export default function FullWidthGrid() {
@@ -34,18 +35,9 @@ export default function FullWidthGrid() {
         <Grid xs={3} md={3}>
           <Link to={"/address"} style={{ color: "lightblue" ,textDecorationLine:'none'}}>
             <Item
-              sx={{
-                height: "200px",
-                width: "250px",
-                marginBottom: "10px",
-                transition: "transform 0.3s",
-                "&:hover": {
-                  transform: "scale(1.03)",
-                },
-              }}
               >
               <ContactsIcon></ContactsIcon>
-              <h3 style={{ color: "lightblue" }}>your address</h3>information
+              <h3 style={{ color: "lightblue" }}>Your Addresses</h3>information
               about your address
             </Item>
           </Link>
@@ -61,7 +53,7 @@ export default function FullWidthGrid() {
               }}
             >
                             <LocalShippingIcon />
-              <h3 style={{ color: "lightblue" }}>your orders</h3>all of your
+              <h3 style={{ color: "lightblue" }}>Your Orders</h3>All of your
               past orders
             </Item>
           </Link>
@@ -69,68 +61,35 @@ export default function FullWidthGrid() {
         <Grid xs={3} md={3}>
         <Link to={"/service"} style={{ textDecorationLine:'none'}}>
           <Item
-            sx={{
-              height: "200px",
-              width: "250px",
-              marginBottom: "10px",
-              transition: "transform 0.3s",
-              "&:hover": {
-                transform: "scale(1.03)",
-              },
-            }}
+         
           >
             <CallRoundedIcon />
             <h3 style={{ color: "lightblue" }}>customer services</h3>stay in
             conttect with us
           </Item>
           </Link>
-          <Link to={"/address"} style={{ color: "lightblue" ,textDecorationLine:'none'}}>
+          <Link to={"/cart"} style={{ color: "lightblue" ,textDecorationLine:'none'}}>
           <Item
-            sx={{
-              height: "200px",
-              width: "250px",
-              transition: "transform 0.3s",
-              "&:hover": {
-                transform: "scale(1.03)",
-              },
-            }}
+            
           >
                           <ShoppingCartIcon />
-                   <h3 style={{ color: "lightblue" }}>your cart</h3>
+                   <h3 style={{ color: "lightblue" }}>Your Cart</h3>
           </Item>
           </Link>
         </Grid>
         <Grid xs={3} md={3}>
+          <Link to= '/profile'  style={{ color: "lightblue" ,textDecorationLine:'none'}}>
           <Item
-            sx={{
-              height: "200px",
-              width: "250px",
-              marginBottom: "10px",
-              transition: "transform 0.3s",
-              "&:hover": {
-                transform: "scale(1.03)",
-              },
-            }}
             >
             <p>
             </p>{" "}
             <PersonIcon/>
-            <h3 style={{ color: "lightblue" }}>profile</h3>
-
-            
+            <h3 style={{ color: "lightblue" }}>profile</h3>    
           </Item>
+            </Link>
           <Link to='/wishlist' style={{ color: "lightblue" ,textDecorationLine:'none'}}>
           <Item
-          sx={{
-            height: "200px",
-            width: "250px",
-            marginBottom: "10px",
-            transition: "transform 0.3s",
-            "&:hover": {
-              transform: "scale(1.03)",
-            }
-            
-          }}
+          
           > 
           <FavoriteIcon></FavoriteIcon>
              <h3 style={{ color: "lightblue" ,textDecorationLine:'none'}}>WishList</h3>

@@ -4,22 +4,24 @@ import { Request, Response } from "express";
 import bannerService from "../services/bannerService.js";
 
 
-const getBannersTop = async (_req :Request, res:Response) => {  
-    const top5Products = await bannerService.getTopBanners();
+const getBannersSide = async (req :Request, res:Response) => {  
+  const top5Products = await bannerService.getSideBannersFromBannerTeam(req.id as unknown as string);
+  console.log('controll');
+  res.json(top5Products);
+}
+
+const getBannersTop = async (req :Request, res:Response) => {  
+    const top5Products = await bannerService.getTopBanners(req.id as unknown as string);
     console.log('controll');
     res.json(top5Products);
   }
-const getBannersLeft = async (_req :Request, res:Response) => {  
-    const top5Products = await bannerService.getSideBanners();
-    console.log('controll');
-    res.json(top5Products);
-  }
-const getBannersRight = async (_req :Request, res:Response) => {  
-    const top5Products = await bannerService.getRightBannersFromBannerTeam();
+
+const getBannersAll = async (req :Request, res:Response) => {  
+    const top5Products = await bannerService.getAllBanners(req.id as unknown as string);
     console.log('controll');
     res.json(top5Products);
   }
 
 
 
-export default { getBannersLft: getBannersLeft,getBannersRight,getBannersTop}
+export default { getBannersSide, getBannersAll,getBannersTop}

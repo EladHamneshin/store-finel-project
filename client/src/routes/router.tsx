@@ -16,6 +16,7 @@ import WishList from "../profile/WishList";
 
 import CheckoutPage from "../pages/Checkout/CheckoutPage";
 import CategoryPage from "../pages/CategoryPage";
+import Profile from "../profile/Profile";
 
 
 const Router = () => {
@@ -33,15 +34,12 @@ const Router = () => {
                 <Route path={ROUTES.SERVICE} element={<CustomerService/>} />    
                 <Route path={ROUTES.ORDERS} element={<Orders/>} />    
                 <Route path={ROUTES.SHIPMENT} element={<Shipment/>} />    
-<<<<<<< HEAD
                 <Route path={ROUTES.ADDRESS} element={<Addrees/>} />    
                 <Route path={ROUTES.WISHLIST} element={<WishList/>} />    
-=======
-                <Route path={ROUTES.ADDRESS} element={<Addrees/>} />
+                <Route path={ROUTES.PROFILE} element={<Profile/>} />    
                 <Route path={ROUTES.CHECKOUT} element={<CheckoutPage/>} />     
->>>>>>> test
-            </Route>
             <Route path={ROUTES.DEFAULT} element={<h1>404 Not Found</h1>} />
+            </Route>
         </Routes>
     );
 }; 

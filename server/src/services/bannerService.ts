@@ -6,26 +6,26 @@ import STATUS_CODES from "../utils/StatusCodes.js";
 
 
 
-const getRightBannersFromBannerTeam= async () => {
-    const banners = await bannerDal.getRightFromBanners();
+const getSideBannersFromBannerTeam = async (userId:string) => {
+    const banners = await bannerDal.getSideFromBanners(userId);
     if (!banners)
         throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
         console.log( 'service');
     return banners;
 }
-const getTopBanners= async () => {
-    const banners = await bannerDal.getTopFromBanners();
+const getTopBanners = async (userId:string) => {
+    const banners = await bannerDal.getTopFromBanners(userId);
     if (!banners)
         throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
         console.log( 'service');
     return banners;
 }
-const getSideBanners= async () => {
-    const banners = await bannerDal.getLftFromBanners();
+const getAllBanners= async (userId:string) => {
+    const banners = await bannerDal.getAllFromBanners(userId);
     if (!banners)
         throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
         console.log( 'service');
     return banners;
 }
 
-export default {getRightBannersFromBannerTeam,getTopBanners,getSideBanners }
+export default { getSideBannersFromBannerTeam,getTopBanners,getAllBanners }

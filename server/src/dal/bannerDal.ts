@@ -1,28 +1,31 @@
 import axios from "axios";
+const banner = process.env.BANNER_BASE_URL;
 
 
-
-
-const getLftFromBanners=  async () => {
-    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/ext/bannersProduct/top5/products`)
-    // return res.data
-    return 1
-
+const getSideFromBanners=  async (userID:string) => {
+    const res = await axios.get(`${banner}/api/bannersImage/ext/?size={side}&userID={userID}`)
+    if (res.status === 200) {
+    return res.data.data;
+    }
+    throw new Error("error");
 };
-const getRightFromBanners=  async () => {
-    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/ext/bannersProduct/top5/products`)
-    // return res.data
-    return 1
-
-};
-
-
-const getTopFromBanners=  async () => {
-    // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/ext/bannersProduct/top5/products`)
-    // return res.data
-    return 1
-};
+const getAllFromBanners=  async (userID:string) => {
+    const res = await axios.get(`${banner}/api/bannersImage/ext/?size={allscreen}&userID={userID}`)
+    if (res.status === 200) {
+        return res.data.data;
+        }
+        throw new Error("error");
+    };
 
 
+const getTopFromBanners = async (userID:string) => {
+    const res = await axios.get(`${banner}/api/bannersImage/ext/?size={top}&userID={userID}`)
+    if (res.status === 200) {
+        return res.data.data;
+        }
+        throw new Error("error");
+    };
 
-export default { getLftFromBanners,getRightFromBanners,getTopFromBanners }
+
+
+export default {  getSideFromBanners, getAllFromBanners,getTopFromBanners }

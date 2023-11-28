@@ -13,6 +13,7 @@ const ROUTES = {
     ORDERS:'/orders',
     SHIPMENT:'/shipment',
     WISHLIST:'/wishlist',
+    PROFILE:'/profile',
     CHECKOUT: "/checkout/:totalAmount",
 
 };

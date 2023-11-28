@@ -20,24 +20,11 @@ import CartItem from "../types/CartItem.ts";
 import { toastError, toastSuccess } from "../utils/toastUtils.ts";
 import { UserContext } from "../UserContext.tsx";
 import Rating from "../components/Rating.tsx";
-<<<<<<< HEAD
 import ProductReviews from "../components/ProductReviews .tsx";
 import DialogReview from "../mui/DialogReview.tsx";
 
-const reviews = [
-    {
-        title: "Great Product",
-        author: "John Doe",
-        body: "Lorem ipsum...",
-        rating: 5,
-    },
-    // Add more reviews as needed
-];
-=======
-// import DialogReview from "../mui/DialogReview.tsx";
-import ProductReviews from "../components/ProductReviews .tsx";
-import DialogReview from "../mui/DialogReview.tsx";
->>>>>>> test
+
+
 
 const ProductPage = () => {
     const navigate = useNavigate();
@@ -163,10 +150,10 @@ const ProductPage = () => {
                         <Typography variant="body1">
                             {product?.description}
                         </Typography>
-<
-                        <Typography variant="h6">
-                            ${product?.salePrice}
+                        <Typography variant="body1">
+                            {product?.salePrice}
                         </Typography>
+
 
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <IconButton onClick={decrementQuantity}>

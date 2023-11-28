@@ -29,12 +29,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api/users', userRoutes);
 
+app.use('/api/banners', bannerRoutes);
 app.use('/api/orders', ordersRoutes);
 
 app.use('/api/users', cartRoutes);
 
 app.use('/api/products', productRoutes);
-app.use('/api/banners', bannerRoutes);
 app.use('/api', categoryRoutes);
 
 // =====================================================
