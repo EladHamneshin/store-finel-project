@@ -26,10 +26,10 @@ app.use('/api/category', categoryRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT ;
+const port = 5000;
 
 await connectDB();
 
 app.listen(port, () => {
-  console.log(`server is running at port ${port}`);
+  console.log(`Server is running at port ${port}...`);
 });

@@ -1,5 +1,11 @@
 import CategoryModel from "../models/categoryModel.js";
 import productModel from "../models/productModel.js";
+import { config } from 'dotenv';
+config();
+
+const banner = process.env.BANNER_BASE_URL
+
+const erp = process.env.ERP_BASE_URL
 
 const getCategories = async () => {
     const categories = await CategoryModel.find({});
@@ -13,11 +19,9 @@ const getCategoryProducts = async (name: string) => {
 };
 
 const getTop5Categories = async () => {
-    const topCategories = await CategoryModel.find({})
-        .sort({ clickCount: -1 })
-        .limit(5)
-        .exec();
-    return topCategories;
+    const response = await fetch(`${erp}/api/shopInventory`);
+    console.log("response", response);
+    return ([response]);
 };
 
 const increaseClickCount = async (name: string) => {
