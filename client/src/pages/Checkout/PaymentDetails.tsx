@@ -19,7 +19,6 @@ interface ApiResponse {
 
 type Props = {
     totalAmount: number;
-    setOrderPayPal: Function;
     onPlaceOrder: Function;
     creditCard: { data: CreditCardDetails, setData: Function };
     setOrderId: Function;
@@ -33,8 +32,7 @@ const PaymentDetails = (props: Props) => {
     // PayPal.
     const handlePayPalSuccess = async (orderData: OrderInPayPal) => {
         console.log("order from PayPal :", orderData);
-        await props.setOrderPayPal(orderData);
-        props.onPlaceOrder()
+        props.onPlaceOrder(orderData)
     };
 
 

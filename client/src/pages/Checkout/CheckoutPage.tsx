@@ -69,10 +69,6 @@ const CheckoutPage = () => {
     saveAddress: false
   });
 
-  // PayPal.
-  const [orderFromPayPal, setOrderFromPayPal] = React.useState<OrderInPayPal | null>(null)
-  console.log("orderFromPayPal-----:", orderFromPayPal);
-
   // State for credit card details
   const [creditCardDetails, setCreditCardDetails] = React.useState<CreditCardDetails>({
     cardholderId: '',
@@ -82,171 +78,181 @@ const CheckoutPage = () => {
     saveCard: false
   });
 
-  // Create order object with collected details
-  const order: OrderInterface = {
-    orderTime: new Date(),
-    userId: '12345',
-    status: OrderStatusEnum.Waiting,
-    totalPrice: totalPrice,
-    shippingDetails: {
-      address: {
-        country: shippingDetails.country,
-        city: shippingDetails.city,
-        street: shippingDetails.street,
-        zipCode: shippingDetails.zipCode,
-        saveAddress: shippingDetails.saveAddress
+
+
+  // Function to prepare order data before sending to the server
+  const prepareOrderData = (orderInPayPal: OrderInPayPal | null = null) => {
+    const orderData: OrderInterface = {
+      orderTime: new Date(),
+      userId: '12345',
+      status: OrderStatusEnum.Waiting,
+      totalPrice: totalPrice,
+      shippingDetails: {
+        address: {
+          country: shippingDetails.country,
+          city: shippingDetails.city,
+          street: shippingDetails.street,
+          zipCode: shippingDetails.zipCode,
+          saveAddress: shippingDetails.saveAddress
+        },
+        orderType: orderTypeReturn(),
+        contactNumber: shippingDetails.cellPhone || '',
       },
-      orderType: orderTypeReturn(),
-      contactNumber: shippingDetails.cellPhone || '',
-    },
-    paymentPayPal: orderFromPayPal
+      paymentPayPal: orderInPayPal
+    };
+
+    return orderData;
   };
 
-  // Function to proceed to the next step in the checkout process
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
+// Function to handle placing the order
+const handlePlaceOrder = async (orderData: OrderInterface) => {
+  setIsChecking(true);
+  try {
+    const response = await sendOrder(orderData);
+    setIsChecking(false);
 
-  // Function to go back to the previous step in the checkout process
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-
-  // Function to place the order
-  const handlePlaceOrder = async () => {
-    console.log("orderFromPayPal", orderFromPayPal);
-    
-    setIsChecking(true);
-    try {
-      const response = await sendOrder(order);
-      setIsChecking(false);
-
-      if (typeof response === 'object' && 'message' in response && 'orderID' in response) {
-        setRes(response.message as string);
-        setOrderID(response.orderID as string)
-        setActiveStep(steps.length)
-      } else {
-        setError('Unknown error occurred !!!');
-      }
-    } catch (error) {
-      setIsChecking(false);
-      if (typeof error === 'object' && error !== null && 'message' in error) {
-        const errorMessage = (error as ApiResponse).message || 'Unknown error occurred';
-        setError(errorMessage);
-      } else {
-        setError('Unknown error occurred !!!');
-      }
+    if (typeof response === 'object' && 'message' in response && 'orderID' in response) {
+      setRes(response.message as string);
+      setOrderID(response.orderID as string);
+      setActiveStep(steps.length);
+    } else {
+      setError('Unknown error occurred !!!');
     }
-  };
+  } catch (error) {
+    setIsChecking(false);
+    if (typeof error === 'object' && error !== null && 'message' in error) {
+      const errorMessage = (error as ApiResponse).message || 'Unknown error occurred';
+      setError(errorMessage);
+    } else {
+      setError('Unknown error occurred !!!');
+    }
+  }
+};
 
-  // Array of steps in the checkout process with corresponding components and labels
-  const steps = [
-    {
-      component:
-        <ShippingDetails
-          deliveryMethod={{ data: deliveryMethod, setData: setDeliveryMethod }}
-          shippingDetails={{ data: shippingDetails, setData: setShippingDetails }}
-          isExpressDelivery={{ data: isExpressDelivery, setData: setIsExpressDelivery }}
-          onNext={handleNext} />,
-      label: 'Shipping address'
-    },
-    {
-      component:
-        <PaymentDetails
-          totalAmount={totalPrice}
-          setOrderPayPal={setOrderFromPayPal}
-          onPlaceOrder={handlePlaceOrder}
-          creditCard={{ data: creditCardDetails, setData: setCreditCardDetails }}
-          setOrderId={setOrderID}
-          onNext={handleNext} 
-          onBack={handleBack} />,
-      label: 'Payment method'
-    },
-    {
-      component:
-        <OrderSummary
-          totalAmount={totalPrice}
-          shippingDetails={shippingDetails}
-          creditCardDetails={creditCardDetails}
-          onBack={handleBack}
-          onPlaceOrder={handlePlaceOrder} />,
-      label: 'Summary of order details'
-    },
-  ];
+// Function to handle order placement
+const handleOrderPlacement = (orderInPayPal: OrderInPayPal | null = null) => {
+  const orderData = prepareOrderData(orderInPayPal);
+  handlePlaceOrder(orderData);
+};
 
-  return (
-    <React.Fragment>
 
-      {/* Set up base CSS */}
-      <CssBaseline />
+// Function to proceed to the next step in the checkout process
+const handleNext = () => {
+  setActiveStep(activeStep + 1);
+};
 
-      {/* Main container for the checkout page */}
-      <Container component="main" maxWidth="sm" sx={{ mb: 20 }}>
+// Function to go back to the previous step in the checkout process
+const handleBack = () => {
+  setActiveStep(activeStep - 1);
+};
 
-        {/* Paper component for layout */}
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+// Array of steps in the checkout process with corresponding components and labels
+const steps = [
+  {
+    component:
+      <ShippingDetails
+        deliveryMethod={{ data: deliveryMethod, setData: setDeliveryMethod }}
+        shippingDetails={{ data: shippingDetails, setData: setShippingDetails }}
+        isExpressDelivery={{ data: isExpressDelivery, setData: setIsExpressDelivery }}
+        onNext={handleNext} />,
+    label: 'Shipping address'
+  },
+  {
+    component:
+      <PaymentDetails
+        totalAmount={totalPrice}
+        onPlaceOrder={handleOrderPlacement}
+        creditCard={{ data: creditCardDetails, setData: setCreditCardDetails }}
+        setOrderId={setOrderID}
+        onNext={handleNext}
+        onBack={handleBack} />,
+    label: 'Payment method'
+  },
+  {
+    component:
+      <OrderSummary
+        totalAmount={totalPrice}
+        shippingDetails={shippingDetails}
+        creditCardDetails={creditCardDetails}
+        onBack={handleBack}
+        onPlaceOrder={handleOrderPlacement} />,
+    label: 'Summary of order details'
+  },
+];
 
-          {/* Heading for the checkout process */}
-          <Typography component="h1" variant="h4" align="center">
-            Just before the product is with you
-          </Typography>
+return (
+  <React.Fragment>
 
-          {/* Stepper component to show current step */}
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((step) => (
-              <Step key={step.label}>
-                <StepLabel>{step.label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+    {/* Set up base CSS */}
+    <CssBaseline />
 
-          {/* Show content based on the current step */}
-          {activeStep === steps.length ? (
-            <React.Fragment>
-              {/* Thank you message after completing the checkout */}
-              <Typography variant="h5" gutterBottom>
-                Thank you for your order.
+    {/* Main container for the checkout page */}
+    <Container component="main" maxWidth="sm" sx={{ mb: 20 }}>
+
+      {/* Paper component for layout */}
+      <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+
+        {/* Heading for the checkout process */}
+        <Typography component="h1" variant="h4" align="center">
+          Just before the product is with you
+        </Typography>
+
+        {/* Stepper component to show current step */}
+        <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          {steps.map((step) => (
+            <Step key={step.label}>
+              <StepLabel>{step.label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+
+        {/* Show content based on the current step */}
+        {activeStep === steps.length ? (
+          <React.Fragment>
+            {/* Thank you message after completing the checkout */}
+            <Typography variant="h5" gutterBottom>
+              Thank you for your order.
+            </Typography>
+            <Typography variant="h6">
+              Your order number is: {orderID} .
+            </Typography>
+            <Typography variant="h6">
+              We have emailed your order confirmation, and will send you an update when your order has shipped.
+            </Typography>
+          </React.Fragment>
+
+        ) : (
+
+          <React.Fragment>
+            {/* Show the current step's component */}
+            {steps[activeStep].component}
+
+            {/* Show a message while checking the order */}
+            {isChecking && (
+              <Typography variant="body1">
+                The order is placed...
               </Typography>
-              <Typography variant="h6">
-                Your order number is: {orderID} .
-              </Typography>
-              <Typography variant="h6">
-                We have emailed your order confirmation, and will send you an update when your order has shipped.
-              </Typography>
-            </React.Fragment>
+            )}
 
-          ) : (
-
-            <React.Fragment>
-              {/* Show the current step's component */}
-              {steps[activeStep].component}
-
-              {/* Show a message while checking the order */}
-              {isChecking && (
-                <Typography variant="body1">
-                  The order is placed...
+            {/* Show error message if there's an error */}
+            {error && (
+              <Box>
+                <ErrorIcon sx={{ color: 'red', fontSize: 40 }} />
+                <Typography variant="body1" color="error">
+                  {error}
                 </Typography>
-              )}
+              </Box>
+            )}
+          </React.Fragment>
+        )}
 
-              {/* Show error message if there's an error */}
-              {error && (
-                <Box>
-                  <ErrorIcon sx={{ color: 'red', fontSize: 40 }} />
-                  <Typography variant="body1" color="error">
-                    {error}
-                  </Typography>
-                </Box>
-              )}
-            </React.Fragment>
-          )}
+      </Paper>
 
-        </Paper>
-
-        {/* Copyright information */}
-        <Copyright />
-      </Container>
-    </React.Fragment>
-  );
+      {/* Copyright information */}
+      <Copyright />
+    </Container>
+  </React.Fragment>
+);
 };
 
 export default CheckoutPage;
