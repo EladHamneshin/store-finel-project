@@ -15,10 +15,10 @@ import { Paper } from '@mui/material';
 
 
 const locations = [
-    { lon: 34.78635811677901, lat: 32.08882688424367, name: 'The super store',addres:'David Remez 23 Tel Aviv',img:'https://t.ly/qgmqT'},
-    { lon: 34.78502081545531, lat: 32.0781257416219, name: 'The super store', addres:'Berkovitz 10 Tel Aviv',img:'https://t.ly/qgmqT'},
-    { lon: 34.78561517159969, lat: 32.07283765572896, name: 'The super store' ,addres:'Loenardo Da Vinci 6 Tel Aviv',img:'https://t.ly/qgmqT'},
-    { lon: 34.77328228161639, lat: 32.06830476724025, name: 'The super store',addres:'Yohanan Hasandlar 2 Tel Aviv',img:'https://t.ly/qgmqT' }
+    { lon: 34.78635811677901, lat: 32.08882688424367, name: 'The super store', addres: 'David Remez 23 Tel Aviv', img: 'https://t.ly/qgmqT' },
+    { lon: 34.78502081545531, lat: 32.0781257416219, name: 'The super store', addres: 'Berkovitz 10 Tel Aviv', img: 'https://t.ly/qgmqT' },
+    { lon: 34.78561517159969, lat: 32.07283765572896, name: 'The super store', addres: 'Loenardo Da Vinci 6 Tel Aviv', img: 'https://t.ly/qgmqT' },
+    { lon: 34.77328228161639, lat: 32.06830476724025, name: 'The super store', addres: 'Yohanan Hasandlar 2 Tel Aviv', img: 'https://t.ly/qgmqT' }
 ];
 
 
@@ -40,8 +40,8 @@ const features = locations.map((location) => {
     return new Feature({
         geometry: new Point(fromLonLat([location.lon, location.lat])),
         name: location.name,
-        addres:location.addres,
-        imgsrc:location.img
+        addres: location.addres,
+        imgsrc: location.img
     });
 });
 
@@ -75,9 +75,9 @@ const StoreMap = () => {
             element: popupRef!.current as unknown as HTMLElement,
             positioning: 'bottom-center',
             stopEvent: false,
-            autoPan:{
-                animation:{
-                    duration:1500
+            autoPan: {
+                animation: {
+                    duration: 1500
                 }
             }
         });
@@ -104,17 +104,17 @@ const StoreMap = () => {
                 popupRef!.current!.hidden = true;
             }
         });
-        
+
         map.on('pointermove', function (e) {
             if (e.dragging) return;
-            
+
             const pixel = map.getEventPixel(e.originalEvent);
             const hit = map.forEachFeatureAtPixel(pixel, function (_feature, _layer) {
-              return true;
+                return true;
             });
-          
+
             map.getTargetElement().style.cursor = hit ? 'pointer' : '';
-          });
+        });
     }, []);
 
     return (

@@ -1,5 +1,5 @@
 import Category from "../types/Category";
-import Product from "../types/Product";
+import { Product } from "../types/Product";
 import handleApiRes from "./apiResHandler";
 
 async function getCategories(): Promise<Category[]> {
@@ -8,7 +8,7 @@ async function getCategories(): Promise<Category[]> {
 }
 
 async function getTop5categories():Promise<Category[]> {
-    const response = await fetch('/api/category/top5');
+    const response = await fetch('/api/category/topFiveCategories');
     return await handleApiRes(response);
 }
 

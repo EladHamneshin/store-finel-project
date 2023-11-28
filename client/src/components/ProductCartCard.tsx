@@ -2,7 +2,7 @@ import { Typography, CardContent, Box, IconButton, Card } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import cartsAPI from '../api/cartsAPI';
-import Product from '../types/Product';
+import { Product } from '../types/Product';
 import * as cartLocalStorageUtils from '../utils/cartLocalStorageUtils';
 import { toastError } from '../utils/toastUtils';
 import { UserContext } from '../UserContext';
@@ -19,7 +19,7 @@ type Props = {
 const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTotalAmount, updateCartItemQuantity }: Props) => {
     const [cartQuantity, setCartQuantity] = useState<number>(quantity);
     const context = useContext(UserContext)!;
-    const { userInfo} = context
+    const { userInfo } = context
 
     const increaseQuantity = async (productId: string) => {
         if (cartQuantity < product.quantity) {
@@ -30,7 +30,7 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
                     cartLocalStorageUtils.incQuantityOfProduct(productId);
                 }
                 setCartQuantity(cartQuantity + 1);
-                setTotalAmount(totalAmount + product.price);
+                setTotalAmount(totalAmount + product.saleprice);
 
                 updateCartItemQuantity(productId, cartQuantity + 1);
             } catch (error) {
@@ -50,7 +50,7 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
                     cartLocalStorageUtils.decQuantityOfProduct(productId);
                 }
                 setCartQuantity(cartQuantity - 1);
-                setTotalAmount(totalAmount - product.price);
+                setTotalAmount(totalAmount - product.saleprice);
 
                 updateCartItemQuantity(productId, cartQuantity - 1);
             } catch (error) {
@@ -66,33 +66,33 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
     };
 
     return (
-        <Card sx={{margin:2, padding:1}}>
-        <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
-          <Box>
-            <img src={product.imageUrl} alt={product.name} style={{ width: '100px' }} />
-          </Box>
-  
-          <Box flexGrow={1}>
-            <CardContent>
-              <Typography variant="h5">{product.name}</Typography>
-              <Typography variant="body1">{product.description}</Typography>
-              <Typography variant="body2">{`Price: ${product.price}`}</Typography>
-            </CardContent>
-          </Box>
-  
-          <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <IconButton onClick={() => increaseQuantity(product._id)}>+</IconButton>
-            <Typography variant="body1">{cartQuantity}</Typography>
-            <IconButton onClick={() => decreaseQuantity(product._id)}>-</IconButton>
-          </Box>
-  
-          <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <IconButton onClick={() => deleteFromCart(product._id)}>
-              <DeleteForeverIcon />
-            </IconButton>
-          </Box>
-        </Box>
-      </Card>
+        <Card sx={{ margin: 2, padding: 1 }}>
+            <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
+                <Box>
+                    <img src={product.image.url} alt={product.name} style={{ width: '100px' }} />
+                </Box>
+
+                <Box flexGrow={1}>
+                    <CardContent>
+                        <Typography variant="h5">{product.name}</Typography>
+                        <Typography variant="body1">{product.description}</Typography>
+                        <Typography variant="body2">{`Price: ${product.saleprice}`}</Typography>
+                    </CardContent>
+                </Box>
+
+                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+                    <IconButton onClick={() => increaseQuantity(product.id)}>+</IconButton>
+                    <Typography variant="body1">{cartQuantity}</Typography>
+                    <IconButton onClick={() => decreaseQuantity(product.id)}>-</IconButton>
+                </Box>
+
+                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+                    <IconButton onClick={() => deleteFromCart(product.id)}>
+                        <DeleteForeverIcon />
+                    </IconButton>
+                </Box>
+            </Box>
+        </Card>
     );
 };
 

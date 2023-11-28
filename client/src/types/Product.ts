@@ -1,14 +1,17 @@
-import CategoryName from './CategoryName.js';
-
-interface Product {
-  _id: string;
-  quantity: number;
-  price: number;
-  description: string;
-  category: CategoryName;
-  imageUrl: string;
+export interface Product {
+  id: string;
   name: string;
-  clickCount: number;
-  tags:  {[key: string]: string}
+  saleprice: number;
+  quantity: number;
+  description: string;
+  category: string;
+  discount: number;
+  rating: number;
+  click: number;
+  image: { url: string, alt: string },
+  coordinate: { longitude: number, latitude: number },
+  tags1:  { [key: string]: string},
+  tags2: {
+    [key: string]: string
+  };
 }
-export default Product;

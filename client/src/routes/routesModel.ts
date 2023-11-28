@@ -6,7 +6,16 @@ const ROUTES = {
     PRODUCT: '/product/:pid',
     CART: '/cart',
     COMPARE: '/compare/:pid1/:pid2',
-    DEFAULT: '*'
+    DEFAULT: '*',
+    ACCOUNT:'/account',
+    ADDRESS:'/address',
+    SERVICE:'/service',
+    ORDERS:'/orders',
+    SHIPMENT:'/shipment',
+    WISHLIST:'/wishlist',
+    PROFILE:'/profile',
+    CHECKOUT: "/checkout/:totalAmount",
+
 };
 
 export default ROUTES;

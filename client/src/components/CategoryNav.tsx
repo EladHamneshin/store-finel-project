@@ -2,6 +2,8 @@ import { Paper, Typography, Link, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import categoriesAPI from '../api/categoriesAPI';
 import Category from '../types/Category';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const handleClick = async (category: Category) => {
   try {
@@ -43,7 +45,7 @@ export default function CategoryNav() {
         <Link
           href={`/category/${category.name}`}
           underline="none"
-          key={category._id}
+          key={uuidv4()}
           onClick={() => handleClick(category)}
           sx={{
             margin: 0.5,

@@ -1,3 +1,4 @@
+import axios from "axios";
 import CategoryModel from "../models/categoryModel.js";
 import productModel from "../models/productModel.js";
 import { config } from 'dotenv';
@@ -8,25 +9,21 @@ const banner = process.env.BANNER_BASE_URL
 const erp = process.env.ERP_BASE_URL
 
 const getCategories = async () => {
-    const categories = await CategoryModel.find({});
-    return categories;
+    const categorys = await axios.get(`${banner}/api/ext/bannersProduct/top5/products`);
+    return categorys.data.data
 };
-
+//OMS
 const getCategoryProducts = async (name: string) => {
-    const a = await productModel.find();
-    const category = await CategoryModel.findOne({ name }).populate('products').exec();
-    return category;
+    const res = await axios.get(`${erp}/api/shopInventory/categories`)
+    console.log(await res.data)
+    return res.data.data
 };
-
+//BANNERS
 const getTop5Categories = async () => {
-    const response = await fetch(`${erp}/api/shopInventory`);
-    console.log("response", response);
-    return ([response]);
+    const res = await axios.get(`${banner}/api/ext/bannersProduct/top5/products`)
+    console.log(await res.data)
+    return res.data.data
 };
 
-const increaseClickCount = async (name: string) => {
-    return await CategoryModel.findOneAndUpdate(
-        { name: name },
-        { $inc: { clickCount: 1 } },);
-};
-export default { getCategories, getCategoryProducts, getTop5Categories, increaseClickCount};
+
+export default { getCategories, getCategoryProducts, getTop5Categories };

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import productsAPI from '../api/productsAPI';
-import Product from '../types/Product';
+import { Product } from '../types/Product';
 import ProductCard from './ProductCard';
 import { Grid, Typography } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
+
 
 function Top5ProductsPage() {
   const [top5Products, setTop5Products] = useState<Product[]>([]);
@@ -38,8 +40,8 @@ function Top5ProductsPage() {
         alignItems="center"
       >
         {top5Products.map((product) => (
-          <Grid item xs key={product._id}>
-            <ProductCard key={product._id} product={product} />
+          <Grid item xs key={uuidv4()}>
+            <ProductCard key={product.id} product={product} />
           </Grid>
         ))}
       </Grid>

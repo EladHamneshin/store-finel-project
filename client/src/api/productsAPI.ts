@@ -1,4 +1,4 @@
-import Product from "../types/Product";
+import { Product } from "../types/Product";
 import handleApiRes from "./apiResHandler";
 
 async function getTop5Products(): Promise<Product[]> {
@@ -11,21 +11,21 @@ async function getProduct(pid: string): Promise<Product> {
     return await handleApiRes(response);
 }
 
-async function patchProductClick(pid: string): Promise<Product>  {
+async function patchProductClick(pid: string): Promise<Product> {
     const response = await fetch(`/api/products/${pid}/click`, { method: "PATCH" });
     return await handleApiRes(response);
 }
 
-async function checkingAndUpdatingProduct(pid: string, quantity: string): Promise<Product>  {
+async function checkingAndUpdatingProduct(pid: string, quantity: string): Promise<Product> {
     const response = await fetch(`/api/products/${pid}/dec`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({ quantityToDelete: quantity }),
-      });
-  
-      return await handleApiRes(response);
+    });
+
+    return await handleApiRes(response);
 }
 
 

@@ -23,6 +23,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/users/cart', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/category', categoryRoutes);
+// app.use('/api/banners', bannerRoutes);
+// app.use('/api/orders', ordersRoutes);
 app.use(notFound);
 app.use(errorHandler);
 

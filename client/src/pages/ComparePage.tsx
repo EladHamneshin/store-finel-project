@@ -2,7 +2,7 @@ import  { useContext, useEffect, useState } from 'react';
 import productsAPI from '../api/productsAPI';
 import { Box, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import Product from '../types/Product';
+import { Product } from '../types/Product';
 import cartsAPI from '../api/cartsAPI';
 import * as cartLocalStorageUtils from '../utils/cartLocalStorageUtils';
 import CartItem from '../types/CartItem';
@@ -20,7 +20,7 @@ const ComparePage = () => {
         };
         if (userInfo) {
             try {
-                const cart = await cartsAPI.addToCart(product._id, '1');
+                const cart = await cartsAPI.addToCart(product.id, '1');
                 setProductsInCart(cart.items.length);
                 toastSuccess('Added to cart!');
             } catch (error) {
@@ -72,7 +72,7 @@ const ComparePage = () => {
                     <TableBody>
                         <TableRow>
                             <TableCell></TableCell>
-                            {products.map((product, index) => <TableCell key={index} align='center'><img src={product.imageUrl} alt={`${product.name} picture`} /></TableCell>)}
+                            {products.map((product, index) => <TableCell key={index} align='center'><img src={product.image.url} alt={`${product.name} picture`} /></TableCell>)}
                         </TableRow>
                         <TableRow>
                             <TableCell align='center'>Description</TableCell>
@@ -80,11 +80,11 @@ const ComparePage = () => {
                         </TableRow>
                         <TableRow>
                             <TableCell align='center'>Popularity</TableCell>
-                            {products.map((product, index) => <TableCell key={index} align='center'>{product!.clickCount}</TableCell>)}
+                            {/* {products.map((product, index) => <TableCell key={index} align='center'>{product!.clickCount}</TableCell>)} */}
                         </TableRow>
                         <TableRow>
                             <TableCell align='center'>Price</TableCell>
-                            {products.map((product, index) => <TableCell key={index} align='center'>{product!.price}</TableCell>)}
+                            {products.map((product, index) => <TableCell key={index} align='center'>{product!.saleprice}</TableCell>)}
                         </TableRow>
                         <TableRow>
                             <TableCell></TableCell>
