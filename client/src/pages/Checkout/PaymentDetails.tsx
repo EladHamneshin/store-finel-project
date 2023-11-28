@@ -283,7 +283,7 @@ const PaymentDetails = (props: Props) => {
                                 label="Remember credit card details for next time"
                             />
                         </Grid>
-                        <Grid>
+                        <Grid item xs={12}>
                             <Typography variant="h5" sx={{ color: "red" }}>
                                 warning!!!
                             </Typography>

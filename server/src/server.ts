@@ -81,7 +81,7 @@ app.post('/api/payment/order', (req, res) => {
 
 
 const port = 5000;
-export const connectionString = process.env.CONNECTION_STRING 
+export const connectionString = process.env.CONNECTION_STRING; 
 //await connectDB();
 
 
