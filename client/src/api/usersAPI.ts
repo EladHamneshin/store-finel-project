@@ -10,7 +10,7 @@ async function loginUser(email: string, password: string): Promise<UserInfo> {
         },
         body: JSON.stringify({ email, password }),
     });
-    console.log("hi from loginUser:", response);
+    // console.log("hi from loginUser:", response);
     return await handleApiRes(response);
 }
 async function logoutUser(): Promise<{message:string}> {

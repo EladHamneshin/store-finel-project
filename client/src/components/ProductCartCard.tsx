@@ -23,9 +23,11 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
     const { userInfo } = context
 
     
-
+    console.log("hi from ProductCartCard:", quantity);
+    
     const increaseQuantity = async (productId: string) => {
         if (cartQuantity < product.quantity) {
+            console.log("hi from ProductCartCard, cartQuantity:", cartQuantity, "product.quantity:", product.quantity);
             try {
                 if (userInfo) {
                     await cartsAPI.updateQuantity(productId, 'inc');
@@ -34,6 +36,7 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
                 }
                 setCartQuantity(cartQuantity + 1);
                 setTotalAmount(totalAmount + product.salePrice);
+                console.log("hello from increaseQuantity:", cartQuantity);
 
                 updateCartItemQuantity(productId, cartQuantity + 1);
             } catch (error) {
@@ -45,6 +48,7 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
     };
 
     const decreaseQuantity = async (product: CartItem) => {
+        console.log("hi from ProductCartCard, cartQuantity:", cartQuantity, "product.quantity:", product.quantity);
         if (cartQuantity > 1) {
             try {
                 if (userInfo) {
@@ -54,8 +58,10 @@ const ProductCartCard = ({ product, quantity, removeFromCart, totalAmount, setTo
                 }
                 setCartQuantity(cartQuantity - 1);
                 setTotalAmount(totalAmount - product.salePrice);
-
+                
+                
                 updateCartItemQuantity(product.productid, cartQuantity - 1);
+                console.log("hello from decreaseQuantity:", cartQuantity);
             } catch (error) {
                 console.error('Error decreasing quantity:', error);
             }

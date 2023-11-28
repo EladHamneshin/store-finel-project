@@ -61,7 +61,9 @@ const ProductPage = () => {
     };
     //handle add to cart. (if user logged in, products is being added to db at the server, else its stored in localstorage)
     const handleAddToCart = async () => {
+        console.log("hi from handleAddToCart, quantity:", quantity, "product!.quantity:",  product!.quantity);
         if (quantity > product!.quantity) {
+            
             toastError(`Only ${product!.quantity} in stock`);
             return;
         }
@@ -72,7 +74,7 @@ const ProductPage = () => {
                 console.log("hi from cart before fetch",)
                 const cart = await cartsAPI.addToCart(
                     product!.id,
-                    String(product.quantity),
+                    String(quantity),
                     product.name,
                     product.description,
                     product.salePrice,
@@ -91,7 +93,7 @@ const ProductPage = () => {
         } else {
             const itemForCart: CartItem = {
                 productid: product!.id,
-                quantity: product.quantity,
+                quantity: quantity,
                 name: product.name,
                 description: product.description,
                 salePrice: product.salePrice,

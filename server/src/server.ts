@@ -78,11 +78,12 @@ app.post('/api/payment/order', (req, res) => {
 const port = 5000 ;
 
 //await connectDB();
+export const connectionString = process.env.CONNECTION_STRING;
 
 
 app.listen(port, async () => {
-  const pool = new Pool()
-  const res = await pool.connect()
+  const pool = new Pool({connectionString: connectionString})
+  const res = await pool.connect()  
   res.release()
   console.log(`server is running at port ${port}`);
   console.log(`Database connection test completed successfully`);

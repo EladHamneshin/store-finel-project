@@ -2,17 +2,6 @@
 
 CREATE DATABASE fullstack;
 
--- CREATE EXTENSION citext;
-
--- CREATE DOMAIN domain_email AS citext
-
--- CHECK(
-
---    VALUE ~ '^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'
-
--- );
-
--- SELECT 'anvesh@gmail.com'::domain_email;
 
 CREATE TABLE
     IF NOT EXISTS users(
@@ -30,6 +19,7 @@ CREATE TABLE IF NOT EXISTS cartitems (
     userId UUID,
     productId UUID PRIMARY KEY,
     quantity NUMERIC,
+    storeQuantity NUMERIC,
     price NUMERIC,
     name TEXT,
     description TEXT,

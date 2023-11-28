@@ -13,7 +13,6 @@ import { v4 as uuidv4 } from 'uuid';
 const CartPage = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
-    const [emptyCart, setEmptyCart] = useState(true);
     const context = useContext(UserContext)!;
     const { userInfo, setProductsInCart } = context
     const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -38,7 +37,7 @@ const CartPage = () => {
             }
         };
         fetchCart();
-    }, [userInfo, emptyCart]);
+    }, [userInfo]);
     useEffect(() => {
         if (cartItems.length !== 0) {
             const total = cartItems.reduce((sum, item) => {
@@ -112,7 +111,7 @@ const CartPage = () => {
         <Grid container spacing={3} style={{ display: 'flex', alignItems: 'start' }}>
             <Grid item xs={8}>
                 {cartItems.map((item) => (
-                    // console.log("item.productid", item),
+                    console.log("hi from CartPage, item.quantity:", item.quantity),
                     <ProductCartCard
                         key={'ProductCartCard-' + uuidv4()}
                         product={item}

@@ -5,6 +5,7 @@ import type Product from "../types/Product.js";
 import pg, { QueryResult } from "pg";
 import { string } from 'joi';
 const { Pool } = pg;
+import { connectionString } from "../server.js";
 // const b = productModel.find();
 const createCart = async (userId: string) => {
   // return await cartModel.create({ user: userId });
@@ -124,11 +125,9 @@ const decAmount = async (userId: string, productid: string) => {
   return rows;
 };
 const sendQueryToDatabase = async (query: string, values: any[]): Promise<any> => {
-  const pool = new Pool()
+  const pool = new Pool({connectionString: connectionString})
   const res = await pool.connect()
-  // console.log("hi from cartDal, sendQueryToDatabase:", values);
   const data = await res.query(query, values).catch(err => console.log(err));
-  // console.log("hi from cartDal, sendQueryToDatabase:", data);
   res.release()
   return data
 }
