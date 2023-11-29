@@ -1,4 +1,3 @@
-import Cart from './Cart.js';
 
 type User = {
   email: string;

@@ -4,9 +4,11 @@ import { authHandler } from "../middlewares/authMiddleware.js";
 
 const productRouter = express.Router();
 
-productRouter.get('/top5', productcontrollers.getTop5Products);
+productRouter.get('/topFiveProducts', productcontrollers.getTop5Products);
+productRouter.get('/top5ForCategory/:name', productcontrollers.getTop5ForCategory);
 productRouter.get('/:pid', productcontrollers.getProductByID);
-productRouter.patch('/:pid/click', productcontrollers.increaseClickCount);
-productRouter.patch('/:pid/dec',authHandler, productcontrollers.deleteQuantity)
+productRouter.get('/:pid/reviews',productcontrollers.getReviewsFromDB)
+productRouter.get('/:pid/reviews/feedback',productcontrollers.feedbackReviews)
+productRouter.post('/:pid/reviews',productcontrollers.saveReviewsToDB)
 
 export default productRouter;

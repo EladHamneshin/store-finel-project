@@ -1,46 +1,85 @@
 import productsService from "../services/productsService.js";
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
-import mongoose from "mongoose";
+import { string } from "joi";
 
-// @desc    Get product by id
-// @route   GET  /api/products/:pid
-// @access  Public
+
+
+//OMS
 const getProductByID = asyncHandler(async (req: Request, res: Response) => {
-    const {pid} = req.params
-    const productId = new mongoose.Types.ObjectId(pid);
-    const product = await productsService.getProductByID(productId)
-
-    res.json(product)  
+    try {
+        const { pid } = req.params
+        const product = await productsService.getProductByID(pid)
+        res.json(product)
+    } catch (error) {
+        console.log(error);   
+    }
 })
 
-// @desc    Increase clicked count
-// @route   PATCH /api/products/:pid/click
-// @access  Public
-const increaseClickCount = asyncHandler(async (req: Request, res: Response) => {
-    const {pid} = req.params
-    const productId = new mongoose.Types.ObjectId(pid);
-    const increased = await productsService.increaseClickCount(productId)
-    res.json(increased)
+
+const getTop5Products = async (_req: Request, res: Response) => {
+    try {
+        const top5Products = await productsService.getTop5Products();
+        res.json(top5Products);
+    } catch (error) {
+        console.log(error);    
+    }
+}
+
+const getTop5ForCategory = async (req: Request, res: Response) => {
+    try {
+        const { name } = req.params
+        const top5Products = await productsService.getTop5ForCategory(name);
+        console.log('controll');
+        res.json(top5Products);
+    } catch (error) {
+        
+    }
+}
+
+
+const saveReviewsToDB = asyncHandler(async (req: Request, res: Response) => {
+    console.log('this is review', req.body)
 })
 
-// @desc    Decrease quantity
-// @route   PARCH /api/products/:pid/dec
-// @access  Public
-const deleteQuantity = asyncHandler(async (req: Request, res: Response) => {
-    const {pid} = req.params
-    const productId = new mongoose.Types.ObjectId(pid);
-    const {quantityToDelete} = req.body
-    const deleted = await productsService.deleteQuantity(productId, +quantityToDelete)
-    res.json(deleted)
+
+const getReviewsFromDB = asyncHandler(async (req: Request, res: Response) => {
+    const { pid } = req.params
+    const product = [
+        {
+            title: "Great Product",
+            author: "John Doe",
+            body: "Lorem ipsum...",
+            rating: 5,
+            thumbUp: 6,
+            thumbDown: 4,
+        },
+        {
+            title: "Another Product",
+            author: "Jane Smith",
+            body: "Lorem ipsum...",
+            rating: 4,
+            thumbUp: 3,
+            thumbDown: 1,
+        },
+        {
+            title: "Excellent Product",
+            author: "Bob Johnson",
+            body: "Lorem ipsum...",
+            rating: 5,
+            thumbUp: 8,
+            thumbDown: 2,
+        },
+    ];
+    res.json(product)
 })
 
-// @desc    Get top 5 products
-// @route   GET /api/products/top5
-// @access  Public
-const getTop5Products = asyncHandler(async (_req, res) => {  
-    const top5Products = await productsService.getTop5Products();
-    res.json(top5Products);
-  });
+const feedbackReviews = asyncHandler(async (req: Request, res: Response) => {
+    console.log('this is feedback', req.params.pid)
+})
 
-export default {increaseClickCount, getProductByID, deleteQuantity, getTop5Products}
+
+
+
+export default { getProductByID, getTop5Products, saveReviewsToDB, getReviewsFromDB, feedbackReviews, getTop5ForCategory }
+

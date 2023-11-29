@@ -4,50 +4,6 @@ import { GetOrderInterface, OrderInterface, OrderStatusEnum } from '../types/ord
 import { Product } from '../types/Product';
 import { UserContext } from '../UserContext';
 
-const order: OrderInterface = {
-  cartItems: [
-  ],
-  userId: 'user123',
-  orderTime: new Date(),
-  userName: 'John Doe',
-  userEmail: 'john@example.com',
-  status: OrderStatusEnum.Waiting,
-  totalPrice: 250.75,
-  shippingDetails: {
-    address: {
-      country: 'Country Name',
-      city: 'City Name',
-      street: 'Street Name',
-      cellPhone: '1234567890',
-      zipCode: '12345',
-    },
-    contactNumber: '0987654321',
-    orderType: 'Regular',
-  }
-}
-const order2: OrderInterface = {
-  cartItems: [
-  ],
-  userId: 'user123',
-  orderTime: new Date(),
-  userName: 'John Doe',
-  userEmail: 'john@example.com',
-  status: OrderStatusEnum.Waiting,
-  totalPrice: 250.75,
-  shippingDetails: {
-    address: {
-      country: 'Country Name',
-      city: 'City Name',
-      street: 'Street Name',
-      cellPhone: '1234567890',
-      zipCode: '12345',
-    },
-    contactNumber: '0987654321',
-    orderType: 'Regular',
-  }
-}
-const ordersFrom = [order, order2]
-
 
 export default function Orders() {
 
@@ -58,7 +14,7 @@ export default function Orders() {
   const userId = userInfo?.id;
 
   async function getOrders(userId: string | undefined) {
-    const response = await fetch(`http://localhost:3000/${userId}`);
+    const response = await fetch(`http://localhost:5000/${userId}`);
     const data = await response.json();
     setOrders(data);
   }

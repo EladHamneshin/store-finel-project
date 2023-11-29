@@ -17,7 +17,7 @@ const addUser = async (user: User) => {
 	const newUser = await userDal.addUser({ email, password: hashedPassword });
 	console.log(newUser._id);
 	
-	const newCart = await cartDal.createCart( newUser._id)
+	// const newCart = await cartDal.createCart( newUser._id)
 	return newUser;
 }
 

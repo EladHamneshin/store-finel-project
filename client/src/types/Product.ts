@@ -7,11 +7,10 @@ export interface Product {
   category: string;
   discount: number;
   rating: number;
-  click: number;
-  image: { url: string, alt: string },
-  coordinate: { longitude: number, latitude: number },
-  tags1:  { [key: string]: string},
-  tags2: {
-    [key: string]: string
+  clicked: number;
+  image: { url: string; alt: string };
+  coordinate: { longitude: number; latitude: number };
+  tags: {
+    [key: string]: string;
   };
 }

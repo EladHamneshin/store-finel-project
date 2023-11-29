@@ -1,9 +1,9 @@
-import { Types } from 'mongoose';
 import CartItem from './CartItem.js';
 
 interface Cart {
-  user: Types.ObjectId;
-  items: CartItem[];
+    _id: string;
+    user: string;
+    items: CartItem[];
 }
 
 export default Cart;

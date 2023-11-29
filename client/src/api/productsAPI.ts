@@ -2,7 +2,7 @@ import { Product } from "../types/Product";
 import handleApiRes from "./apiResHandler";
 
 async function getTop5Products(): Promise<Product[]> {
-    const response = await fetch('/api/products/top5');
+    const response = await fetch('/api/products/topFiveProducts');
     return await handleApiRes(response);
 }
 

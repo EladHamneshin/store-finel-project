@@ -5,6 +5,7 @@ import pg from "pg";
 const { Pool } = pg;
 import { connectionString } from "../configs/db.js";
 
+
 const addUser = async (user: User) => {
     const query = `INSERT INTO
     users (email, password)
