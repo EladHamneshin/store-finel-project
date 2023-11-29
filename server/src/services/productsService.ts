@@ -4,6 +4,12 @@ import RequestError from "../types/errors/RequestError.js";
 import STATUS_CODES from "../utils/StatusCodes.js";
 
 
+const increaseClickCount = async (ID: string) => {
+    const increased = await productsDal.increaseClickCount(ID)
+        if(!increased) throw new RequestError('product not found', STATUS_CODES.BAD_REQUEST)
+    return increased;
+};
+
 const getProductByID = async (ID: string) => {
     const product = productsDal.getProductByID(ID)
     if (!product)
@@ -28,4 +34,4 @@ const getTop5ForCategory = async (name: string) => {
     return Top5Products;
 }
 
-export default { getProductByID, getTop5Products, getTop5ForCategory }
+export default { getProductByID, getTop5Products, getTop5ForCategory, increaseClickCount }

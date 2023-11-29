@@ -17,6 +17,7 @@ const authHandler = asyncHandler( async (req, _res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = (decoded as JwtPayload).userId;
+    
     next();
   } catch (error) {
     console.error(error);

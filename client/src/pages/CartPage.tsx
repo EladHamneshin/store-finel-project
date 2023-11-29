@@ -21,6 +21,7 @@ const CartPage = () => {
             try {
                 if (userInfo) {
                     const cartData = await cartsAPI.getCart();
+                    console.log(cartData);
                     setCartItems(cartData.items);
                 } else {
                     const localCart = cartLocalStorageUtils.getCart();

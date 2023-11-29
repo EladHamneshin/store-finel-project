@@ -4,6 +4,13 @@ import { Request, Response } from "express";
 import { string } from "joi";
 
 
+const increaseClickCount = asyncHandler(async (req: Request, res: Response) => {
+    const { pid } = req.params
+    const productId = pid;
+    const increased = await productsService.increaseClickCount(productId)
+    res.json(increased)
+})
+
 
 //OMS
 const getProductByID = asyncHandler(async (req: Request, res: Response) => {
@@ -81,5 +88,5 @@ const feedbackReviews = asyncHandler(async (req: Request, res: Response) => {
 
 
 
-export default { getProductByID, getTop5Products, saveReviewsToDB, getReviewsFromDB, feedbackReviews, getTop5ForCategory }
+export default { getProductByID, getTop5Products, saveReviewsToDB, getReviewsFromDB, feedbackReviews, getTop5ForCategory, increaseClickCount }
 

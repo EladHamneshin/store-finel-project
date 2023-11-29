@@ -17,5 +17,9 @@ async function getProductsFromCategory(name: string): Promise<Product[]>{
         return await handleApiRes(response);
 }
 
+async function patchCategoryClick(cname: string): Promise<Category> {
+    const response = await fetch(`/api/category/${cname}/click`, { method: "PATCH" });
+    return await handleApiRes(response);
+}
 
-export default { getCategories, getTop5categories, getProductsFromCategory }
+export default { getCategories, getTop5categories, getProductsFromCategory, patchCategoryClick }
