@@ -31,9 +31,6 @@ const get5Categories = asyncHandler(async (_req, res) => {
   }
 });
 
-
-
-
 export default {
   getCategories,
   getCategoryProducts,
