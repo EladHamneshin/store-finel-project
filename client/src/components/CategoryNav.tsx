@@ -64,6 +64,7 @@ export default function CategoryNav() {
           }}
         >
           <Typography variant="body1">{category.name}</Typography>
+        
         </Link>
       ))}
     </Paper>

@@ -1,9 +1,11 @@
 import Cart from "../types/Cart";
 import handleApiRes from "./apiResHandler";
-
+// import dotenv from "dotenv";
+// dotenv.config();
+//no need for change 
 
 async function getCart(): Promise<Cart> {
-    const response = await fetch('/api/users/cart');
+    const response = await fetch(`/api/users/cart`);
     return await handleApiRes(response);
 }
 

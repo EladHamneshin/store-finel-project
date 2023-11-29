@@ -27,7 +27,7 @@ export default function ProductCard({ product, navigateToOnClick }: props) {
       maxWidth: 300, // adjust this value to change the size of the card
       margin: '5px', 
       boxSizing:'border-box',
-      boxShadow: '0 4px 8px rgba(0, 0, 0.9, 0.8)',
+      boxShadow: '0 5px 8px rgba(0, 0, 0.9, 0.8)',
       marginBlock:'10px',
       transition: 'transform 0.3s', // animate the transform property
       '&:hover': {
