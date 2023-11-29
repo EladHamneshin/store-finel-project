@@ -9,6 +9,8 @@ import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productsRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import bannerRoutes from './routes/bannerRouetes.js';
+import ordersRouter from './routes/ordersRouets.js';
 
 const app = express();
 
@@ -23,8 +25,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/users/cart', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/category', categoryRoutes);
-// app.use('/api/banners', bannerRoutes);
-// app.use('/api/orders', ordersRoutes);
+app.use('/api/banners', bannerRoutes);
+app.use('/api/orders', ordersRouter);
+app.use('/api/reviows', ordersRouter);
 app.use(notFound);
 app.use(errorHandler);
 

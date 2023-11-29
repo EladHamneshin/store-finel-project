@@ -6,24 +6,24 @@ import STATUS_CODES from "../utils/StatusCodes.js";
 
 
 
-const getSideBannersFromBannerTeam = async (userID: string) => {
-    const banners = await bannerDal.getSideFromBanners(userID);
+const getSideBannersFromBannerTeam = async () => {
+    const banners = await bannerDal.getSideFromBanners();
     if (!banners)
-        throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
+        throw new RequestError(' not found', STATUS_CODES.NOT_FOUND);
         console.log( 'service');
     return banners;
 }
-const getTopBanners= async (userID: string) => {
-    const banners = await bannerDal.getTopFromBanners(userID);
+const getTopBanners= async () => {
+    const banners = await bannerDal.getTopFromBanners();
     if (!banners)
-        throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
+        throw new RequestError(' not found', STATUS_CODES.NOT_FOUND);
         console.log( 'service');
     return banners;
 }
 const getAllBanners= async (userID: string) => {
     const banners = await bannerDal.getAllFromBanners(userID);
     if (!banners)
-        throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
+        throw new RequestError(' not found', STATUS_CODES.NOT_FOUND);
         console.log( 'service');
     return banners;
 }

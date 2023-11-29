@@ -1,33 +1,45 @@
-import { useContext, useEffect, useState } from 'react'
-import { Typography, Box, Card } from '@mui/material';
-import { GetOrderInterface, OrderInterface, OrderStatusEnum } from '../types/order';
+import { useContext, useEffect, useState } from 'react';
+import { Typography, Box, Card, CircularProgress } from '@mui/material';
+import { GetOrderInterface, OrderInterface } from '../types/order';
 import { Product } from '../types/Product';
 import { UserContext } from '../UserContext';
 
-
 export default function Orders() {
-
-
-  const [orders, setOrders] = useState<GetOrderInterface[]>()
+  const [orders, setOrders] = useState<GetOrderInterface[] | null>(null); 
+  const [loading, setLoading] = useState<boolean>(true); 
   const context = useContext(UserContext)!;
   const { userInfo } = context;
   const userId = userInfo?.id;
 
   async function getOrders(userId: string | undefined) {
-    const response = await fetch(`http://localhost:5000/${userId}`);
-    const data = await response.json();
-    setOrders(data);
+    try {
+      const response = await fetch(`api/orders${userId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch orders');
+      }
+      const data = await response.json();
+      setOrders(data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      setOrders([]); 
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
-    getOrders(userId)
-  }, [])
+    if (userId) {
+      getOrders(userId);
+    }
+  }, [userId]); 
 
   return (
     <>
-      <div>
+      {loading ? (
+        <CircularProgress /> 
+      ) : orders && orders.length > 0 ? (
         <Card sx={{ margin: 2, padding: 1 }}>
-          {orders?.map((orderData: GetOrderInterface) =>
+          {orders.map((orderData: GetOrderInterface) =>
             orderData.orders.map((order: OrderInterface) => (
               <div key={order.orderTime.toString()}>
                 {order.cartItems?.map((product: Product) => (
@@ -48,8 +60,10 @@ export default function Orders() {
             ))
           )}
         </Card>
-      </div>
+      ) : (
+        <Typography variant="h6">No orders available</Typography>
+        // Rendering if orders are null, empty, or fetching failed
+      )}
     </>
   );
-
 }

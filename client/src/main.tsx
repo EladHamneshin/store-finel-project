@@ -10,6 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <UserContextProvider>
       <BrowserRouter>
         <Router/>
+    <div>hi</div>
       </BrowserRouter>
     </UserContextProvider>
   </React.StrictMode>,

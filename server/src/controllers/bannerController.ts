@@ -5,18 +5,29 @@ import bannerService from "../services/bannerService.js";
 
 
 const getBannersSide = async (_req: Request, res: Response) => {  
-  const top5Products = await bannerService.getSideBannersFromBannerTeam(_req.userId as unknown as string);
-  console.log('controll');
-  res.json(top5Products);
+  try {
+    const banner = await bannerService.getSideBannersFromBannerTeam();
+    res.json(banner);
+    console.log('controll');
+  } catch (error) {
+    console.log(error);
+    
+  }
 }
 const getBannersTop = async (_req: Request, res: Response) => {  
-    const top5Products = await bannerService.getTopBanners(_req.userId as unknown as string);
+  try {
+    const banner = await bannerService.getTopBanners();
+    res.json(banner);
     console.log('controll');
-    res.json(top5Products);
+  } catch (error) {
+    console.log(error);
+    
   }
+}
   
-const getBannersAll = async (_req :Request, res:Response) => {  
-    const top5Products = await bannerService.getAllBanners(_req.userId as unknown as string);
+const getBannersAll = async (req :Request, res:Response) => { 
+  const {userID} = req.params
+    const top5Products = await bannerService.getAllBanners( userID);
     console.log('controll');
     res.json(top5Products);
   }

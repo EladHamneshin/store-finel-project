@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { BannerInterface } from '../types/banner';
 
-export default function BannerTop() {
-  const [banner, setBanner] = useState<BannerInterface | null>(null); 
+export default function BannerAll() {
+  const [banner, setBanner] = useState<|BannerInterface| null>(null); 
 
   async function getProducts() {
     try {

@@ -1,32 +1,37 @@
-import {useEffect,useState} from 'react'
-import { Typography, Box, Card } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { BannerInterface } from '../types/banner';
 
+export default function BannerSide() {
+  const [banner, setBanner] = useState<BannerInterface | null>(null); 
 
-export default function BannerTop() {
-    const [banner, setBanner] = useState<BannerInterface>()
-
-    async function getProducts() {
-        const response = await fetch('http://localhost:3000/bannerSide');
-        const data = await response.json();
-        setBanner(data);
+  async function getProducts() {
+    try {
+      const response = await fetch('api/banners/sideBanners');
+      if (!response.ok) {
+        throw new Error('Failed to fetch banner');
+      }
+      const data = await response.json();
+      console.log(data[0]);
+      setBanner(data[0]);
+    } catch (error) {
+      console.error('Error fetching banner:', error);
+      setBanner(null); 
     }
+  }
 
-   useEffect(() => {
-    getProducts()
-   }, [])
-
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <>
-    <Card sx={{margin:2, padding:1}}>
-   <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
-    <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }} />
-</Box>
-<Box>
-    <Typography variant="h5">{banner?.name}</Typography>
-</Box>
-</Card>
-
-</>  )
+      {banner ? (
+        <div style={{ position: 'fixed', height: '500px', left: 0, top: 75, zIndex: 1000 }}>
+          <img src={banner?.image.url} alt={banner?.image.alt} style={{ width: '100px' }} />
+        </div>
+      ) : (
+        <p>Banner not available</p>
+      )}
+    </>
+  );
 }
