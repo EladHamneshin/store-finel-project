@@ -18,10 +18,9 @@ config();
 const app = express();
 
 // APP CONFIGS
-// console.log(process.env);
 app.use(
     cors({
-        origin: "*",
+        origin: "https://my-private-api.vercel.app/",
     })
 );
 app.use(morgan("dev"));
@@ -63,8 +62,8 @@ app.use(errorHandler);
 // });
 
 const port = 5000;
+
 export const connectionString = process.env.CONNECTION_STRING;
-//await connectDB();
 app.listen(port, async () => {
     const pool = new Pool({ connectionString: connectionString });
     const res = await pool.connect();
