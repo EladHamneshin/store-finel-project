@@ -11,6 +11,8 @@ import { useContext, useMemo } from 'react'
 import { UserContext } from './UserContext'
 import { Box } from '@mui/material'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { config } from "dotenv";
+config()
 
 function App() {
     const context = useContext(UserContext)!;
