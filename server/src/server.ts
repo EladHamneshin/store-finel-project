@@ -91,5 +91,5 @@ app.listen(port, async () => {
   res.release()
   console.log(`Database connection test completed successfully`);
   console.log(`\nServer is running at port ${port}...`);
-
+  
 });
