@@ -43,7 +43,7 @@ const styles = [
     })
 ];
 
-const features = locations.map((location: any) => {
+const features = locations.map((location: Location) => {
     return new Feature({
         geometry: new Point(fromLonLat([location.lon, location.lat])),
         name: location.name,

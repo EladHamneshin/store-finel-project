@@ -11,8 +11,13 @@ import cartRoutes from './routes/cartRoutes.js';
 import pg from "pg";
 const { Pool } = pg;
 import { config } from 'dotenv';
+import ordersRouter from './routes/ordersRouets.js';
+import bannerRoutes from './routes/bannerRouetes.js';
 config();
+
 const app = express();
+
+
 // APP CONFIGS
 // console.log(process.env);
 app.use(cors());
@@ -23,11 +28,17 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/users', cartRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/orders', ordersRouter);
+app.use('/api/banner', bannerRoutes);
 app.use('/api', categoryRoutes);
+
 // =====================================================
 // app.use(notFound);    צריך בדיקה, חוסם שליחת בקשות.
 // =====================================================
+
 app.use(errorHandler);
+
+
 // Payment.
 // =====================================================================
 // Credit.
@@ -48,6 +59,8 @@ app.post('/api/payment/check', (req, res) => {
     }
   }, 3000); // השהייה של 3 שניות
 });
+
+
 // Order.
 app.post('/api/payment/order', (req, res) => {
   const order = req.body;
@@ -61,6 +74,9 @@ app.post('/api/payment/order', (req, res) => {
   }, 3000); // השהייה של 3 שניות
 });
 // ======================================================================
+
+
+
 const port = 5000;
 export const connectionString = process.env.CONNECTION_STRING
 //await connectDB();

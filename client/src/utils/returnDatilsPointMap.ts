@@ -20,6 +20,8 @@ async function getLocationInfo(lat: number, lon: number): Promise<{ name: string
 
             if (photoReference) {
                 imgUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${apiKey}`;
+            } else{
+                imgUrl = "https://images.pexels.com/photos/139303/pexels-photo-139303.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             }
             console.log({ name, address, imgUrl });
 
