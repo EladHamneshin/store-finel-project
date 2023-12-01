@@ -11,8 +11,7 @@ import { useContext, useMemo } from 'react'
 import { UserContext } from './UserContext'
 import { Box } from '@mui/material'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
-import { config } from "dotenv";
-config()
+
 
 function App() {
     const context = useContext(UserContext)!;
@@ -31,6 +30,11 @@ function App() {
             },
         },
     }), [mode])
+
+    console.log(import.meta.env.VITE_API_KEY_LOCATION);
+    console.log(import.meta.env.VITE_PAYPAL_CLIENT_ID);
+    console.log(import.meta.env.VITE_NODE_ENV);
+
 
     return (
         <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
