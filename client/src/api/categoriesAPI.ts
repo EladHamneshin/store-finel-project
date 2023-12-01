@@ -1,8 +1,6 @@
 import Category from "../types/Category";
 import {Product} from "../types/Product";
 import handleApiRes from "./apiResHandler";
-// import dotenv from "dotenv";
-// dotenv.config();
 
 
 
