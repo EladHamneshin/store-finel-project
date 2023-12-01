@@ -9,7 +9,7 @@ import { config } from "dotenv";
 config()
 
 
-if (process.env.VITE_NODE_ENV === "production") disableReactDevTools()
+if (import.meta.env.VITE_NODE_ENV === "production") disableReactDevTools()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

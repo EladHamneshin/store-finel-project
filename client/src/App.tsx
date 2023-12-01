@@ -33,7 +33,7 @@ function App() {
     }), [mode])
 
     return (
-        <PayPalScriptProvider options={{ clientId: process.env.VITE_PAYPAL_CLIENT_ID! }}>
+        <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <AppBar />
