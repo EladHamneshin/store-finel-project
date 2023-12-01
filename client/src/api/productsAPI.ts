@@ -4,7 +4,7 @@ import handleApiRes from "./apiResHandler";
 // external
 async function getTop5Products(): Promise<Product[]> {
 
-    const response = await fetch('/api/products/topFiveProducts');
+    const response = await fetch('https://store-yxvx.onrender.com/api/products/topFiveProducts');
     
     const res = await handleApiRes(response);
     return res

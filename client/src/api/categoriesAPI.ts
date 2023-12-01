@@ -5,7 +5,7 @@ import handleApiRes from "./apiResHandler";
 
 
 async function getCategories(): Promise<Category[]> {
-    const response = await fetch(`/api/categories`);
+    const response = await fetch(`https://store-yxvx.onrender.com/api/categories`);
     return await handleApiRes(response);
 }
 
