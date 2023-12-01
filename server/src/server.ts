@@ -1,5 +1,4 @@
 import cors from "cors";
-import dotenv from "dotenv";
 import morgan from "morgan";
 import express from "express";
 import cookieParser from "cookie-parser";
@@ -20,7 +19,7 @@ const app = express();
 // APP CONFIGS
 app.use(
     cors({
-        origin: "https://my-private-api.vercel.app/",
+        origin: "https://my-private-store.vercel.app/",
     })
 );
 app.use(morgan("dev"));
