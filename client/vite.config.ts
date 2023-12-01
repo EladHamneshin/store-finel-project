@@ -10,7 +10,6 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const processEnv = {};
   arrayOfKeys.forEach(key => processEnv[key] = env[key]);
-  console.log(processEnv);
   
   return {
     define: {
@@ -24,7 +23,7 @@ export default defineConfig(({ mode }) => {
           // development
           // target: 'http://localHost:5000',
           // for prodoction only:
-          target: 'https://My-private-client.onrender.com',
+          target: 'https://store-yxvx.onrender.com',
           changeOrigin: true,
         }
       }

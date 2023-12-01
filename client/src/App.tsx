@@ -31,10 +31,6 @@ function App() {
         },
     }), [mode])
 
-    console.log(import.meta.env.VITE_API_KEY_LOCATION);
-    console.log(import.meta.env.VITE_PAYPAL_CLIENT_ID);
-    console.log(import.meta.env.VITE_NODE_ENV);
-
 
     return (
         <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID }}>
