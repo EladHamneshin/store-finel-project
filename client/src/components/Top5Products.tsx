@@ -11,7 +11,6 @@ function Top5ProductsPage() {
     const fetchTop5Products = async () => {
       try {
         const top5Products = await productsAPI.getTop5Products();
-        console.log('top5Products:', top5Products);
         setTop5Products(top5Products);
 
       } catch (error) {

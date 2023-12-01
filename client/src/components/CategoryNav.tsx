@@ -2,7 +2,7 @@ import { Paper, Typography, Link, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import categoriesAPI from '../api/categoriesAPI';
 import Category from '../types/Category';
-
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function CategoryNav() {
@@ -37,7 +37,7 @@ export default function CategoryNav() {
         <Link
           href={`/category/${category.name}`}
           underline="none"
-          key={category._id}
+          key= {uuidv4()}
           sx={{
             margin: 0.5,
             padding: 1,
