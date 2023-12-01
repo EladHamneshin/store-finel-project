@@ -20,7 +20,7 @@ const products:Product[] = [
       latitude3: -122.6795,
     },
     image: {
-      url: "https://example.com/product1.jpg",
+      url: "https://tinyurl.com/54v6k6p3",
       alt: "Product 1 Image",
     },
     tags: {
@@ -47,7 +47,7 @@ const products:Product[] = [
       latitude3: 0.1278,
     },
     image: {
-      url: "https://example.com/product2.jpg",
+      url: "https://tinyurl.com/54v6k6p3",
       alt: "Product 2 Image",
     },
     tags: {
@@ -74,7 +74,7 @@ const products:Product[] = [
         latitude3: 139.6917,
       },
       image: {
-        url: "https://example.com/product6.jpg",
+        url: "https://tinyurl.com/54v6k6p3",
         alt: "Product 6 Image",
       },
       tags: {
@@ -101,7 +101,7 @@ const products:Product[] = [
         latitude3: -0.1278,
       },
       image: {
-        url: "https://example.com/product7.jpg",
+        url: "https://tinyurl.com/54v6k6p3",
         alt: "Product 7 Image",
       },
       tags: {
@@ -128,7 +128,7 @@ const products:Product[] = [
         latitude3: -0.1278,
       },
       image: {
-        url: "https://example.com/product7.jpg",
+        url: "https://tinyurl.com/54v6k6p3",
         alt: "Product 5 Image",
       },
       tags: {

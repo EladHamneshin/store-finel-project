@@ -12,6 +12,7 @@ const { Pool } = pg;
 import { config } from "dotenv";
 import ordersRouter from "./routes/ordersRouets.js";
 import bannerRoutes from "./routes/bannerRouetes.js";
+import bodyParser  from "body-parser";
 config();
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(bodyParser.json())
 app.use("/api/users", userRoutes);
 app.use("/api/users", cartRoutes);
 app.use("/api/products", productRoutes);

@@ -19,10 +19,9 @@ const getProductByID = async (id:string) => {
 
 const getTop5Products =  async () => {
     const data = products
-    // console.log('hellow from dal', data);
-    return data 
     // const res = await axios.get(`${process.env.BANNER_BASE_URI}/api/topFiveCategories`)
     // return res.data
+    return data 
 };
 
 const getTop5ForCategory = async (name: string) => {
