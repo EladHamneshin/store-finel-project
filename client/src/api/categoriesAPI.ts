@@ -10,7 +10,7 @@ async function getCategories(): Promise<Category[]> {
 }
 
 async function getTop5categories():Promise<Category[]> {
-    const response = await fetch(`/api/topFiveCategories`);
+    const response = await fetch(`https://store-yxvx.onrender.com/api/topFiveCategories`);
     return await handleApiRes(response);
 }
 
