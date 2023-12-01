@@ -5,7 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 import Router from './routes/router.tsx'
 import UserContextProvider from './UserContext.tsx'
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
-
+import { config } from "dotenv";
+config()
 
 
 if (process.env.VITE_NODE_ENV === "production") disableReactDevTools()
