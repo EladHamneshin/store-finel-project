@@ -7,7 +7,8 @@ import UserContextProvider from './UserContext.tsx'
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 
 
-if (import.meta.env.NODE_ENV === "production") disableReactDevTools()
+
+if (import.meta.env.VITE_NODE_ENV === "production") disableReactDevTools()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
