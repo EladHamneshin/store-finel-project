@@ -20,7 +20,7 @@ const app = express();
 // APP CONFIGS
 app.use(
     cors({
-        origin: "https://my-private-store.vercel.app/",
+        origin: "https://my-private-store.vercel.app",
     })
 );
 app.use(morgan("dev"));
