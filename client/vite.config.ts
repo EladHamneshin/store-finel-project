@@ -21,9 +21,9 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           // development
-          // target: 'http://localHost:5000',
+          // target: 'http://localHost:5000/',
           // for prodoction only:
-          target: 'https://store-yxvx.onrender.com',
+          target: 'https://store-yxvx.onrender.com/',
           changeOrigin: true,
         }
       }
