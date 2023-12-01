@@ -3,7 +3,7 @@ import { Location } from "../types/location";
 
 
 async function getLocationInfo(lat: number, lon: number): Promise<{ name: string, address: string, imgUrl: string }> {
-    const apiKey = import.meta.env.VITE_API_KEY_LOCATION;
+    const apiKey = process.env.VITE_API_KEY_LOCATION;
     const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${apiKey}`;
     
     try {
