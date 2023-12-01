@@ -1,4 +1,6 @@
 import { Location } from "../types/location";
+import { config } from "dotenv";
+config()
 
 
 
