@@ -55,7 +55,7 @@ const AppBar = () => {
   const [searchQuery, setSearchQuery] = React.useState<Product[]>([]);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    navigate('/Account');
+    navigate('/store/Account');
     setAnchorElUser(event.currentTarget);
   };
 

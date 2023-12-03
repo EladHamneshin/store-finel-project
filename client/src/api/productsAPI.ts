@@ -4,7 +4,7 @@ import handleApiRes from "./apiResHandler";
 // external
 async function getTop5Products(): Promise<Product[]> {
 
-    const response = await fetch('https://store-yxvx.onrender.com/api/products/topFiveProducts');
+    const response = await fetch(`${import.meta.env.VITE_API_URI}/products/topFiveProducts`);
     
     const res = await handleApiRes(response);
     return res
@@ -15,7 +15,7 @@ async function getTop5Products(): Promise<Product[]> {
 // external
 async function sendReviewToDB(pid: string, title: string, review: string, rating: number,author:string,userId:string): Promise<Product> {
 
-    const response = await fetch(`/api/products/${pid}/reviews`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URI}/products/${pid}/reviews`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -29,23 +29,23 @@ async function sendReviewToDB(pid: string, title: string, review: string, rating
 
 async function getProductById(pid: string): Promise<Product[]> {
     console.log('hello from apiProduct',pid);
-    const response = await fetch(`/api/products/${pid}`);
+    const response = await fetch(`${import.meta.env.VITE_API_URI}/products/${pid}`);
     return await handleApiRes(response);
 }
 
 async function getReviewsByProductIdFromDB(pid: string): Promise<Product[]> {
-    const response = await fetch(`/api/products/${pid}/reviews`);
+    const response = await fetch(`${import.meta.env.VITE_API_URI}/products/${pid}/reviews`);
     return await handleApiRes(response);
 }
 
 async function searchProducts(searchTerm: string): Promise<Product[]> {
-    const response = await fetch(`https://9eedfc32-4177-4a3b-9a23-f580cfee1c19.mock.pstmn.io//api/shopInventory/${searchTerm}`);
+    const response = await fetch(`${import.meta.env.VITE_API_URI}/shopInventory/${searchTerm}`);
     console.log('hello from apiProduct: search',response);
     return await handleApiRes(response);
 }
 
 async function reviewFeedbackProduct(feedback:boolean){
-    const response = await fetch(`/api/products/${feedback}/reviews/feedback`);
+    const response = await fetch(`${import.meta.env.VITE_API_URI}/products/${feedback}/reviews/feedback`);
     return await handleApiRes(response);
 }
 

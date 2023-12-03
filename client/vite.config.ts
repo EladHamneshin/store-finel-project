@@ -18,15 +18,15 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       port: 5173,
-      proxy: {
-        '/api': {
-          // development
-          // target: 'http://localHost:5000/',
-          // for prodoction only:
-          target: 'https://store-yxvx.onrender.com/',
-          changeOrigin: true,
-        }
-      }
+      // proxy: {
+      //   '/api': {
+      //     // development
+      //     // target: 'http://localHost:5000/',
+      //     // for prodoction only:
+      //     target: 'https://store-yxvx.onrender.com/',
+      //     changeOrigin: true,
+      //   }
+      // }
     },
     build: {
       rollupOptions: {

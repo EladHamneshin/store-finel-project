@@ -16,24 +16,23 @@ import bodyParser  from "body-parser";
 config();
 
 const app = express();
-
-// APP CONFIGS
 app.use(
     cors({
-        origin: "https://my-private-store.vercel.app",
+        // origin: process.env.STORE_BASE_URL,
+        origin: "*",
     })
 );
+app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(bodyParser.json())
-app.use("/api/users", userRoutes);
-app.use("/api/users", cartRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/orders", ordersRouter);
-app.use("/api/banner", bannerRoutes);
-app.use("/api", categoryRoutes);
+app.use("/users", userRoutes);
+app.use("/users", cartRoutes);
+app.use("/products", productRoutes);
+app.use("/orders", ordersRouter);
+app.use("/banner", bannerRoutes);
+app.use("/", categoryRoutes);
 
 app.use(errorHandler);
 

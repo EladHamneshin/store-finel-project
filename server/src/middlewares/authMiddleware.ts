@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 import STATUS_CODES from '../utils/StatusCodes.js';
 import RequestError from '../types/errors/RequestError.js';
 
-const authHandler = asyncHandler( async (req, _res, next) => {
+const authHandler = asyncHandler( async (req, res, next) => {
   const token = req.cookies.jwt;
   if (!token)
     throw new RequestError('Not authorized, no token', STATUS_CODES.UNAUTHORIZED);
@@ -14,9 +14,7 @@ const authHandler = asyncHandler( async (req, _res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = (decoded as JwtPayload).userId;
-    console.log("hello from authHandler:", req.userId);
-    
+    req.userId = (decoded as JwtPayload).userId;    
     next();
   } catch (error) {
     console.error(error);

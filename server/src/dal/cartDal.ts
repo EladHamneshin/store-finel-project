@@ -65,7 +65,7 @@ const updateAmount = async (userId: string, productid: string, quantity: number)
   return rows;
 };
 const sendToOms = async (cart: Cart) => {
-  const res = await axios.post('localhost:3000/api/cart', cart)
+  const res = await axios.post('localhost:3000/cart', cart)
   console.log('hi')
   return res
 }

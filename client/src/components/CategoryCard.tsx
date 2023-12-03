@@ -13,7 +13,7 @@ export default function CategoryCard({ category }: props) {
   const navigate = useNavigate();
   const handleClick = async () => {
     try {
-        navigate(`/category/${category.name}`);
+        navigate(`/store/category/${category.name}`);
       } catch (err) {
         console.error((err as Error).message);
       }    

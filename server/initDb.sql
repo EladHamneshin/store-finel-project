@@ -16,7 +16,7 @@ CREATE DATABASE fullstack;
 
 CREATE TABLE
     IF NOT EXISTS users(
-        user_id uuid PRIMARY KEY DEFAULT gen_random_uuid (),
+        userid uuid PRIMARY KEY DEFAULT gen_random_uuid (),
         name TEXT,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
@@ -29,13 +29,13 @@ CREATE TABLE
 CREATE TABLE IF NOT EXISTS cartitems (
     userId UUID,
     productId UUID PRIMARY KEY,
-    storeQuantity NUMERIC,
+    quantity NUMERIC,
     quantityOfProduct NUMERIC,
-    price NUMERIC,
+    salePrice NUMERIC,
     name TEXT,
     description TEXT,
     discount NUMERIC,
-    image TEXT,
+    image JSONB DEFAULT '{"image": {"url": " "}}',
     UNIQUE(productId, userId),
     CONSTRAINT userId
     FOREIGN KEY(userId)
@@ -46,16 +46,16 @@ CREATE TABLE IF NOT EXISTS cartitems (
 
 
 CREATE TABLE IF NOT EXISTS reviews(
-    user_id UUID NOT NULL, 
-    product_id UUID NOT NULL, 
+    userid UUID NOT NULL, 
+    productid UUID NOT NULL, 
     author TEXT,
     title TEXT, 
     body TEXT, 
     rating NUMERIC, 
     thumbUp NUMERIC, 
     thumbDown NUMERIC,
-    CONSTRAINT user_id FOREIGN KEY(user_id) REFERENCES users(user_id),
-    CONSTRAINT product_id FOREIGN KEY(product_id) REFERENCES cartitems(product_id)
+    CONSTRAINT userid FOREIGN KEY(userid) REFERENCES users(userid),
+    CONSTRAINT productid FOREIGN KEY(productid) REFERENCES cartitems(productid)
 );
 
 DROP Table users ;

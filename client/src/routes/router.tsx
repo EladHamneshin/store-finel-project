@@ -19,7 +19,7 @@ import CategoryPage from "../pages/CategoryPage";
 const Router = () => {
     return (
         <Routes>
-            <Route path={'/'} element={<App />}>
+            <Route path={'/store'} element={<App />}>
                 <Route index={true} path={ROUTES.HOME} element={<HomePage/>} />
                 <Route path={ROUTES.LOGIN} element={<LoginPage/>} />
                 <Route path={ROUTES.REGISTER} element={<RegisterPage/>} />

@@ -116,7 +116,7 @@ const CartPage = () => {
     const buyNow = async () => {
         if (userInfo) {
             console.log("Product purchased!");
-            navigate(`/checkout/${totalAmount.toFixed(2) || 0}`);
+            navigate(`/store/checkout/${totalAmount.toFixed(2) || 0}`);
         } else {
             navigate(ROUTES.LOGIN);
         }

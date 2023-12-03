@@ -78,7 +78,7 @@ const RegisterPage = () => {
       console.log(email);
       const templateParams = {
         email: String(email),
-        "contact": <Link href={"class4store@gmail.com"}>contact us</Link>
+        contact: <link href={"class4store@gmail.com"}>contact us</link>
       };
       sendEmail(templateParams)
       navigate(ROUTES.LOGIN);

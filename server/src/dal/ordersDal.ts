@@ -5,12 +5,12 @@ const erp = process.env.ERP_BASE_URL;
 const oms = process.env.OMS_BASE_URL;
 
 const sendToOms = async (order: OrderInterface) => {
-  const res = await axios.post(`${oms}api/orders`, order);
+  const res = await axios.post(`${oms}/orders`, order);
   return res.data.data;
 };
 
 const getFromOms = async (userId: string) => {
-  const res = await axios.get(`${oms}api/orders/${userId}`);
+  const res = await axios.get(`${oms}/orders/${userId}`);
   return res.data.data;
 };
 

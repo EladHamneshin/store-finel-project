@@ -13,7 +13,7 @@ export default function Orders() {
 
   async function getOrders(userId: string | undefined) {
     try {
-      const response = await fetch(`api/orders${userId}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URI}/orders${userId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch orders');
       }
