@@ -15,10 +15,10 @@ import ordersRouter from "./routes/ordersRouets.js";
 import bannerRoutes from "./routes/bannerRouetes.js";
 config();
 
+
 const app = express();
 
-// APP CONFIGS
-// console.log(process.env);
+// App configurations
 app.use(
     cors({
         origin: "*",
@@ -38,13 +38,37 @@ app.use("/api/", categoryRoutes);
 app.use(errorHandler);
 
 
-const port = 5000;
+
 export const connectionString = process.env.CONNECTION_STRING;
-//await connectDB();
-app.listen(port, async () => {
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, async () => {
     const pool = new Pool();
     const res = await pool.connect();
     res.release();
     console.log(`Database connection test completed successfully`);
-    console.log(`\nServer is running at port ${port}...`);
+    console.log(`\nServer running at http://localhost:${PORT}`);
 });
+
+
+// ============================================================================
+
+// GraphQL.
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+import typeDefs from './GraphQL/schemas/schema.js'
+import resolvers from './GraphQL/resolvers/resolvers.js';
+
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+});
+
+
+const { url } = await startStandaloneServer(server, {
+    listen: { port: 4000 },
+});
+
+console.log(`🚀  Server ready at: ${url}`);
