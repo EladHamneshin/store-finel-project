@@ -35,9 +35,9 @@ type Product {
 
 
 type Query {
-  getProductByID(id: ID!): Product
-  getProductBySearch(search: String!): [Product]
-  getTop5Products: [Product]
-  getProductsByCategory(name: String!): [Product]
+  getProductByID(pid: String!): Product
+  getTop5Products: [Product]!
+  getProductBySearch(searchItem: String!): [Product]!
+  getProductsByCategory(name: String!): [Product]!
 }
 `;

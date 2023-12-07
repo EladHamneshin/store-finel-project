@@ -7,7 +7,6 @@ export const categoriesTypeDefs = `
 
   type Query {
     getCategories: [Category]!
-    getCategoryByName(name: String!): Category
     getTop5ForCategories: [Category]!
   }
 `;

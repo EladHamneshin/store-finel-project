@@ -1,56 +1,61 @@
-import userDal from "../../dal/userDal.js"
-import User from "../../types/User.js";
+import STATUS_CODES from "../../utils/StatusCodes.js";
+import RequestError from "../../types/errors/RequestError.js";
+import userService from "../../services/userService.js";
+import userValidation from "../../utils/validations/userValidation.js";
 
 interface ResolverArgs {
-    user: User;
     userid: string;
-    email: string;
+    newUser: {
+        email: string;
+        password: string;
+    };
 }
 
 export const usersResolver = {
     Query: {
-        getAllUsers: async () => {
-            try {
-                const rows = await userDal.getAllUser();
-                return rows;
-            } catch (error) {
-                console.error("Error in getAllUsers resolver:", error);
-                throw new Error("Failed to fetch all users");
-            }
-        },
         getUser: async (_: any, { userid }: ResolverArgs) => {
             try {
-                console.log("Fetching user with id:", userid);
-                const rows = await userDal.getUser(userid);
-                return rows[0];
-            } catch (error) {
-                console.error("Error in getUser resolver:", error);
-                throw new Error("Failed to fetch user");
-            }
-        },
-        getUserByEmail: async (_: any, { email }: ResolverArgs) => {
-            try {
-                console.log("Fetching user with email:", email);
-                const rows = await userDal.getUserByEmail(email);
-                console.log(rows);
+                // Get user by ID
+                const user = await userService.getUser(userid);
+                console.log("deghaerhehe",user);
                 
-                return rows[0];
+                return user[0];
             } catch (error) {
-                console.error("Error in get user by email resolver:", error);
-                throw new Error("Failed to fetch user by email");
+                throw new RequestError("Failed to fetch user", STATUS_CODES.INTERNAL_SERVER_ERROR);
             }
         },
     },
-    Mutation: {
-        addUser: async (_: any, { user }: ResolverArgs) => {
-            try {
-                const rows = await userDal.addUser(user);
-                return rows[0];
-            } catch (error) {
-                console.error("Error in addUser resolver:", error);
-                throw new Error("Failed to add user");
-            }
-        },
-    },
-};
 
+    Mutation: {
+        registerUser: async (_: any, { newUser}: ResolverArgs) => {
+            try {
+                // Validate user input
+                const { error } = userValidation(newUser);
+                if (error) {
+                    // Throw a request error if validation fails
+                    throw new RequestError(error.message, STATUS_CODES.BAD_REQUEST);
+                }
+                
+                
+                // Add user if validation passes
+                const user = await userService.addUser(newUser);
+                return user[0];
+            } catch (error) {
+                throw new RequestError("Failed to register user", STATUS_CODES.INTERNAL_SERVER_ERROR);
+            }
+        },
+
+        logoutUser: (_: any, res: any) => {
+            try {
+                // Logout user by clearing JWT cookie
+                res.cookie('jwt', '', {
+                    httpOnly: true,
+                    expires: new Date(0),
+                });
+                return { message: 'Logged out successfully' };
+            } catch (error) {
+                throw new RequestError("Failed to logout user", STATUS_CODES.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+};

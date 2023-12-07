@@ -11,15 +11,6 @@ const getCategories = async () => {
     return categorys;
 }
 
-const getCategoryProducts = async (req: Request) => {
-    console.log("hi from service getCategoryProducts:", req.params);
-    const { name } = req.params;
-    const categoryProducts = await productsDal.getProductsByCategory(name);
-    if (!categoryProducts)
-        throw new RequestError('Category not found', STATUS_CODES.NOT_FOUND);
-    return categoryProducts;
-
-}
 const getTop5Categories = async () => {
     const category = await categoryDal.getTop5Categories();
     if (!category)
@@ -28,4 +19,4 @@ const getTop5Categories = async () => {
 }
 
 
-export default { getCategories, getCategoryProducts, getTop5Categories }
+export default { getCategories, getTop5Categories }

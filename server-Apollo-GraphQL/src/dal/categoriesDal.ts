@@ -17,15 +17,6 @@ const getCategories = async () => {
     return data
 };
 
-const getCategoryByName = async (name: string) => {
-    // const res = await axios.get(`${banner}/topFiveCategories/${name}`)
-    // console.log(res);
-    // return res.data
-
-    const data = categories.find((categorie) => categorie.name === name)
-    return data
-};
-
 // BANNERS 
 const getTop5Categories = async () => {
     const res = await axios.get(`${banner}/ext/bannersProduct/top5/categories`)
@@ -35,4 +26,4 @@ const getTop5Categories = async () => {
     throw new Error("Error fetching top 5 categories");
 };
 
-export default { getCategories, getCategoryByName, getTop5Categories };
+export default { getCategories, getTop5Categories };

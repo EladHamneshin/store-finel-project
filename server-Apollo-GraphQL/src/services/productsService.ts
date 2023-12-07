@@ -1,7 +1,6 @@
 import productsDal from "../dal/productsDal.js";
 import RequestError from "../types/errors/RequestError.js";
 import STATUS_CODES from "../utils/StatusCodes.js";
-import reviewsDal from "../dal/reviewsDal.js";
 
 
 
@@ -20,40 +19,20 @@ const getTop5Products = async () => {
     return Top5Products;
 }
 
-// const getTop5ForCategory = async (name: string) => {
-//     const Top5Products = await productsDal.getTop5ForCategory(name);
-//     if (!Top5Products)
-//         throw new RequestError('Top5Products not found', STATUS_CODES.NOT_FOUND);
-//     console.log('service');
-//     return Top5Products;
-// }
-
-const saveReviewsToDB = async (reviews: any, pid: string) => {
-    const product = await reviewsDal.saveReviewsToDB(reviews, pid)
-    if (!product)
-        throw new RequestError('product not found', STATUS_CODES.BAD_REQUEST)
-    return product
-}
-
-const getReviewsFromDB = async (pid: string) => {
-    const product = await reviewsDal.getReviewsFromDB(pid)
-    if (!product)
-        throw new RequestError('product not found', STATUS_CODES.BAD_REQUEST)
-    return product
-}
-
-const feedbackReviews = async (pid: string, userId: string, feedback: boolean) => {
-
-    const product = await reviewsDal.feedbackReviews(pid, userId, feedback)
-    if (!product)
-        throw new RequestError('product not found', STATUS_CODES.BAD_REQUEST)
-    return product
-}
-
 const getProductBySearch = async (search: string) => {
     const product = await productsDal.getProductBySearch(search)
     if (!product)
         throw new RequestError('product not found', STATUS_CODES.BAD_REQUEST)
     return product
 }
-export default { getProductByID, getTop5Products, saveReviewsToDB, getReviewsFromDB, feedbackReviews, getProductBySearch }
+
+const getProductsByCategory = async (category: string) => {
+    console.log("hi from service getCategoryProducts:", category);
+    const categoryProducts = await productsDal.getProductsByCategory(category);
+    if (!categoryProducts)
+        throw new RequestError('Category not found', STATUS_CODES.NOT_FOUND);
+    return categoryProducts;
+
+}
+
+export default { getProductByID, getTop5Products, getProductBySearch, getProductsByCategory }

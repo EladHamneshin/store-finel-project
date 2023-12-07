@@ -1,18 +1,13 @@
 import cors from "cors";
-import dotenv from "dotenv";
 import morgan from "morgan";
 import express from "express";
 import cookieParser from "cookie-parser";
-import { errorHandler, notFound } from "./middlewares/errorsMiddleware.js";
-import userRoutes from "./routes/userRoutes.js";
-import productRoutes from "./routes/productsRoutes.js";
-import categoryRoutes from "./routes/categoryRoutes.js";
-import cartRoutes from "./routes/cartRoutes.js";
+import { errorHandler } from "./middlewares/errorsMiddleware.js";
+
 import pg from "pg";
 const { Pool } = pg;
 import { config } from "dotenv";
-import ordersRouter from "./routes/ordersRouets.js";
-import bannerRoutes from "./routes/bannerRouetes.js";
+
 config();
 
 const app = express();
@@ -28,12 +23,6 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use("/users", userRoutes);
-app.use("/users", cartRoutes);
-app.use("/products", productRoutes);
-app.use("/orders", ordersRouter);
-app.use("/banner", bannerRoutes);
-app.use("/", categoryRoutes);
 
 app.use(errorHandler);
 
@@ -100,7 +89,7 @@ const startServer = async (server: ApolloServer<any>, port: number) => {
   });
 
   // Logging the server's URL once it's ready
-  console.log(`\n\n🚀  Server ready at: ${url}`);
+  console.log(`🚀  Server ready at: ${url}`);
 };
 
 // Port.
