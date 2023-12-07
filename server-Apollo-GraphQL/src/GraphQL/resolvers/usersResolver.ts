@@ -7,7 +7,7 @@ interface ResolverArgs {
     email: string;
 }
 
-export const userResolvers = {
+export const usersResolver = {
     Query: {
         getAllUsers: async () => {
             try {

@@ -1,4 +1,4 @@
-export const productTypeDefs = `
+export const productsTypeDefs = `
 interface Coordinate {
   longitude1: Float!
   longitude2: Float!
@@ -34,18 +34,10 @@ type Product {
 }
 
 
-type Category {
-  id: String!
-  name: String!
-  clicked: Int!
-}
-
-
 type Query {
   getProductByID(id: ID!): Product
   getProductBySearch(search: String!): [Product]
   getTop5Products: [Product]
-  getTop5ForCategorys: [Category]
-  getCategoryByName(name: String!): Category
+  getProductsByCategory(name: String!): [Product]
 }
 `;

@@ -1,6 +1,5 @@
-import ProductDAL from "../../dal/productsDal.js";
+import productsDAL from "../../dal/productsDal.js";
 import Product from "../../types/Product.js";
-import Category from "../../types/Category.js";
 
 interface ResolverArgs {
   id: string;
@@ -8,11 +7,11 @@ interface ResolverArgs {
   name: string;
 }
 
-export const productResolvers = {
+export const productsResolver = {
   Query: {
     async getProductByID(_: any, { id }: ResolverArgs): Promise<Product | null> {
       try {
-        const product = await ProductDAL.getProductByID(id);
+        const product = await productsDAL.getProductByID(id);
         if (!product) {
           throw new Error(`Product with ID ${id} not found`);
         }
@@ -23,7 +22,7 @@ export const productResolvers = {
     },
     async getProductBySearch(_: any, { search }: ResolverArgs): Promise<Product[] | null> {
       try {
-        const products = await ProductDAL.getProductBySearch(search);
+        const products = await productsDAL.getProductBySearch(search);
         if (!products || products.length === 0) {
           throw new Error(`No products found for search term: ${search}`);
         }
@@ -34,26 +33,18 @@ export const productResolvers = {
     },
     async getTop5Products(): Promise<Product[]> {
       try {
-        const products = await ProductDAL.getTop5Products();
+        const products = await productsDAL.getTop5Products();
         return products;
       } catch (error) {
         throw new Error(`Failed to fetch top 5 products`);
       }
     },
-    async getTop5ForCategorys(): Promise<Category[] | undefined> {
+    async getProductsByCategory(_: any, { name }: ResolverArgs): Promise<Product[] | undefined> {
       try {
-        const category = await ProductDAL.getTop5ForCategorys();
+        const category = await productsDAL.getProductsByCategory(name);
         return category;
       } catch (error) {
-        throw new Error(`Failed to fetch top 5 products for category`);
-      }
-    },
-    async getCategoryByName(_: any, { name }: ResolverArgs): Promise<Category | undefined> {
-      try {
-        const category = await ProductDAL.getCategoryByName(name);
-        return category;
-      } catch (error) {
-        throw new Error(`Failed to fetch top 5 products for category: ${name}`);
+        throw new Error(`Failed to fetch category: ${name}`);
       }
     },
   }

@@ -1,4 +1,4 @@
-export const userTypeDefs = `
+export const usersTypeDefs = `
 type User {
     userid: ID
     name: String

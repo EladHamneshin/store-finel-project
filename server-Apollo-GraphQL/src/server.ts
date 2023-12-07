@@ -57,28 +57,34 @@ import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
 // TypeDefs.
-import { userTypeDefs } from "./GraphQL/schema/userSchema.js";
-import { productTypeDefs } from "./GraphQL/schema/productSchema.js";
+import { usersTypeDefs } from "./GraphQL/schema/usersSchema.js";
+import { productsTypeDefs } from "./GraphQL/schema/productsSchema.js";
+import { categoriesTypeDefs } from "./GraphQL/schema/categoriesSchema.js";
 
 // Resolvers.
-import { userResolvers } from "./GraphQL/resolvers/userResolvers.js";
-import { productResolvers } from "./GraphQL/resolvers/productResolvers.js";
+import { usersResolver } from "./GraphQL/resolvers/usersResolver.js";
+import { productsResolver } from "./GraphQL/resolvers/productsResolver.js";
+import { categoriesResolver } from "./GraphQL/resolvers/categoriesResolver.js";
+
+
 
 
 // Combining type definitions from user and product schemas
 const typeDefs = `
-  ${userTypeDefs} 
-  ${productTypeDefs}
+  ${usersTypeDefs} 
+  ${productsTypeDefs}
+  ${categoriesTypeDefs}
 `;
 
 // Combining resolver objects for users and products
 const resolvers = {
   Query: {
-    ...userResolvers.Query,
-  ...productResolvers.Query
+    ...usersResolver.Query,
+    ...productsResolver.Query,
+    ...categoriesResolver.Query
   },
   Mutation: {
-    ...userResolvers.Mutation
+    ...usersResolver.Mutation
   }
 };
 
@@ -94,7 +100,7 @@ const startServer = async (server: ApolloServer<any>, port: number) => {
   });
 
   // Logging the server's URL once it's ready
-  console.log(`🚀  Server ready at: ${url}`);
+  console.log(`\n\n🚀  Server ready at: ${url}`);
 };
 
 // Port.
