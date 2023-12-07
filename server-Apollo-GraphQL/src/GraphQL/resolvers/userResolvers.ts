@@ -11,7 +11,7 @@ interface ResolverArgs {
     };
 }
 
-export const usersResolver = {
+export const userResolvers = {
     Query: {
         getUser: async (_: any, { userid }: ResolverArgs) => {
             try {

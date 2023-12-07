@@ -2,7 +2,7 @@ import categoriesDAL from "../../dal/categoriesDal.js";
 import Category from "../../types/Category.js";
 
 
-export const categoriesResolver = {
+export const categoryResolvers = {
   Query: {
 
     async getCategories(): Promise<Category[] | undefined> {

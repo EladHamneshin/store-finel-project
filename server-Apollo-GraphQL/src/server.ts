@@ -23,20 +23,15 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.use(errorHandler);
 
 
-const port = 5000;
-export const connectionString = process.env.CONNECTION_STRING;
-//await connectDB();
-app.listen(port, async () => {
+const dbConnect = () => {
   const pool = new Pool();
   const res = await pool.connect();
   res.release();
   console.log(`\n\nDatabase connection test completed successfully`);
-  console.log(`\nServer is running at port ${port}...`);
-});
+}
 
 
 // ==========================================================================
@@ -46,34 +41,42 @@ import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
 // TypeDefs.
-import { usersTypeDefs } from "./GraphQL/schema/usersSchema.js";
-import { productsTypeDefs } from "./GraphQL/schema/productsSchema.js";
-import { categoriesTypeDefs } from "./GraphQL/schema/categoriesSchema.js";
+import { userTypeDefs } from "./GraphQL/schema/userSchema.js";
+import { productTypeDefs } from "./GraphQL/schema/productSchema.js";
+import { categoryTypeDefs } from "./GraphQL/schema/categorySchema.js";
+import { cartTypeDefs } from "./GraphQL/schema/cartSchema.js";
+import { bannerTypeDefs } from "./GraphQL/schema/bannerSchema.js";
 
 // Resolvers.
-import { usersResolver } from "./GraphQL/resolvers/usersResolver.js";
-import { productsResolver } from "./GraphQL/resolvers/productsResolver.js";
-import { categoriesResolver } from "./GraphQL/resolvers/categoriesResolver.js";
-
+import { userResolvers } from "./GraphQL/resolvers/userResolvers.js";
+import { productResolvers } from "./GraphQL/resolvers/productResolvers.js";
+import { categoryResolvers } from "./GraphQL/resolvers/categoyResolvers.js";
+import { cartResolvers } from "./GraphQL/resolvers/cartResolvers.js";
+import { bannerResolvers } from "./GraphQL/resolvers/bannerResolvers.js";
 
 
 
 // Combining type definitions from user and product schemas
 const typeDefs = `
-  ${usersTypeDefs} 
-  ${productsTypeDefs}
-  ${categoriesTypeDefs}
+  ${userTypeDefs} 
+  ${productTypeDefs}
+  ${categoryTypeDefs}
+  ${cartTypeDefs}
+  ${bannerTypeDefs}
 `;
 
 // Combining resolver objects for users and products
 const resolvers = {
   Query: {
-    ...usersResolver.Query,
-    ...productsResolver.Query,
-    ...categoriesResolver.Query
+    ...userResolvers.Query,
+    ...productResolvers.Query,
+    ...categoryResolvers.Query,
+    ...cartResolvers.Query,
+    ...bannerResolvers.Query
   },
   Mutation: {
-    ...usersResolver.Mutation
+    ...userResolvers.Mutation,
+    ...cartResolvers.Mutation
   }
 };
 

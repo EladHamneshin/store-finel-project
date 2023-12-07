@@ -1,4 +1,4 @@
-export const productsTypeDefs = `
+export const productTypeDefs = `
 interface Coordinate {
   longitude1: Float!
   longitude2: Float!

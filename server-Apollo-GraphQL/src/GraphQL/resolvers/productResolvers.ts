@@ -8,7 +8,7 @@ interface ResolverArgs {
   name: string;
 }
 
-export const productsResolver = {
+export const productResolvers = {
   Query: {
 
     getProductByID: async (_: any, { pid }: { pid: string }) => {

@@ -1,4 +1,4 @@
-export const categoriesTypeDefs = `
+export const categoryTypeDefs = `
   type Category {
     id: ID!
     name: String!

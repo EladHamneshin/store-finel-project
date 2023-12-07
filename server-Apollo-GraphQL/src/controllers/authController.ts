@@ -7,6 +7,8 @@ import authService from "../services/authService.js";
 import userValidation from "../utils/validations/userValidation.js";
 import User from "../types/User.js";
 import jwt, { JwtPayload } from "jsonwebtoken";
+
+
 // @desc    Auth user & get token
 // @route   POST /api/users/auth/login
 // @access  Public
@@ -46,6 +48,8 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
         email: user.email,
     });
 });
+
+
 // @desc    Logout user / clear cookie
 // @route   POST /api/users/auth/logout
 // @access  Public
@@ -56,4 +60,7 @@ const logoutUser = (_req: Request, res: Response) => {
     });
     res.status(STATUS_CODES.OK).json({ message: "Logged out successfully" });
 };
+
+
+
 export default { loginUser, logoutUser };
