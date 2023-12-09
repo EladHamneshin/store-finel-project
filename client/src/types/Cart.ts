@@ -4,6 +4,6 @@ interface Cart {
     _id: string;
     user: string;
     items: ProductCart[];
-}[]
+}
 
 export default Cart;

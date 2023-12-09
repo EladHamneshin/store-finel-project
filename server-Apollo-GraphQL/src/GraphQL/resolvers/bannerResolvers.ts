@@ -9,20 +9,20 @@ interface ResolverArgs {
 export const bannerResolvers = {
   Query: {
 
-    getBannersSide: async (_: any, args: ResolverArgs) => {
+    getBannersSide: async () => {
       try {
         console.log('controller banner');
         const banner = await bannerService.getSideBannersFromBannerTeam();
-        return banner;
+        return banner.data;
       } catch (error) {
         throw new RequestError('Failed to get shopping cart', 500);
       }
     },
 
-    getBannersTop: async (_: any, args: ResolverArgs) => {
+    getBannersTop: async () => {
       try {
         const banner = await bannerService.getTopBanners();
-        return banner;
+        return banner.data;
       } catch (error) {
         throw new RequestError('Failed to get shopping cart', 500);
       }
@@ -31,7 +31,7 @@ export const bannerResolvers = {
     getBannersAll: async (_: any, { userID }: ResolverArgs) => {
       try {
         const top5Products = await bannerService.getAllBanners(userID);
-        return top5Products;
+        return top5Products.data;
       } catch (error) {
         throw new RequestError('Failed to get shopping cart', 500);
       }

@@ -23,8 +23,10 @@ const getTopFromBanners = async () => {
 };
 
 const getAllFromBanners = async (userID: string) => {
-    console.log("userID in dal", userID);
+    // console.log("userID in dal", userID);
     const res = await axios.get(`${banner}/bannersImage/ext/?size={allscreen}`)
+    // console.log("res: ", res);
+    
     if (res.status >= 200 && res.status < 400) {
         return res.data;
     }

@@ -12,8 +12,6 @@ config();
 
 const app = express();
 
-// APP CONFIGS
-// console.log(process.env);
 app.use(
   cors({
     origin: "*",
@@ -25,78 +23,69 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(errorHandler);
 
-
-const dbConnect = () => {
+const dbConnect = async () => {
   const pool = new Pool();
   const res = await pool.connect();
   res.release();
-  console.log(`\n\nDatabase connection test completed successfully`);
-}
-
-
-// ==========================================================================
-// ==========================================================================
+  console.log(`\n\nDatabase connection test completed successfully!`);
+};
 
 import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
+import { expressMiddleware } from '@apollo/server/express4';
 
-// TypeDefs.
+// Schema TypeDefs
 import { userTypeDefs } from "./GraphQL/schema/userSchema.js";
 import { productTypeDefs } from "./GraphQL/schema/productSchema.js";
 import { categoryTypeDefs } from "./GraphQL/schema/categorySchema.js";
 import { cartTypeDefs } from "./GraphQL/schema/cartSchema.js";
 import { bannerTypeDefs } from "./GraphQL/schema/bannerSchema.js";
+import { orderTypeDefs } from "./GraphQL/schema/orderSchema.js";
 
-// Resolvers.
+// Resolvers
 import { userResolvers } from "./GraphQL/resolvers/userResolvers.js";
 import { productResolvers } from "./GraphQL/resolvers/productResolvers.js";
-import { categoryResolvers } from "./GraphQL/resolvers/categoyResolvers.js";
+import { categoryResolvers } from "./GraphQL/resolvers/categoryResolvers.js";
 import { cartResolvers } from "./GraphQL/resolvers/cartResolvers.js";
 import { bannerResolvers } from "./GraphQL/resolvers/bannerResolvers.js";
+import { orderResolvers } from "./GraphQL/resolvers/orderResolvers.js";
 
-
-
-// Combining type definitions from user and product schemas
 const typeDefs = `
-  ${userTypeDefs} 
+  ${userTypeDefs}
   ${productTypeDefs}
   ${categoryTypeDefs}
   ${cartTypeDefs}
   ${bannerTypeDefs}
+  
 `;
-
-// Combining resolver objects for users and products
+// ${orderTypeDefs}
 const resolvers = {
   Query: {
     ...userResolvers.Query,
     ...productResolvers.Query,
     ...categoryResolvers.Query,
     ...cartResolvers.Query,
-    ...bannerResolvers.Query
+    ...bannerResolvers.Query,
+    // ...orderResolvers.Query
   },
   Mutation: {
     ...userResolvers.Mutation,
-    ...cartResolvers.Mutation
-  }
+    ...cartResolvers.Mutation,
+    // ...orderResolvers.Mutation
+  },
 };
 
+const startServer = async () => {
+  const server = new ApolloServer({ typeDefs, resolvers });
+  await server.start();
 
-// Creating a new ApolloServer instance with type definitions and resolvers
-const server = new ApolloServer({ typeDefs, resolvers });
+  app.use('/graphql', cors(), express.json(), expressMiddleware(server));
 
+  await dbConnect();
 
-// Function to start the server on a specified port
-const startServer = async (server: ApolloServer<any>, port: number) => {
-  const { url } = await startStandaloneServer(server, {
-    listen: { port },
+  const PORT = 5000;
+  app.listen(PORT, () => {
+    console.log(`\n\n🚀 Server running on http://localhost:${PORT}/graphql`);
   });
+}
 
-  // Logging the server's URL once it's ready
-  console.log(`🚀  Server ready at: ${url}`);
-};
-
-// Port.
-const PORT = 3000;
-
-// Start server.
-startServer(server, PORT)
+startServer()

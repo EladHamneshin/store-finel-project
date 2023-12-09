@@ -16,6 +16,12 @@ export const userTypeDefs = `
     zip_code: String
   }
 
+  type LoginResponse {
+    store_token: String!
+    id: ID!
+    email: String!
+  }
+
   type LogoutResponse {
     message: String!
   }
@@ -26,6 +32,7 @@ export const userTypeDefs = `
   
   type Mutation {
     registerUser(newUser: UserInput!): User!
+    loginUser(user: UserInput!): LoginResponse!
     logoutUser: LogoutResponse!
   }
   
