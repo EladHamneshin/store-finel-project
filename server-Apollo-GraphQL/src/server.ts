@@ -1,5 +1,4 @@
 import cors from "cors";
-import dotenv from "dotenv";
 import morgan from "morgan";
 import express from "express";
 import cookieParser from "cookie-parser";
@@ -10,10 +9,8 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import pg from "pg";
 const { Pool } = pg;
-import { config } from "dotenv";
 import ordersRouter from "./routes/ordersRouets.js";
 import bannerRoutes from "./routes/bannerRouetes.js";
-config();
 
 const app = express();
 
@@ -59,26 +56,29 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 // TypeDefs.
 import { userTypeDefs } from "./GraphQL/schema/userSchema.js";
 import { productTypeDefs } from "./GraphQL/schema/productSchema.js";
-
+import { cartTypeDefs } from "./GraphQL/schema/cartSchema.js";
 // Resolvers.
 import { userResolvers } from "./GraphQL/resolvers/userResolvers.js";
 import { productResolvers } from "./GraphQL/resolvers/productResolvers.js";
-
+import { cartResolvers } from "./GraphQL/resolvers/cartResolvers.js";
 
 // Combining type definitions from user and product schemas
 const typeDefs = `
   ${userTypeDefs} 
   ${productTypeDefs}
+  ${cartTypeDefs}
 `;
 
 // Combining resolver objects for users and products
 const resolvers = {
   Query: {
     ...userResolvers.Query,
-  ...productResolvers.Query
+  ...productResolvers.Query,
+  ...cartResolvers.Query
   },
   Mutation: {
-    ...userResolvers.Mutation
+    ...userResolvers.Mutation,
+    ...cartResolvers.Mutation
   }
 };
 
