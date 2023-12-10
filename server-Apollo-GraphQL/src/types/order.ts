@@ -1,4 +1,4 @@
-import  Product  from "./Product.js";
+import Product from "./Product.js";
 
 export interface Address {
     country: string;
@@ -29,6 +29,14 @@ export interface ShippingDetailsType {
     orderType: OrderEnum;
 }
 
+
+type CreditCardDetails = {
+    cardNumber: string
+    expirationDate: string
+    CVV: string
+    cardHolderName: string
+}
+
 export interface OrderInterface {
     cartItems?: Product[] | [];
     userId: string;
@@ -38,10 +46,11 @@ export interface OrderInterface {
     status: OrderStatusEnum;
     totalPrice: number;
     shippingDetails: ShippingDetailsType;
+    creditCardDetails?: CreditCardDetails;
 }
 
 export interface GetOrderInterface {
-    orders : OrderInterface[];
+    orders: OrderInterface[];
 }
 
 

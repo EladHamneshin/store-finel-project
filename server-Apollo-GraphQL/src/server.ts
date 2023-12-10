@@ -53,11 +53,11 @@ const typeDefs = `
   ${userTypeDefs}
   ${productTypeDefs}
   ${categoryTypeDefs}
-  ${cartTypeDefs}
-  ${bannerTypeDefs}
-  
+  ${cartTypeDefs} 
+  ${bannerTypeDefs} 
+  ${orderTypeDefs} 
 `;
-// ${orderTypeDefs}
+
 const resolvers = {
   Query: {
     ...userResolvers.Query,
@@ -65,12 +65,12 @@ const resolvers = {
     ...categoryResolvers.Query,
     ...cartResolvers.Query,
     ...bannerResolvers.Query,
-    // ...orderResolvers.Query
+    ...orderResolvers.Query
   },
   Mutation: {
     ...userResolvers.Mutation,
     ...cartResolvers.Mutation,
-    // ...orderResolvers.Mutation
+    ...orderResolvers.Mutation
   },
 };
 

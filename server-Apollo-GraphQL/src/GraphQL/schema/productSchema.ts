@@ -33,6 +33,38 @@ type Product {
   tags: Tag!
 }
 
+input ProductInput {
+  name: String!
+  saleprice: Float!
+  quantity: Int!
+  description: String!
+  category: String!
+  discount: Float!
+  rating: Float!
+  click: Int!
+  coordinate: CoordinateInput!
+  image: ImageInput!
+  tags: TagInput!
+}
+
+input CoordinateInput {
+  longitude1: Float!
+  longitude2: Float!
+  longitude3: Float!
+  latitude1: Float!
+  latitude2: Float!
+  latitude3: Float!
+}
+
+input ImageInput {
+  url: String!
+  alt: String!
+}
+
+input TagInput {
+  tag: String!
+  tag2: String!
+}
 
 type Query {
   getProductByID(pid: String!): Product

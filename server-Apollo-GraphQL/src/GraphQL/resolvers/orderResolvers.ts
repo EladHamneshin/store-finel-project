@@ -1,8 +1,10 @@
 import ordersService from '../../services/ordersService.js';
+import { OrderInterface } from '../../types/order.js';
 
 interface ResolverArgs {
     order: any; // Replace 'any' with the appropriate type for 'order'
-    debitCardDetails: any; // Replace 'any' with the appropriate type for 'debitCardDetails'
+    debitCardDetails: OrderInterface;
+    id: string // Replace 'any' with the appropriate type for 'debitCardDetails'
 }
 
 export const orderResolvers = {
@@ -27,12 +29,12 @@ export const orderResolvers = {
                     }
                 }, 3000);
             });
-        },
+        }
     },
 
     Query: {
 
-        getOrdersFromServer: async (_: any, { id }: any) => {
+        getOrdersFromOms: async (_: any, { id }: ResolverArgs) => {
             try {
                 const data = await ordersService.getOrdersFromOms(id);
                 return data;
