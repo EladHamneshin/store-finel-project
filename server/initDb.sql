@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS cartitems (
     userId UUID,
     productId UUID PRIMARY KEY,
     quantity NUMERIC,
-    salePrice NUMERIC,
+    saleprice NUMERIC,
     name TEXT,
     description TEXT,
     discount NUMERIC,

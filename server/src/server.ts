@@ -13,6 +13,7 @@ const { Pool } = pg;
 import { config } from "dotenv";
 import ordersRouter from "./routes/ordersRouets.js";
 import bannerRoutes from "./routes/bannerRouetes.js";
+
 config();
 
 const app = express();

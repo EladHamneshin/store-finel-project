@@ -6,9 +6,11 @@ import { errorHandler } from "./middlewares/errorsMiddleware.js";
 
 import pg from "pg";
 const { Pool } = pg;
+
 import { config } from "dotenv";
 
 config();
+
 
 const app = express();
 
@@ -36,6 +38,7 @@ import { expressMiddleware } from '@apollo/server/express4';
 // Schema TypeDefs
 import { userTypeDefs } from "./GraphQL/schema/userSchema.js";
 import { productTypeDefs } from "./GraphQL/schema/productSchema.js";
+
 import { categoryTypeDefs } from "./GraphQL/schema/categorySchema.js";
 import { cartTypeDefs } from "./GraphQL/schema/cartSchema.js";
 import { bannerTypeDefs } from "./GraphQL/schema/bannerSchema.js";
@@ -49,18 +52,22 @@ import { cartResolvers } from "./GraphQL/resolvers/cartResolvers.js";
 import { bannerResolvers } from "./GraphQL/resolvers/bannerResolvers.js";
 import { orderResolvers } from "./GraphQL/resolvers/orderResolvers.js";
 
+
 const typeDefs = `
   ${userTypeDefs}
   ${productTypeDefs}
+
   ${categoryTypeDefs}
   ${cartTypeDefs}
   ${bannerTypeDefs}
   
+
 `;
 // ${orderTypeDefs}
 const resolvers = {
   Query: {
     ...userResolvers.Query,
+
     ...productResolvers.Query,
     ...categoryResolvers.Query,
     ...cartResolvers.Query,
@@ -72,6 +79,7 @@ const resolvers = {
     ...cartResolvers.Mutation,
     // ...orderResolvers.Mutation
   },
+
 };
 
 const startServer = async () => {

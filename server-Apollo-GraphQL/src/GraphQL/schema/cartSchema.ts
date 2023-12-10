@@ -1,4 +1,4 @@
-export const cartTypeDefs = `
+
   input CoordinateInput {
     longitude1: Float!
     longitude2: Float!
