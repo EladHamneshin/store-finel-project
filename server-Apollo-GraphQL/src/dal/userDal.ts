@@ -16,7 +16,6 @@ const addUser = async (user: User) => {
     console.log("values", values);
     const res = await sendQueryToDatabase(query, values)
     const { rowCount } = res
-    console.log(rowCount);
     if (!rowCount) throw new Error("Not insert user!!!");
 
     return await getUserByEmail(user.email);
@@ -39,7 +38,6 @@ const getUserByEmail = async (email: string): Promise<User[]> => {
     const query = 'SELECT * FROM users WHERE email = $1';
     const values = [email];
     const { rows } = await sendQueryToDatabase(query, values)
-    console.log(rows);
     return rows;
 }
 

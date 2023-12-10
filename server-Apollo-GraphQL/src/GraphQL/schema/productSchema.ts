@@ -34,18 +34,10 @@ type Product {
 }
 
 
-type Category {
-  id: String!
-  name: String!
-  clicked: Int!
-}
-
-
 type Query {
-  getProductByID(id: ID!): Product
-  getProductBySearch(search: String!): [Product]
-  getTop5Products: [Product]
-  getTop5ForCategorys: [Category]
-  getCategoryByName(name: String!): Category
+  getProductByID(pid: String!): Product
+  getTop5Products: [Product]!
+  getProductBySearch(searchItem: String!): [Product]!
+  getProductsByCategory(name: String!): [Product]!
 }
 `;

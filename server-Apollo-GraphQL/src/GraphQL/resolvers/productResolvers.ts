@@ -1,6 +1,6 @@
-import ProductDAL from "../../dal/productsDal.js";
+import productsService from "../../services/productsService.js";
 import Product from "../../types/Product.js";
-import Category from "../../types/Category.js";
+import RequestError from "../../types/errors/RequestError.js";
 
 interface ResolverArgs {
   id: string;
@@ -10,52 +10,42 @@ interface ResolverArgs {
 
 export const productResolvers = {
   Query: {
-    async getProductByID(_: any, { id }: ResolverArgs): Promise<Product | null> {
+
+    getProductByID: async (_: any, { pid }: { pid: string }) => {
       try {
-        const product = await ProductDAL.getProductByID(id);
-        if (!product) {
-          throw new Error(`Product with ID ${id} not found`);
-        }
+        const product = await productsService.getProductByID(pid);
         return product;
       } catch (error) {
-        throw new Error(`Failed to fetch product with ID: ${id}`);
+        throw new RequestError("Failed to fetch product by ID", 500);
       }
     },
-    async getProductBySearch(_: any, { search }: ResolverArgs): Promise<Product[] | null> {
+
+    getTop5Products: async () => {
       try {
-        const products = await ProductDAL.getProductBySearch(search);
-        if (!products || products.length === 0) {
-          throw new Error(`No products found for search term: ${search}`);
-        }
-        return products;
+        const top5Products = await productsService.getTop5Products();
+        return top5Products;
       } catch (error) {
-        throw new Error(`Failed to fetch product by search term: ${search}`);
+        throw new RequestError("Failed to fetch top 5 products", 500);
       }
     },
-    async getTop5Products(): Promise<Product[]> {
+
+    getProductBySearch: async (_: any, { searchItem }: { searchItem: string }) => {
       try {
-        const products = await ProductDAL.getTop5Products();
-        return products;
+        const result = await productsService.getProductBySearch(searchItem);
+        return result;
       } catch (error) {
-        throw new Error(`Failed to fetch top 5 products`);
+        throw new RequestError("Failed to fetch product by search", 500);
       }
     },
-    async getTop5ForCategorys(): Promise<Category[] | undefined> {
+
+    async getProductsByCategory(_: any, { name }: ResolverArgs): Promise<Product[] | undefined> {
       try {
-        const category = await ProductDAL.getTop5ForCategorys();
+        const category = await productsService.getProductsByCategory(name);
         return category;
       } catch (error) {
-        throw new Error(`Failed to fetch top 5 products for category`);
+        throw new Error(`Failed to fetch category: ${name}`);
       }
     },
-    async getCategoryByName(_: any, { name }: ResolverArgs): Promise<Category | undefined> {
-      try {
-        const category = await ProductDAL.getCategoryByName(name);
-        return category;
-      } catch (error) {
-        throw new Error(`Failed to fetch top 5 products for category: ${name}`);
-      }
-    },
+
   }
 };
-

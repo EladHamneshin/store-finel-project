@@ -1,5 +1,5 @@
 export const userTypeDefs = `
-type User {
+  type User {
     userid: ID
     name: String
     email: String!
@@ -15,15 +15,25 @@ type User {
     street: String
     zip_code: String
   }
-  
+
+  type LoginResponse {
+    store_token: String!
+    id: ID!
+    email: String!
+  }
+
+  type LogoutResponse {
+    message: String!
+  }
+
   type Query {
-    getAllUsers: [User]
     getUser(userid: ID!): User
-    getUserByEmail(email: String!): User
   }
   
   type Mutation {
-    addUser(user: UserInput): User
+    registerUser(newUser: UserInput!): User!
+    loginUser(user: UserInput!): LoginResponse!
+    logoutUser: LogoutResponse!
   }
   
   input UserInput {
@@ -35,12 +45,11 @@ type User {
     payment: String
     address: AddressInput
   }
-  
+
   input AddressInput {
     country: String
     city: String
     street: String
     zip_code: String
   }
-  
 `;
